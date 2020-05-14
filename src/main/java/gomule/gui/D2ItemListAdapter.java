@@ -6,104 +6,93 @@
  */
 package gomule.gui;
 
-import gomule.util.*;
+import java.io.File;
+import java.util.ArrayList;
 
-import java.io.*;
-import java.util.*;
+import gomule.util.D2Project;
 
 /**
  * @author Marco
- *
+ * <p>
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public abstract class D2ItemListAdapter implements D2ItemList
-{
-    protected String	iFileName;
+public abstract class D2ItemListAdapter implements D2ItemList {
     
-    private long		iTimestamp;
+    protected String iFileName;
     
-    private ArrayList	iListeners = new ArrayList();
-    private boolean 	iModified;
+    private long iTimestamp;
     
-    private boolean iIgnoreItemListEvents =false;
+    private ArrayList iListeners = new ArrayList();
+    private boolean iModified;
     
-    protected D2ItemListAdapter(String pFileName)
-    {
+    private boolean iIgnoreItemListEvents = false;
+    
+    protected D2ItemListAdapter(String pFileName) {
         iFileName = pFileName;
         initTimestamp();
     }
     
-    public final void save(D2Project pProject)
-    {
+    public final void save(D2Project pProject) {
         saveInternal(pProject);
         initTimestamp();
     }
     
     protected abstract void saveInternal(D2Project pProject);
     
-    public void initTimestamp()
-    {
-        iTimestamp = (new File( iFileName )).lastModified();
+    public void initTimestamp() {
+        iTimestamp = (new File(iFileName)).lastModified();
     }
     
-    public boolean checkTimestamp()
-    {
-        long lTimestamp = (new File( iFileName )).lastModified();
+    public boolean checkTimestamp() {
+        long lTimestamp = (new File(iFileName)).lastModified();
         return iTimestamp == lTimestamp;
     }
     
-    public Object getItemListInfo()
-    {
+    public Object getItemListInfo() {
         return iListeners;
     }
     
-    public void putItemListInfo(Object pItemListInfo)
-    {
-        iListeners = (ArrayList) pItemListInfo; 
+    public void putItemListInfo(Object pItemListInfo) {
+        iListeners = (ArrayList) pItemListInfo;
     }
     
-    protected void setModified(boolean pModified)
-    {
+    protected void setModified(boolean pModified) {
         iModified = pModified;
         fireD2ItemListEvent();
     }
     
-    public boolean isModified()
-    {
+    public boolean isModified() {
         return iModified;
     }
     
-    public void addD2ItemListListener(D2ItemListListener pListener)
-    {
+    public void addD2ItemListListener(D2ItemListListener pListener) {
         iListeners.add(pListener);
     }
-    public void removeD2ItemListListener(D2ItemListListener pListener)
-    {
+    
+    public void removeD2ItemListListener(D2ItemListListener pListener) {
         iListeners.remove(pListener);
     }
-    public boolean hasD2ItemListListener()
-    {
+    
+    public boolean hasD2ItemListListener() {
         return !iListeners.isEmpty();
     }
-    public void fireD2ItemListEvent()
-    {
-    	if(iIgnoreItemListEvents){
-    		return;
-    	}
-        for ( int i = 0 ; i < iListeners.size() ; i++ )
-        {
+    
+    public void fireD2ItemListEvent() {
+        if (iIgnoreItemListEvents) {
+            return;
+        }
+        for (int i = 0; i < iListeners.size(); i++) {
             ((D2ItemListListener) iListeners.get(i)).itemListChanged();
         }
     }
     
-    public void ignoreItemListEvents(){
-    	iIgnoreItemListEvents = true;
+    public void ignoreItemListEvents() {
+        iIgnoreItemListEvents = true;
     }
     
-    public void listenItemListEvents(){
-    	iIgnoreItemListEvents = false;
+    public void listenItemListEvents() {
+        iIgnoreItemListEvents = false;
     }
-
-
+    
 }

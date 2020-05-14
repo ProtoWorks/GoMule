@@ -6,15 +6,16 @@
  */
 package gomule.item;
 
-import java.util.*;
+import java.util.ArrayList;
+
 /**
  * @author Marco
- *
+ * <p>
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class D2WeaponTypes
-{
+public class D2WeaponTypes {
+    
     private String iType;
     private String iType2;
     private String iDisplay;
@@ -28,8 +29,7 @@ public class D2WeaponTypes
     public static final D2WeaponTypes WEAP_HAMM = new D2WeaponTypes("hamm", "Hammer");
     public static final D2WeaponTypes WEAP_AXE = new D2WeaponTypes("axe", "Axe");
     
-    static
-    {
+    static {
         addNewLine();
     }
     
@@ -40,74 +40,66 @@ public class D2WeaponTypes
     public static final D2WeaponTypes WEAP_POLE = new D2WeaponTypes("pole", "Polearm");
     public static final D2WeaponTypes WEAP_ASPE = new D2WeaponTypes("aspe", "Amazon Spear");
     
-    static
-    {
+    static {
         addNewLine();
     }
+    
     public static final D2WeaponTypes WEAP_BOW = new D2WeaponTypes("bow", "Bow");
     public static final D2WeaponTypes WEAP_XBOW = new D2WeaponTypes("xbow", "Crossbow");
     public static final D2WeaponTypes WEAP_ABOW = new D2WeaponTypes("abow", "Amazon Bow");
     public static final D2WeaponTypes WEAP_JAVE = new D2WeaponTypes("jave", "Javelin");
     public static final D2WeaponTypes WEAP_AJAV = new D2WeaponTypes("ajav", "Amazon Javelin");
-
-    static
-    {
+    
+    static {
         addNewLine();
     }
+    
     public static final D2WeaponTypes WEAP_KNIF = new D2WeaponTypes("knif", "Knife");
     public static final D2WeaponTypes WEAP_H2H = new D2WeaponTypes("h2h", "h2h2", "Hand to Hand");
-//    public static final D2WeaponTypes WEAP_H2H2 = new D2WeaponTypes("h2h2", "Hand to Hand 2");
+    //    public static final D2WeaponTypes WEAP_H2H2 = new D2WeaponTypes("h2h2", "Hand to Hand 2");
     public static final D2WeaponTypes WEAP_TAXE = new D2WeaponTypes("taxe", "Throwing Axe");
     public static final D2WeaponTypes WEAP_TKNI = new D2WeaponTypes("tkni", "Throwing Knife");
-
-//    static
-//    {
-//        addNewLine();
-//    }
+    
+    //    static
+    //    {
+    //        addNewLine();
+    //    }
     
     public static final D2WeaponTypes WEAP_ALL = new D2WeaponTypes("all", "All");
     
-    private static void addNewLine()
-    {
+    private static void addNewLine() {
         sListAll.add(new Object());
     }
-
-    private D2WeaponTypes(String pType, String pDisplay)
-    {
+    
+    private D2WeaponTypes(String pType, String pDisplay) {
         this(pType, null, pDisplay);
     }
     
-    private D2WeaponTypes(String pType, String pType2, String pDisplay)
-    {
+    private D2WeaponTypes(String pType, String pType2, String pDisplay) {
         iType = pType;
         iType2 = pType2;
         iDisplay = pDisplay;
         sListAll.add(this);
     }
     
-    public boolean isType(String pType)
-    {
-        if ( iType.equals(pType) )
-        {
+    public boolean isType(String pType) {
+        if (iType.equals(pType)) {
             return true;
         }
         
-        if ( iType2 != null && iType2.equals(pType) )
-        {
+        if (iType2 != null && iType2.equals(pType)) {
             return true;
         }
         
         return false;
     }
     
-    public String toString()
-    {
+    public String toString() {
         return iDisplay;
     }
     
-    public static ArrayList getWeaponTypeList()
-    {
+    public static ArrayList getWeaponTypeList() {
         return sListAll;
     }
-
+    
 }

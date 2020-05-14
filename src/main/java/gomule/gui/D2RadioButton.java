@@ -6,32 +6,29 @@
  */
 package gomule.gui;
 
-import javax.swing.*;
+import javax.swing.JRadioButton;
 
 /**
  * @author Marco
- *
+ * <p>
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class D2RadioButton extends JRadioButton
-{
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 3895689813117999958L;
-	private Object iData;
+public class D2RadioButton extends JRadioButton {
     
-    public D2RadioButton(Object pData)
-    {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 3895689813117999958L;
+    private Object iData;
+    
+    public D2RadioButton(Object pData) {
         super(pData.toString());
         iData = pData;
     }
     
-    
-    public Object getData()
-    {
+    public Object getData() {
         return iData;
     }
-
+    
 }
