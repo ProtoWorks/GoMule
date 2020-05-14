@@ -18,15 +18,15 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package gomule.gui;
+package test.gomule.gui;
 
-import gomule.d2s.D2Character;
-import gomule.d2x.D2Stash;
-import gomule.item.D2BodyLocations;
-import gomule.item.D2Item;
-import gomule.item.D2WeaponTypes;
-import gomule.util.D2CellStringRenderer;
-import gomule.util.D2CellValue;
+import test.gomule.d2s.D2Character;
+import test.gomule.d2x.D2Stash;
+import test.gomule.item.D2BodyLocations;
+import test.gomule.item.D2Item;
+import test.gomule.item.D2WeaponTypes;
+import test.gomule.util.D2CellStringRenderer;
+import test.gomule.util.D2CellValue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -75,8 +75,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 
-import randall.util.RandallPanel;
-import randall.util.RandallUtil;
+import test.randall.util.RandallPanel;
+import test.randall.util.RandallUtil;
 
 /**
  * @author Marco

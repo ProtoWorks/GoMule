@@ -18,30 +18,30 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package gomule.dropCalc;
+package test.gomule.dropCalc;
 
-import gomule.dropCalc.items.Item;
-import gomule.dropCalc.items.MiscItem;
-import gomule.dropCalc.items.SetItem;
-import gomule.dropCalc.items.UniqItem;
-import gomule.dropCalc.items.WhiteItem;
-import gomule.dropCalc.monsters.Boss;
-import gomule.dropCalc.monsters.Champion;
-import gomule.dropCalc.monsters.Minion;
-import gomule.dropCalc.monsters.Monster;
-import gomule.dropCalc.monsters.MonsterTuple;
-import gomule.dropCalc.monsters.Regular;
-import gomule.dropCalc.monsters.SuperUnique;
-import gomule.dropCalc.monsters.Unique;
+import test.gomule.dropCalc.items.Item;
+import test.gomule.dropCalc.items.MiscItem;
+import test.gomule.dropCalc.items.SetItem;
+import test.gomule.dropCalc.items.UniqItem;
+import test.gomule.dropCalc.items.WhiteItem;
+import test.gomule.dropCalc.monsters.Boss;
+import test.gomule.dropCalc.monsters.Champion;
+import test.gomule.dropCalc.monsters.Minion;
+import test.gomule.dropCalc.monsters.Monster;
+import test.gomule.dropCalc.monsters.MonsterTuple;
+import test.gomule.dropCalc.monsters.Regular;
+import test.gomule.dropCalc.monsters.SuperUnique;
+import test.gomule.dropCalc.monsters.Unique;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import randall.d2files.D2TblFile;
-import randall.d2files.D2TxtFile;
-import randall.d2files.D2TxtFileItemProperties;
+import test.randall.d2files.D2TblFile;
+import test.randall.d2files.D2TxtFile;
+import test.randall.d2files.D2TxtFileItemProperties;
 
 public class DCNew {
 

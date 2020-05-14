@@ -18,11 +18,11 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package gomule.gui;
+package test.gomule.gui;
 
-import gomule.d2x.*;
-import gomule.item.*;
-import gomule.util.*;
+import test.gomule.d2x.*;
+import test.gomule.item.*;
+import test.gomule.util.*;
 import java.awt.*;
 import java.io.*;
 import java.util.*;
@@ -30,7 +30,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.*;
 import javax.swing.table.*;
-import randall.util.*;
+import test.randall.util.*;
 
 public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2ItemListListener
 {

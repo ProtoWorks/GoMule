@@ -1,4 +1,4 @@
-package gomule.d2s;
+package test.gomule.d2s;
 import java.io.*;
  
 public class HexDump {

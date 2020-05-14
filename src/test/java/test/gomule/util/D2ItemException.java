@@ -18,7 +18,7 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package gomule.util;
+package test.gomule.util;
 
 /**
  * @author Marco

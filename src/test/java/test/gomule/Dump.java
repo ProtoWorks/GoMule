@@ -19,11 +19,11 @@
  *  
  ******************************************************************************/
 
-package gomule;
+package test.gomule;
 
 import java.io.*;
 
-import randall.d2files.*;
+import test.randall.d2files.*;
 
 public class Dump
 {

@@ -18,15 +18,15 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package gomule.util;
+package test.gomule.util;
 
-import gomule.gui.*;
-import gomule.item.*;
+import test.gomule.gui.*;
+import test.gomule.item.*;
 import java.awt.*;
 import java.io.*;
 import java.util.*;
 import javax.swing.*;
-import randall.util.*;
+import test.randall.util.*;
 
 /**
  * @author Marco

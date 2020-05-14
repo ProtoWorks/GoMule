@@ -19,17 +19,17 @@
  *  
  ******************************************************************************/
 
-package gomule.d2s;
+package test.gomule.d2s;
 
-import gomule.gui.*;
-import gomule.item.*;
-import gomule.util.*;
+import test.gomule.gui.*;
+import test.gomule.item.*;
+import test.gomule.util.*;
 
 import java.awt.Point;
 import java.io.*;
 import java.util.*;
 
-import randall.d2files.*;
+import test.randall.d2files.*;
 
 //a character class
 //manages one character file

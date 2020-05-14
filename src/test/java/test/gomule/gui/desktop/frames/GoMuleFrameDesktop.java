@@ -1,12 +1,12 @@
-package gomule.gui.desktop.frames;
+package test.gomule.gui.desktop.frames;
 
-import gomule.gui.D2FileManager;
-import gomule.gui.D2ItemContainer;
-import gomule.gui.desktop.generic.GoMuleDesktop;
-import gomule.gui.desktop.generic.GoMuleDesktopListener;
-import gomule.gui.desktop.generic.GoMuleView;
-import gomule.gui.desktop.generic.GoMuleViewDisplayHandler;
-import gomule.gui.desktop.generic.GoMuleViewStash;
+import test.gomule.gui.D2FileManager;
+import test.gomule.gui.D2ItemContainer;
+import test.gomule.gui.desktop.generic.GoMuleDesktop;
+import test.gomule.gui.desktop.generic.GoMuleDesktopListener;
+import test.gomule.gui.desktop.generic.GoMuleView;
+import test.gomule.gui.desktop.generic.GoMuleViewDisplayHandler;
+import test.gomule.gui.desktop.generic.GoMuleViewStash;
 
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;

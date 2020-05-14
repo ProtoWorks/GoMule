@@ -18,10 +18,10 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package randall.d2files;
+package test.randall.d2files;
 
-import gomule.gui.D2FileManager;
-import gomule.item.D2Prop;
+import test.gomule.gui.D2FileManager;
+import test.gomule.item.D2Prop;
 import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;

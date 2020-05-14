@@ -18,15 +18,15 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package gomule.dropCalc.items;
+package test.gomule.dropCalc.items;
 
-import gomule.dropCalc.DCNew;
-import gomule.dropCalc.monsters.MonsterTuple;
+import test.gomule.dropCalc.DCNew;
+import test.gomule.dropCalc.monsters.MonsterTuple;
 
 import java.util.HashMap;
 
-import randall.d2files.D2TblFile;
-import randall.d2files.D2TxtFileItemProperties;
+import test.randall.d2files.D2TblFile;
+import test.randall.d2files.D2TxtFileItemProperties;
 
 public class WhiteItem extends Item {
 

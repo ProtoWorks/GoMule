@@ -18,9 +18,9 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package randall.d2files;
+package test.randall.d2files;
 
-import gomule.gui.*;
+import test.gomule.gui.*;
 import java.io.*;
 
 /**

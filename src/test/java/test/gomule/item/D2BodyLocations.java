@@ -4,7 +4,7 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package gomule.item;
+package test.gomule.item;
 
 import java.awt.Point;
 import java.util.*;

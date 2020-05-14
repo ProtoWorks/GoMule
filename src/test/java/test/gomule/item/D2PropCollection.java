@@ -19,14 +19,14 @@
  *  
  ******************************************************************************/
 
-package gomule.item;
+package test.gomule.item;
 
-import gomule.util.D2BitReader;
+import test.gomule.util.D2BitReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import randall.d2files.D2TxtFile;
-import randall.d2files.D2TxtFileItemProperties;
+import test.randall.d2files.D2TxtFile;
+import test.randall.d2files.D2TxtFileItemProperties;
 
 public class D2PropCollection extends ArrayList{
 

@@ -19,13 +19,13 @@
  *  
  ******************************************************************************/
 
-package gomule.gui;
+package test.gomule.gui;
 
-import gomule.d2s.*;
-import gomule.d2x.*;
-import gomule.dropCalc.gui.RealGUI;
-import gomule.item.D2Item;
-import gomule.util.*;
+import test.gomule.d2s.*;
+import test.gomule.d2x.*;
+import test.gomule.dropCalc.gui.RealGUI;
+import test.gomule.item.D2Item;
+import test.gomule.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyVetoException;
@@ -39,9 +39,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
-import randall.d2files.*;
-import randall.flavie.Flavie;
-import randall.util.RandallPanel;
+import test.randall.d2files.*;
+import test.randall.flavie.Flavie;
+import test.randall.util.RandallPanel;
 
 /**
  * this class is the top-level administrative window. 

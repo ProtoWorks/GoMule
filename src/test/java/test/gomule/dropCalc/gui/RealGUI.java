@@ -18,11 +18,11 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package gomule.dropCalc.gui;
+package test.gomule.dropCalc.gui;
 
-import gomule.dropCalc.DCNew;
-import gomule.dropCalc.items.Item;
-import gomule.dropCalc.monsters.Monster;
+import test.gomule.dropCalc.DCNew;
+import test.gomule.dropCalc.items.Item;
+import test.gomule.dropCalc.monsters.Monster;
 
 import java.awt.Container;
 import java.awt.Dimension;

@@ -19,7 +19,7 @@
  *  
  ******************************************************************************/
 
-package gomule.util;
+package test.gomule.util;
 
 import java.io.*;
 import java.util.*;

@@ -19,9 +19,9 @@
  *  
  ******************************************************************************/
 
-package gomule.item;
+package test.gomule.item;
 
-import gomule.util.*;
+import test.gomule.util.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

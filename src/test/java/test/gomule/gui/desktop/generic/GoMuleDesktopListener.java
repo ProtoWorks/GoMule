@@ -1,4 +1,4 @@
-package gomule.gui.desktop.generic;
+package test.gomule.gui.desktop.generic;
 
 public interface GoMuleDesktopListener 
 {

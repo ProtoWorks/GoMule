@@ -19,7 +19,7 @@
  *  
  ******************************************************************************/
 
-package gomule.util;
+package test.gomule.util;
 
 // loads a d2-style palette
 public class D2Palette{

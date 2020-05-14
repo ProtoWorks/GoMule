@@ -4,12 +4,12 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package gomule.gui;
+package test.gomule.gui;
 
-import gomule.d2s.D2Character;
-import gomule.d2x.D2Stash;
-import gomule.item.*;
-import gomule.util.*;
+import test.gomule.d2s.D2Character;
+import test.gomule.d2x.D2Stash;
+import test.gomule.item.*;
+import test.gomule.util.*;
 
 import java.io.*;
 import java.util.*;

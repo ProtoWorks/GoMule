@@ -4,9 +4,9 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package gomule.gui;
+package test.gomule.gui;
 
-import gomule.util.*;
+import test.gomule.util.*;
 
 import java.io.*;
 import java.util.*;

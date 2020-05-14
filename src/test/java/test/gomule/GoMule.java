@@ -19,9 +19,9 @@
  *  
  ******************************************************************************/
 
-package gomule;
+package test.gomule;
 
-import gomule.gui.*;
+import test.gomule.gui.*;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import randall.util.RandallUtil;
+import test.randall.util.RandallUtil;
 
 public class GoMule
 {

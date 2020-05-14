@@ -1,9 +1,9 @@
 /*
  * Created on 01.09.2004
  */
-package randall.flavie.filters;
+package test.randall.flavie.filters;
 
-import randall.flavie.*;
+import test.randall.flavie.*;
 
 /**
  * @author mbr

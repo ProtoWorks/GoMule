@@ -18,7 +18,7 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package gomule.dropCalc.gui;
+package test.gomule.dropCalc.gui;
 
 import java.text.DecimalFormat;
 

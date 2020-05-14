@@ -19,9 +19,9 @@
  *  
  ******************************************************************************/
 
-package gomule.gui;
+package test.gomule.gui;
 
-import gomule.util.*;
+import test.gomule.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;

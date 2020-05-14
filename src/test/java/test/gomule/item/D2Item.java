@@ -19,16 +19,16 @@
  *
  ******************************************************************************/
 
-package gomule.item;
+package test.gomule.item;
 
-import gomule.util.*;
+import test.gomule.util.*;
 import java.awt.Color;
 import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import randall.d2files.*;
-import randall.flavie.*;
+import test.randall.d2files.*;
+import test.randall.flavie.*;
 
 //an item class
 //manages one item

@@ -18,12 +18,12 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package randall.flavie;
+package test.randall.flavie;
 
 import java.io.*;
 import java.util.*;
 
-import randall.util.*;
+import test.randall.util.*;
 
 /**
  * @author Marco

@@ -1,7 +1,7 @@
-package gomule.gui.desktop.generic;
+package test.gomule.gui.desktop.generic;
 
-import gomule.gui.D2ItemContainer;
-import gomule.gui.D2ItemList;
+import test.gomule.gui.D2ItemContainer;
+import test.gomule.gui.D2ItemList;
 
 import javax.swing.JComponent;
 

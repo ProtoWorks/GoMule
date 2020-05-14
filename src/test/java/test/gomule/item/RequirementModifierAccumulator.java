@@ -1,4 +1,4 @@
-package gomule.item;
+package test.gomule.item;
 
 public class RequirementModifierAccumulator {
     private int levelRequirement;

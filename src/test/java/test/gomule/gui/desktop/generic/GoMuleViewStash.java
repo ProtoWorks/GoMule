@@ -1,6 +1,6 @@
-package gomule.gui.desktop.generic;
+package test.gomule.gui.desktop.generic;
 
-import gomule.gui.D2ViewStash;
+import test.gomule.gui.D2ViewStash;
 
 /**
  * stash content

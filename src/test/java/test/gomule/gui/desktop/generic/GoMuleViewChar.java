@@ -1,7 +1,7 @@
-package gomule.gui.desktop.generic;
+package test.gomule.gui.desktop.generic;
 
-import gomule.d2s.D2Character;
-import gomule.gui.D2ViewChar;
+import test.gomule.d2s.D2Character;
+import test.gomule.gui.D2ViewChar;
 
 /**
  * character content

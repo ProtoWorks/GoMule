@@ -18,11 +18,11 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package gomule.d2x;
+package test.gomule.d2x;
 
-import gomule.gui.*;
-import gomule.item.*;
-import gomule.util.*;
+import test.gomule.gui.*;
+import test.gomule.item.*;
+import test.gomule.util.*;
 
 import java.io.*;
 import java.util.*;

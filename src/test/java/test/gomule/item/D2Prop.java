@@ -19,13 +19,13 @@
  *  
  ******************************************************************************/
 
-package gomule.item;
+package test.gomule.item;
 
 import java.util.ArrayList;
 
-import randall.d2files.D2TblFile;
-import randall.d2files.D2TxtFile;
-import randall.d2files.D2TxtFileItemProperties;
+import test.randall.d2files.D2TblFile;
+import test.randall.d2files.D2TxtFile;
+import test.randall.d2files.D2TxtFileItemProperties;
 
 public class D2Prop {
 

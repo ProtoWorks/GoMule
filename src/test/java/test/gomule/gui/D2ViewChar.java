@@ -18,10 +18,10 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package gomule.gui;
+package test.gomule.gui;
 
-import gomule.d2s.*;
-import gomule.item.*;
+import test.gomule.d2s.*;
+import test.gomule.item.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.*;
-import randall.util.*;
+import test.randall.util.*;
 
 /**
  * @author Marco

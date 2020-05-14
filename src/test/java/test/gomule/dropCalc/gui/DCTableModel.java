@@ -18,9 +18,9 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package gomule.dropCalc.gui;
+package test.gomule.dropCalc.gui;
 
-import gomule.dropCalc.monsters.MonsterTuple;
+import test.gomule.dropCalc.monsters.MonsterTuple;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

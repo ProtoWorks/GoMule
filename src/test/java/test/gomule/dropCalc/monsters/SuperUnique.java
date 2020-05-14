@@ -18,15 +18,15 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package gomule.dropCalc.monsters;
+package test.gomule.dropCalc.monsters;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import randall.d2files.D2TblFile;
-import randall.d2files.D2TxtFile;
-import randall.d2files.D2TxtFileItemProperties;
+import test.randall.d2files.D2TblFile;
+import test.randall.d2files.D2TxtFile;
+import test.randall.d2files.D2TxtFileItemProperties;
 
 public class SuperUnique extends Monster {
 

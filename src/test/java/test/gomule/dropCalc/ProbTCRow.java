@@ -18,7 +18,7 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package gomule.dropCalc;
+package test.gomule.dropCalc;
 
 import java.util.ArrayList;
 

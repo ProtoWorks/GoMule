@@ -4,14 +4,14 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package gomule.util;
+package test.gomule.util;
 
-import gomule.gui.*;
+import test.gomule.gui.*;
 
 import java.io.*;
 import java.util.*;
 
-import randall.util.*;
+import test.randall.util.*;
 
 /**
  * @author Marco

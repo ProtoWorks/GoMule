@@ -18,20 +18,20 @@
  * Fifth Floor, Boston, MA 02110-1301 USA
  *  
  ******************************************************************************/
-package randall.flavie;
+package test.randall.flavie;
 
-import gomule.d2s.*;
-import gomule.d2x.*;
-import gomule.gui.D2FileManager;
-import gomule.item.*;
+import test.gomule.d2s.*;
+import test.gomule.d2x.*;
+import test.gomule.gui.D2FileManager;
+import test.gomule.item.*;
 
 import java.io.*;
 import java.util.*;
 
 import javax.swing.JOptionPane;
 
-import randall.d2files.D2TblFile;
-import randall.d2files.D2TxtFile;
+import test.randall.d2files.D2TblFile;
+import test.randall.d2files.D2TxtFile;
 
 /**
  * @author Marco

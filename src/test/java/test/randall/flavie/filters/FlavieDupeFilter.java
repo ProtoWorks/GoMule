@@ -1,13 +1,13 @@
 /*
  * Created on 01.09.2004
  */
-package randall.flavie.filters;
+package test.randall.flavie.filters;
 
 import java.io.*;
 import java.util.*;
 
-import randall.flavie.*;
-import randall.util.*;
+import test.randall.flavie.*;
+import test.randall.util.*;
 
 /**
  * @author mbr
