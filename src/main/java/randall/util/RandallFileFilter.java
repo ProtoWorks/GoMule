@@ -25,38 +25,29 @@ package randall.util;
  * @version 1.0
  */
 
+import lombok.NonNull;
+import lombok.Value;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RandallFileFilter
-        extends javax.swing.filechooser.FileFilter {
+@Value
+public class RandallFileFilter extends javax.swing.filechooser.FileFilter {
     
-    private List<Object> iExtensions;
-    private String iDescription;
+    List<String> extensions = new ArrayList<>();
+    String description;
     
-    public RandallFileFilter(String pDescription) {
-        iExtensions = new ArrayList<>();
-        iDescription = pDescription;
-    }
-    
-    public boolean accept(File pFile) {
-        for (int i = 0; i < iExtensions.size(); i++) {
-            if (pFile.isDirectory()) {
-                return true;
-            }
-            if (pFile.getAbsolutePath().toLowerCase().endsWith(((String) iExtensions.get(i)).toLowerCase())) {
-                return true;
-            }
+    @Override
+    public boolean accept(File file) {
+        if (file.isDirectory()) {
+            return true;
         }
-        return false;
+        return extensions.stream()
+                         .anyMatch(extension -> file.getAbsolutePath().toLowerCase().endsWith(extension));
     }
     
-    public void addExtension(String pExtension) {
-        iExtensions.add(pExtension);
-    }
-    
-    public String getDescription() {
-        return iDescription;
+    public void addExtension(@NonNull String extension) {
+        extensions.add(extension.toLowerCase());
     }
 }
