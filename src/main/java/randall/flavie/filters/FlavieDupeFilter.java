@@ -8,8 +8,8 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 import randall.flavie.D2ItemInterface;
 import randall.flavie.Flavie;
@@ -36,7 +36,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
                 // Find fingerprint in this line
                 List<Object> lSplit = RandallUtil.split(lLine, " ", false);
                 for (int i = 0; i < lSplit.size(); i++) {
-                    if ((String) lSplit.get(i) != null) {
+                    if (lSplit.get(i) != null) {
                         String lSplitted = ((String) lSplit.get(i)).trim();
                         if (lSplitted.startsWith("0x")) {
                             iDupeList.put(lSplitted, lLine.trim());
@@ -54,6 +54,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
         return iDupeList;
     }
     
+    @Override
     public void initialize() throws Exception {
         if (iDupeOut != null) {
             throw new Exception("Dupe file allready initialised");
@@ -63,6 +64,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
         //		iDupeOut.println("Start dupe detection");
     }
     
+    @Override
     public void finish() throws Exception {
         if (iDupeOut == null) {
             throw new Exception("Dupe file not initialised");
@@ -72,6 +74,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
         iDupeOut = null;
     }
     
+    @Override
     public boolean check(D2ItemInterface pItemFound) {
         if (iDupeList.containsKey(pItemFound.getFingerprint())) {
             iDupeOut.println("Item " + pItemFound.getFingerprint() + "/" + pItemFound.getName() + " from file " + pItemFound.getFileName() + " is listed as a dupe");
@@ -81,6 +84,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
         return true;
     }
     
+    @Override
     public boolean check(String pFingerprint, String pItemname) {
         if (iDupeList.containsKey(pFingerprint)) {
             iDupeOut.println("Item " + pFingerprint + "/" + pItemname + " is listed as a dupe");

@@ -22,9 +22,9 @@ package gomule.dropCalc.monsters;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import randall.d2files.D2TxtFile;
 import randall.d2files.D2TxtFileItemProperties;
@@ -114,10 +114,10 @@ public class Monster {
             monSearch = D2TxtFile.LEVELS.searchColumnsMultipleHits(selector, monID);
             if (monSearch.size() > 0) {
                 for (int y = 0; y < monSearch.size(); y = y + 1) {
-                    monLvlAreas.put(((D2TxtFileItemProperties) monSearch.get(y)).get("Name"), new Integer(0));
+                    monLvlAreas.put(((D2TxtFileItemProperties) monSearch.get(y)).get("Name"), 0);
                 }
             }
-            selector = selector.substring(0, selector.length() - 1) + (new Integer(x + 1));
+            selector = selector.substring(0, selector.length() - 1) + (x + 1);
         }
         
         return monLvlAreas;
@@ -180,41 +180,41 @@ public class Monster {
         Map<Object, Object> monLvlAreas = new HashMap<>();
         
         if (monID.equals("andariel")) {
-            monLvlAreas.put("Act 1 - Catacombs 4", new Integer(0));
+            monLvlAreas.put("Act 1 - Catacombs 4", 0);
         } else if (monID.equals("duriel")) {
-            monLvlAreas.put("Act 2 - Duriel's Lair", new Integer(0));
+            monLvlAreas.put("Act 2 - Duriel's Lair", 0);
         } else if (monID.equals("radament")) {
-            monLvlAreas.put("Act 2 - Sewer 1 C", new Integer(0));
+            monLvlAreas.put("Act 2 - Sewer 1 C", 0);
         } else if (monID.equals("mephisto")) {
-            monLvlAreas.put("Act 3 - Mephisto 3", new Integer(0));
+            monLvlAreas.put("Act 3 - Mephisto 3", 0);
         } else if (monID.equals("diablo")) {
-            monLvlAreas.put("Act 4 - Diablo 1", new Integer(0));
+            monLvlAreas.put("Act 4 - Diablo 1", 0);
         } else if (monID.equals("summoner")) {
-            monLvlAreas.put("Act 2 - Arcane", new Integer(0));
+            monLvlAreas.put("Act 2 - Arcane", 0);
         } else if (monID.equals("izual")) {
-            monLvlAreas.put("Act 4 - Mesa 2", new Integer(0));
+            monLvlAreas.put("Act 4 - Mesa 2", 0);
         } else if (monID.equals("bloodraven")) {
-            monLvlAreas.put("Act 1 - Graveyard", new Integer(0));
+            monLvlAreas.put("Act 1 - Graveyard", 0);
         } else if (monID.equals("diabloclone")) {
         } else if (monID.equals("griswold")) {
-            monLvlAreas.put("Act 1 - Tristram", new Integer(0));
+            monLvlAreas.put("Act 1 - Tristram", 0);
         } else if (monID.equals("nihlathakboss")) {
-            monLvlAreas.put("Act 5 - Temple Boss", new Integer(0));
+            monLvlAreas.put("Act 5 - Temple Boss", 0);
         } else if (monID.equals("baalcrab")) {
-            monLvlAreas.put("Act 5 - World Stone", new Integer(0));
+            monLvlAreas.put("Act 5 - World Stone", 0);
         } else if (monID.equals("putriddefiler1")) {
-            monLvlAreas.put("Act 5 - Temple 2", new Integer(0));
-            monLvlAreas.put("Act 5 - Temple Boss", new Integer(0));
+            monLvlAreas.put("Act 5 - Temple 2", 0);
+            monLvlAreas.put("Act 5 - Temple Boss", 0);
         } else if (monID.equals("putriddefiler2")) {
-            monLvlAreas.put("Act 5 - Baal Temple 1", new Integer(0));
-            monLvlAreas.put("Act 5 - Temple Boss", new Integer(0));
+            monLvlAreas.put("Act 5 - Baal Temple 1", 0);
+            monLvlAreas.put("Act 5 - Temple Boss", 0);
         } else if (monID.equals("putriddefiler3")) {
-            monLvlAreas.put("Act 5 - Baal Temple 1", new Integer(0));
-            monLvlAreas.put("Act 5 - Baal Temple 3", new Integer(0));
+            monLvlAreas.put("Act 5 - Baal Temple 1", 0);
+            monLvlAreas.put("Act 5 - Baal Temple 3", 0);
         } else if (monID.equals("putriddefiler4")) {
-            monLvlAreas.put("Act 5 - Baal Temple 3", new Integer(0));
+            monLvlAreas.put("Act 5 - Baal Temple 3", 0);
         } else if (monID.equals("putriddefiler5")) {
-            monLvlAreas.put("Act 5 - Baal Temple 3", new Integer(0));
+            monLvlAreas.put("Act 5 - Baal Temple 3", 0);
         }
         return monLvlAreas;
     }
@@ -232,7 +232,6 @@ public class Monster {
                 monLvlAreas.put(monLvlAreas.keySet().toArray()[x], new Integer(D2TxtFile.MONSTATS.searchColumns("Id", monID).get(selector)));
             }
         }
-        return;
     }
     
     public String getID() {
@@ -353,9 +352,9 @@ public class Monster {
         areaSUPair.put("Baal Subject 5", "Act 5 - Throne Room");
         
         if (i == 1) {
-            lvlArr.put(areaSUPair.get(ID), new Integer(0));
+            lvlArr.put(areaSUPair.get(ID), 0);
         } else {
-            lvlArr.put(areaSUPair.get(ID), new Integer(0));
+            lvlArr.put(areaSUPair.get(ID), 0);
             
         }
     }

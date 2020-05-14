@@ -21,10 +21,9 @@
 package gomule.dropCalc.monsters;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import randall.d2files.D2TblFile;
 import randall.d2files.D2TxtFile;
@@ -51,15 +50,15 @@ public class Unique extends Monster {
             String area = (String) it.next();
             
             if (monDiff.equals("N")) {
-                monLvlAreas.put(area, new Integer(Integer.parseInt(monRow.get("Level")) + 3));
+                monLvlAreas.put(area, Integer.parseInt(monRow.get("Level")) + 3);
                 
             } else if (monDiff.equals("NM")) {
                 
-                monLvlAreas.put(area, new Integer(Integer.parseInt(D2TxtFile.LEVELS.searchColumns("Name", area).get("MonLvl2Ex")) + 3));
+                monLvlAreas.put(area, Integer.parseInt(D2TxtFile.LEVELS.searchColumns("Name", area).get("MonLvl2Ex")) + 3);
                 
             } else {
                 
-                monLvlAreas.put(area, new Integer(Integer.parseInt(D2TxtFile.LEVELS.searchColumns("Name", area).get("MonLvl3Ex")) + 3));
+                monLvlAreas.put(area, Integer.parseInt(D2TxtFile.LEVELS.searchColumns("Name", area).get("MonLvl3Ex")) + 3);
             }
             
         }

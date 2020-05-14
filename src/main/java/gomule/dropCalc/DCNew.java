@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 import gomule.dropCalc.items.Item;
 import gomule.dropCalc.items.MiscItem;
@@ -316,15 +316,15 @@ public class DCNew {
                             //						System.out.println(((MonsterTuple)mTuples.get(y)).getParent().getID());
                             
                             monsterTCList.put(mTuples.get(y),
-                                              new Double(((Double) ((MonsterTuple) mTuples.get(y)).getFinalTCs().get(key)).doubleValue() * d * generateRarityList((MonsterTuple) mTuples.get(y),
-                                                                                                                                                                  item) * getQuality(item,
-                                                                                                                                                                                     ((MonsterTuple) mTuples
-                                                                                                                                                                                             .get(y)).getLevel(),
-                                                                                                                                                                                     MF,
-                                                                                                                                                                                     ((MonsterTuple) mTuples
-                                                                                                                                                                                             .get(y)),
-                                                                                                                                                                                     QRecursions,
-                                                                                                                                                                                     true)));
+                                              ((Double) ((MonsterTuple) mTuples.get(y)).getFinalTCs().get(key)).doubleValue() * d * generateRarityList((MonsterTuple) mTuples.get(y),
+                                                                                                                                                       item) * getQuality(item,
+                                                                                                                                                                          ((MonsterTuple) mTuples
+                                                                                                                                                                                  .get(y)).getLevel(),
+                                                                                                                                                                          MF,
+                                                                                                                                                                          ((MonsterTuple) mTuples
+                                                                                                                                                                                  .get(y)),
+                                                                                                                                                                          QRecursions,
+                                                                                                                                                                          true));
                         }
                     }
                 }
@@ -343,15 +343,15 @@ public class DCNew {
                         ((MonsterTuple) mTuples.get(y)).lookupBASETCReturnATOMICTCS(nPlayers, nGroup, 0, sevP);
                         if (((MonsterTuple) mTuples.get(y)).getFinalTCs().containsKey(key)) {
                             monsterTCList.put(mTuples.get(y),
-                                              new Double(((Double) ((MonsterTuple) mTuples.get(y)).getFinalTCs().get(key)).doubleValue() * d * generateRarityList((MonsterTuple) mTuples.get(y),
-                                                                                                                                                                  item) * getQuality(item,
-                                                                                                                                                                                     ((MonsterTuple) mTuples
-                                                                                                                                                                                             .get(y)).getLevel(),
-                                                                                                                                                                                     MF,
-                                                                                                                                                                                     ((MonsterTuple) mTuples
-                                                                                                                                                                                             .get(y)),
-                                                                                                                                                                                     QRecursions,
-                                                                                                                                                                                     true)));
+                                              ((Double) ((MonsterTuple) mTuples.get(y)).getFinalTCs().get(key)).doubleValue() * d * generateRarityList((MonsterTuple) mTuples.get(y),
+                                                                                                                                                       item) * getQuality(item,
+                                                                                                                                                                          ((MonsterTuple) mTuples
+                                                                                                                                                                                  .get(y)).getLevel(),
+                                                                                                                                                                          MF,
+                                                                                                                                                                          ((MonsterTuple) mTuples
+                                                                                                                                                                                  .get(y)),
+                                                                                                                                                                          QRecursions,
+                                                                                                                                                                          true));
                         }
                     }
                 }
@@ -367,15 +367,15 @@ public class DCNew {
                         ((MonsterTuple) mTuples.get(y)).lookupBASETCReturnATOMICTCS(nPlayers, nGroup, 0, sevP);
                         if (((MonsterTuple) mTuples.get(y)).getFinalTCs().containsKey(key)) {
                             monsterTCList.put(mTuples.get(y),
-                                              new Double(((Double) ((MonsterTuple) mTuples.get(y)).getFinalTCs().get(key)).doubleValue() * d * generateRarityList((MonsterTuple) mTuples.get(y),
-                                                                                                                                                                  item) * getQuality(item,
-                                                                                                                                                                                     ((MonsterTuple) mTuples
-                                                                                                                                                                                             .get(y)).getLevel(),
-                                                                                                                                                                                     MF,
-                                                                                                                                                                                     ((MonsterTuple) mTuples
-                                                                                                                                                                                             .get(y)),
-                                                                                                                                                                                     QRecursions,
-                                                                                                                                                                                     true)));
+                                              ((Double) ((MonsterTuple) mTuples.get(y)).getFinalTCs().get(key)).doubleValue() * d * generateRarityList((MonsterTuple) mTuples.get(y),
+                                                                                                                                                       item) * getQuality(item,
+                                                                                                                                                                          ((MonsterTuple) mTuples
+                                                                                                                                                                                  .get(y)).getLevel(),
+                                                                                                                                                                          MF,
+                                                                                                                                                                          ((MonsterTuple) mTuples
+                                                                                                                                                                                  .get(y)),
+                                                                                                                                                                          QRecursions,
+                                                                                                                                                                          true));
                         }
                     }
                 }
@@ -391,15 +391,15 @@ public class DCNew {
                         ((MonsterTuple) mTuples.get(y)).lookupBASETCReturnATOMICTCS(nPlayers, nGroup, 0, sevP);
                         if (((MonsterTuple) mTuples.get(y)).getFinalTCs().containsKey(key)) {
                             monsterTCList.put(mTuples.get(y),
-                                              new Double(((Double) ((MonsterTuple) mTuples.get(y)).getFinalTCs().get(key)).doubleValue() * d * generateRarityList((MonsterTuple) mTuples.get(y),
-                                                                                                                                                                  item) * getQuality(item,
-                                                                                                                                                                                     ((MonsterTuple) mTuples
-                                                                                                                                                                                             .get(y)).getLevel(),
-                                                                                                                                                                                     MF,
-                                                                                                                                                                                     ((MonsterTuple) mTuples
-                                                                                                                                                                                             .get(y)),
-                                                                                                                                                                                     QRecursions,
-                                                                                                                                                                                     true)));
+                                              ((Double) ((MonsterTuple) mTuples.get(y)).getFinalTCs().get(key)).doubleValue() * d * generateRarityList((MonsterTuple) mTuples.get(y),
+                                                                                                                                                       item) * getQuality(item,
+                                                                                                                                                                          ((MonsterTuple) mTuples
+                                                                                                                                                                                  .get(y)).getLevel(),
+                                                                                                                                                                          MF,
+                                                                                                                                                                          ((MonsterTuple) mTuples
+                                                                                                                                                                                  .get(y)),
+                                                                                                                                                                          QRecursions,
+                                                                                                                                                                          true));
                         }
                     }
                 }
@@ -427,16 +427,16 @@ public class DCNew {
                                                                                         sevP);
                             if (((MonsterTuple) mTuples.get(y)).getFinalTCs().containsKey(key)) {
                                 monsterTCList.put(mTuples.get(y),
-                                                  new Double(((Double) ((MonsterTuple) mTuples.get(y)).getFinalTCs().get(key)).doubleValue() * d * generateRarityList((MonsterTuple) mTuples.get(y),
-                                                                                                                                                                      item) * getQuality(item,
-                                                                                                                                                                                         ((MonsterTuple) mTuples
-                                                                                                                                                                                                 .get(y))
-                                                                                                                                                                                                 .getLevel(),
-                                                                                                                                                                                         MF,
-                                                                                                                                                                                         ((MonsterTuple) mTuples
-                                                                                                                                                                                                 .get(y)),
-                                                                                                                                                                                         QRecursions,
-                                                                                                                                                                                         true)));
+                                                  ((Double) ((MonsterTuple) mTuples.get(y)).getFinalTCs().get(key)).doubleValue() * d * generateRarityList((MonsterTuple) mTuples.get(y),
+                                                                                                                                                           item) * getQuality(item,
+                                                                                                                                                                              ((MonsterTuple) mTuples
+                                                                                                                                                                                      .get(y))
+                                                                                                                                                                                      .getLevel(),
+                                                                                                                                                                              MF,
+                                                                                                                                                                              ((MonsterTuple) mTuples
+                                                                                                                                                                                      .get(y)),
+                                                                                                                                                                              QRecursions,
+                                                                                                                                                                              true));
                             }
                         } else {
                             ((MonsterTuple) mTuples.get(y)).lookupBASETCReturnATOMICTCS(nPlayers,
@@ -663,6 +663,7 @@ public class DCNew {
     private void sortItemArrays() {
         
         Collections.sort(regItemArray, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 Item lItem1 = (Item) pObj1;
                 Item lItem2 = (Item) pObj2;
@@ -673,6 +674,7 @@ public class DCNew {
         });
         
         Collections.sort(magItemArray, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 Item lItem1 = (Item) pObj1;
                 Item lItem2 = (Item) pObj2;
@@ -683,6 +685,7 @@ public class DCNew {
         });
         
         Collections.sort(rareItemArray, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 Item lItem1 = (Item) pObj1;
                 Item lItem2 = (Item) pObj2;
@@ -693,6 +696,7 @@ public class DCNew {
         });
         
         Collections.sort(setItemArray, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 Item lItem1 = (Item) pObj1;
                 Item lItem2 = (Item) pObj2;
@@ -703,6 +707,7 @@ public class DCNew {
         });
         
         Collections.sort(uniqItemArray, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 Item lItem1 = (Item) pObj1;
                 Item lItem2 = (Item) pObj2;
@@ -712,6 +717,7 @@ public class DCNew {
             }
         });
         Collections.sort(miscItemArray, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 Item lItem1 = (Item) pObj1;
                 Item lItem2 = (Item) pObj2;
@@ -826,6 +832,7 @@ public class DCNew {
     private void sortArrays() {
         
         Collections.sort(mainRegMonArray, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 Monster lItem1 = (Monster) pObj1;
                 Monster lItem2 = (Monster) pObj2;
@@ -836,6 +843,7 @@ public class DCNew {
         });
         
         Collections.sort(mainMinMonArray, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 Monster lItem1 = (Monster) pObj1;
                 Monster lItem2 = (Monster) pObj2;
@@ -846,6 +854,7 @@ public class DCNew {
         });
         
         Collections.sort(mainChampMonArray, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 Monster lItem1 = (Monster) pObj1;
                 Monster lItem2 = (Monster) pObj2;
@@ -856,6 +865,7 @@ public class DCNew {
         });
         
         Collections.sort(mainUniqArray, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 Monster lItem1 = (Monster) pObj1;
                 Monster lItem2 = (Monster) pObj2;
@@ -866,6 +876,7 @@ public class DCNew {
         });
         
         Collections.sort(mainSupUniqArray, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 Monster lItem1 = (Monster) pObj1;
                 Monster lItem2 = (Monster) pObj2;
@@ -876,6 +887,7 @@ public class DCNew {
         });
         
         Collections.sort(mainBossArray, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 Monster lItem1 = (Monster) pObj1;
                 Monster lItem2 = (Monster) pObj2;
@@ -1011,7 +1023,6 @@ public class DCNew {
         switch (recursions) {
             
             case -2:
-                return 1;
             
             case -1:
                 return 1;
@@ -1158,7 +1169,7 @@ public class DCNew {
                         ((MonsterTuple) mTuples.get(y)).lookupBASETCReturnTrueMiscTCS(nPlayers, nGroup, 0, item, this, MF, sevP);
                         
                         if (((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().containsKey(item.getItemCode())) {
-                            monsterTCList.put(mTuples.get(y), (Double) ((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().get(item.getItemCode()));
+                            monsterTCList.put(mTuples.get(y), ((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().get(item.getItemCode()));
                         }
                     }
                 }
@@ -1173,7 +1184,7 @@ public class DCNew {
                         ((MonsterTuple) mTuples.get(y)).lookupBASETCReturnTrueMiscTCS(nPlayers, nGroup, 0, item, this, MF, sevP);
                         
                         if (((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().containsKey(item.getItemCode())) {
-                            monsterTCList.put(mTuples.get(y), ((Double) ((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().get(item.getItemCode())));
+                            monsterTCList.put(mTuples.get(y), ((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().get(item.getItemCode()));
                         }
                     }
                 }
@@ -1188,7 +1199,7 @@ public class DCNew {
                         ((MonsterTuple) mTuples.get(y)).lookupBASETCReturnTrueMiscTCS(nPlayers, nGroup, 0, item, this, MF, sevP);
                         
                         if (((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().containsKey(item.getItemCode())) {
-                            monsterTCList.put(mTuples.get(y), ((Double) ((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().get(item.getItemCode())));
+                            monsterTCList.put(mTuples.get(y), ((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().get(item.getItemCode()));
                         }
                     }
                 }
@@ -1203,7 +1214,7 @@ public class DCNew {
                         ((MonsterTuple) mTuples.get(y)).lookupBASETCReturnTrueMiscTCS(nPlayers, nGroup, 0, item, this, MF, sevP);
                         
                         if (((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().containsKey(item.getItemCode())) {
-                            monsterTCList.put(mTuples.get(y), ((Double) ((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().get(item.getItemCode())));
+                            monsterTCList.put(mTuples.get(y), ((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().get(item.getItemCode()));
                         }
                     }
                 }
@@ -1221,7 +1232,7 @@ public class DCNew {
                         ((MonsterTuple) mTuples.get(y)).lookupBASETCReturnTrueMiscTCS(nPlayers, nGroup, 0, item, this, MF, sevP);
                         //					System.out.println(((MonsterTuple)mTuples.get(y)).getParent().getRealName());
                         if (((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().containsKey(item.getItemCode())) {
-                            monsterTCList.put(mTuples.get(y), ((Double) ((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().get(item.getItemCode())));
+                            monsterTCList.put(mTuples.get(y), ((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().get(item.getItemCode()));
                         }
                     }
                 }
@@ -1236,7 +1247,7 @@ public class DCNew {
                         ((MonsterTuple) mTuples.get(y)).lookupBASETCReturnTrueMiscTCS(nPlayers, nGroup, 0, item, this, MF, sevP);
                         
                         if (((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().containsKey(item.getItemCode())) {
-                            monsterTCList.put(mTuples.get(y), ((Double) ((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().get(item.getItemCode())));
+                            monsterTCList.put(mTuples.get(y), ((MonsterTuple) mTuples.get(y)).getFinalTrueMiscTCs().get(item.getItemCode()));
                         }
                     }
                 }
@@ -1265,16 +1276,16 @@ public class DCNew {
                         
                         if (((MonsterTuple) mTuples.get(y)).getFinalMiscTCs().containsKey(item.getItemCode())) {
                             monsterTCList.put(mTuples.get(y),
-                                              new Double(((Double) ((MonsterTuple) mTuples.get(y)).getFinalMiscTCs()
-                                                                                                  .get(item.getItemCode())).doubleValue() * generateRarityList((MonsterTuple) mTuples.get(y),
-                                                                                                                                                               item) * getQuality(item,
-                                                                                                                                                                                  ((MonsterTuple) mTuples
-                                                                                                                                                                                          .get(y)).getLevel(),
-                                                                                                                                                                                  MF,
-                                                                                                                                                                                  ((MonsterTuple) mTuples
-                                                                                                                                                                                          .get(y)),
-                                                                                                                                                                                  QRecursions,
-                                                                                                                                                                                  true)));
+                                              ((Double) ((MonsterTuple) mTuples.get(y)).getFinalMiscTCs()
+                                                                                       .get(item.getItemCode())).doubleValue() * generateRarityList((MonsterTuple) mTuples.get(y),
+                                                                                                                                                    item) * getQuality(item,
+                                                                                                                                                                       ((MonsterTuple) mTuples
+                                                                                                                                                                               .get(y)).getLevel(),
+                                                                                                                                                                       MF,
+                                                                                                                                                                       ((MonsterTuple) mTuples
+                                                                                                                                                                               .get(y)),
+                                                                                                                                                                       QRecursions,
+                                                                                                                                                                       true));
                         }
                     }
                 }
@@ -1297,18 +1308,18 @@ public class DCNew {
                         if (((MonsterTuple) mTuples.get(y)).getFinalMiscTCs().containsKey(item.getItemCode())) {
                             if (((MonsterTuple) mTuples.get(y)).getInitTC().indexOf("Council") == -1) {
                                 monsterTCList.put(mTuples.get(y),
-                                                  new Double(((Double) ((MonsterTuple) mTuples.get(y)).getFinalMiscTCs()
-                                                                                                      .get(item.getItemCode())).doubleValue() * generateRarityList((MonsterTuple) mTuples.get(y),
-                                                                                                                                                                   item) * getQuality(item,
-                                                                                                                                                                                      ((MonsterTuple) mTuples
-                                                                                                                                                                                              .get(y)).getLevel(),
-                                                                                                                                                                                      MF,
-                                                                                                                                                                                      ((MonsterTuple) mTuples
-                                                                                                                                                                                              .get(y)),
-                                                                                                                                                                                      QRecursions,
-                                                                                                                                                                                      true)));
+                                                  ((Double) ((MonsterTuple) mTuples.get(y)).getFinalMiscTCs()
+                                                                                           .get(item.getItemCode())).doubleValue() * generateRarityList((MonsterTuple) mTuples.get(y),
+                                                                                                                                                        item) * getQuality(item,
+                                                                                                                                                                           ((MonsterTuple) mTuples
+                                                                                                                                                                                   .get(y)).getLevel(),
+                                                                                                                                                                           MF,
+                                                                                                                                                                           ((MonsterTuple) mTuples
+                                                                                                                                                                                   .get(y)),
+                                                                                                                                                                           QRecursions,
+                                                                                                                                                                           true));
                             } else {
-                                monsterTCList.put(mTuples.get(y), new Double(((Double) ((MonsterTuple) mTuples.get(y)).getFinalMiscTCs().get(item.getItemCode())).doubleValue()));
+                                monsterTCList.put(mTuples.get(y), ((Double) ((MonsterTuple) mTuples.get(y)).getFinalMiscTCs().get(item.getItemCode())).doubleValue());
                                 
                             }
                         }
@@ -1327,16 +1338,16 @@ public class DCNew {
                         if (((MonsterTuple) mTuples.get(y)).getFinalMiscTCs().containsKey(item.getItemCode())) {
                             //						if(((MonsterTuple)mTuples.get(y)).getFinalMiscTCs().containsKey("rin") || ((MonsterTuple)mTuples.get(y)).getFinalMiscTCs().containsKey("amu")|| ((MonsterTuple)mTuples.get(y)).getFinalMiscTCs().containsKey("jew") ){
                             monsterTCList.put(mTuples.get(y),
-                                              new Double(((Double) ((MonsterTuple) mTuples.get(y)).getFinalMiscTCs()
-                                                                                                  .get(item.getItemCode())).doubleValue() * generateRarityList((MonsterTuple) mTuples.get(y),
-                                                                                                                                                               item) * getQuality(item,
-                                                                                                                                                                                  ((MonsterTuple) mTuples
-                                                                                                                                                                                          .get(y)).getLevel(),
-                                                                                                                                                                                  MF,
-                                                                                                                                                                                  ((MonsterTuple) mTuples
-                                                                                                                                                                                          .get(y)),
-                                                                                                                                                                                  QRecursions,
-                                                                                                                                                                                  true)));
+                                              ((Double) ((MonsterTuple) mTuples.get(y)).getFinalMiscTCs()
+                                                                                       .get(item.getItemCode())).doubleValue() * generateRarityList((MonsterTuple) mTuples.get(y),
+                                                                                                                                                    item) * getQuality(item,
+                                                                                                                                                                       ((MonsterTuple) mTuples
+                                                                                                                                                                               .get(y)).getLevel(),
+                                                                                                                                                                       MF,
+                                                                                                                                                                       ((MonsterTuple) mTuples
+                                                                                                                                                                               .get(y)),
+                                                                                                                                                                       QRecursions,
+                                                                                                                                                                       true));
                             //						}
                         }
                     }
@@ -1353,16 +1364,16 @@ public class DCNew {
                         if (((MonsterTuple) mTuples.get(y)).getFinalMiscTCs().containsKey(item.getItemCode())) {
                             //						if(((MonsterTuple)mTuples.get(y)).getFinalMiscTCs().containsKey("rin") || ((MonsterTuple)mTuples.get(y)).getFinalMiscTCs().containsKey("amu")|| ((MonsterTuple)mTuples.get(y)).getFinalMiscTCs().containsKey("jew") ){
                             monsterTCList.put(mTuples.get(y),
-                                              new Double(((Double) ((MonsterTuple) mTuples.get(y)).getFinalMiscTCs()
-                                                                                                  .get(item.getItemCode())).doubleValue() * generateRarityList((MonsterTuple) mTuples.get(y),
-                                                                                                                                                               item) * getQuality(item,
-                                                                                                                                                                                  ((MonsterTuple) mTuples
-                                                                                                                                                                                          .get(y)).getLevel(),
-                                                                                                                                                                                  MF,
-                                                                                                                                                                                  ((MonsterTuple) mTuples
-                                                                                                                                                                                          .get(y)),
-                                                                                                                                                                                  QRecursions,
-                                                                                                                                                                                  true)));
+                                              ((Double) ((MonsterTuple) mTuples.get(y)).getFinalMiscTCs()
+                                                                                       .get(item.getItemCode())).doubleValue() * generateRarityList((MonsterTuple) mTuples.get(y),
+                                                                                                                                                    item) * getQuality(item,
+                                                                                                                                                                       ((MonsterTuple) mTuples
+                                                                                                                                                                               .get(y)).getLevel(),
+                                                                                                                                                                       MF,
+                                                                                                                                                                       ((MonsterTuple) mTuples
+                                                                                                                                                                               .get(y)),
+                                                                                                                                                                       QRecursions,
+                                                                                                                                                                       true));
                             //						}
                         }
                     }
@@ -1384,7 +1395,7 @@ public class DCNew {
                         
                         //					if(((MonsterTuple)mTuples.get(y)).getFinalMiscTCs().containsKey("rin") || ((MonsterTuple)mTuples.get(y)).getFinalMiscTCs().containsKey("amu")|| ((MonsterTuple)mTuples.get(y)).getFinalMiscTCs().containsKey("jew") ){
                         if (((MonsterTuple) mTuples.get(y)).getFinalMiscTCs().containsKey(item.getItemCode())) {
-                            monsterTCList.put(mTuples.get(y), new Double(((Double) ((MonsterTuple) mTuples.get(y)).getFinalMiscTCs().get(item.getItemCode())).doubleValue()));
+                            monsterTCList.put(mTuples.get(y), ((Double) ((MonsterTuple) mTuples.get(y)).getFinalMiscTCs().get(item.getItemCode())).doubleValue());
                             //						}
                         }
                     }
@@ -1400,7 +1411,7 @@ public class DCNew {
                         
                         ((MonsterTuple) mTuples.get(y)).lookupBASETCReturnMiscTCS(nPlayers, nGroup, generateRarityList((MonsterTuple) mTuples.get(y), item), item, this, MF, QRecursions, sevP);
                         if (((MonsterTuple) mTuples.get(y)).getFinalMiscTCs().containsKey(item.getItemCode())) {
-                            monsterTCList.put(mTuples.get(y), new Double(((Double) ((MonsterTuple) mTuples.get(y)).getFinalMiscTCs().get(item.getItemCode())).doubleValue()));
+                            monsterTCList.put(mTuples.get(y), ((Double) ((MonsterTuple) mTuples.get(y)).getFinalMiscTCs().get(item.getItemCode())).doubleValue());
                         }
                     }
                 }

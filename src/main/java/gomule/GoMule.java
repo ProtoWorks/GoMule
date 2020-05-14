@@ -40,7 +40,7 @@ public class GoMule {
     /**
      * Main Class, runs GoMule
      *
-     * @param args Can set L+F
+     * @param pArgs Can set L+F
      */
     public static void main(String[] pArgs) {
         try {
@@ -84,6 +84,7 @@ public class GoMule {
         }
         // Randall: generally adviced for swing, doing anything with GUI inside the swing-thread
         EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 D2FileManager.getInstance();
             }

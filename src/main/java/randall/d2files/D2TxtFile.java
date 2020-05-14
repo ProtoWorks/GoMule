@@ -75,7 +75,7 @@ public final class D2TxtFile {
     private String[][] iData;
     
     public static void constructTxtFiles(String pMod) {
-    
+        
         if (read) { return; }
         sMod = pMod;
         MISC = new D2TxtFile("Misc");
@@ -326,7 +326,7 @@ public final class D2TxtFile {
             if (pList.size() == lRW.size()) {
                 boolean lIsRuneWord = true;
                 for (int j = 0; j < pList.size() && lIsRuneWord; j++) {
-                    if (!((String) lRW.get(j)).equals((String) pList.get(j))) {
+                    if (!lRW.get(j).equals(pList.get(j))) {
                         lIsRuneWord = false;
                     }
                 }

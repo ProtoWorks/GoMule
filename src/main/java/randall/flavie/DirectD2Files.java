@@ -177,9 +177,9 @@ public class DirectD2Files {
                     if (pItem.isRune()) {
                         Long lRuneCount = (Long) iFlavie.iRuneCount.get(pItem.getName());
                         if (lRuneCount == null) {
-                            lRuneCount = new Long(1);
+                            lRuneCount = 1L;
                         } else {
-                            lRuneCount = new Long(lRuneCount.longValue() + 1);
+                            lRuneCount = lRuneCount.longValue() + 1;
                         }
                         iFlavie.iRuneCount.put(pItem.getName(), lRuneCount);
                     }

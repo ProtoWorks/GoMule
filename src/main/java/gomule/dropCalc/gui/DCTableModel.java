@@ -23,10 +23,9 @@ package gomule.dropCalc.gui;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -63,11 +62,13 @@ public class DCTableModel extends AbstractTableModel {
         //		this.setValueAt(iItems.get(0), 0, 0);
     }
     
+    @Override
     public Class getColumnClass(int c) {
         
         return String.class;
     }
     
+    @Override
     public int getColumnCount() {
         return colCount;
     }
@@ -153,6 +154,7 @@ public class DCTableModel extends AbstractTableModel {
         sortCol(iSelected);
     }
     
+    @Override
     public String getColumnName(int arg0) {
         switch (type) {
             case 0:
@@ -186,6 +188,7 @@ public class DCTableModel extends AbstractTableModel {
         //		return columnNames[arg0];
     }
     
+    @Override
     public int getRowCount() {
         
         if (tmRows == null) {
@@ -195,6 +198,7 @@ public class DCTableModel extends AbstractTableModel {
         return tmRows.size();
     }
     
+    @Override
     public Object getValueAt(int row, int col) {
         switch (col) {
             case 0:
@@ -206,21 +210,24 @@ public class DCTableModel extends AbstractTableModel {
             case 3:
                 return ((OutputRow) tmRows.get(row)).getStrC3(dec);
             default:
-                return new String("");
+                return "";
         }
         
         //		return new Integer(type);
         
     }
     
+    @Override
     public boolean isCellEditable(int arg0, int arg1) {
         return false;
     }
     
+    @Override
     public void addTableModelListener(TableModelListener pListener) {
         iTableModelListeners.add(pListener);
     }
     
+    @Override
     public void removeTableModelListener(TableModelListener pListener) {
         iTableModelListeners.remove(pListener);
     }
@@ -229,6 +236,7 @@ public class DCTableModel extends AbstractTableModel {
         fireTableChanged(new TableModelEvent(this));
     }
     
+    @Override
     public void fireTableChanged(TableModelEvent pEvent) {
         for (int i = 0; i < iTableModelListeners.size(); i++) {
             ((TableModelListener) iTableModelListeners.get(i))
@@ -236,6 +244,7 @@ public class DCTableModel extends AbstractTableModel {
         }
     }
     
+    @Override
     public void setValueAt(Object value, int row, int col) {
     
     }
@@ -252,6 +261,7 @@ public class DCTableModel extends AbstractTableModel {
         
         iSelected = headerCol;
         Collections.sort(tmRows, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 OutputRow lItem1 = (OutputRow) pObj1;
                 OutputRow lItem2 = (OutputRow) pObj2;

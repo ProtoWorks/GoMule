@@ -20,7 +20,6 @@
  ******************************************************************************/
 package gomule.dropCalc.items;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import gomule.dropCalc.DCNew;
@@ -42,6 +41,7 @@ public class WhiteItem extends Item {
         
     }
     
+    @Override
     public String getRealName() {
         
         return D2TblFile.getString(ItemCode);
@@ -65,6 +65,7 @@ public class WhiteItem extends Item {
         
     }
     
+    @Override
     public Map<Object, Object> getFinalProbSum(DCNew DC, int monSelection, int MF, int nPlayers, int nGroup, int QRecursions, boolean sevP) {
         
         switch (ItemClass) {

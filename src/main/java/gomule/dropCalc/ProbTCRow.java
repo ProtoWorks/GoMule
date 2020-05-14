@@ -41,8 +41,8 @@ public class ProbTCRow {
         this.TC = new ArrayList<>();
         
         for (int x = 0; x < ptcR.getProb().size(); x++) {
-            Prob.add(new Double(((Double) ptcR.getProb().get(x)).doubleValue()));
-            TC.add(new String(((String) ptcR.getTC().get(x))));
+            Prob.add(((Double) ptcR.getProb().get(x)).doubleValue());
+            TC.add(((String) ptcR.getTC().get(x)));
         }
         this.totProb = ptcR.totProb;
         
@@ -76,7 +76,7 @@ public class ProbTCRow {
     }
     
     public void setProb(double d, int x) {
-        this.Prob.set(x, new Double(d));
+        this.Prob.set(x, d);
         
     }
     

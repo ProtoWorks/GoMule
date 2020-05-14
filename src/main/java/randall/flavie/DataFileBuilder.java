@@ -88,7 +88,7 @@ public class DataFileBuilder {
                 if (lItem.size() == 4) {
                     for (int i = 0; i < lTotalObjectList.size(); i++) {
                         TotalObject lParent = (TotalObject) lTotalObjectList.get(i);
-                        if (((String) lItem.get(3)).equals(lParent.getShort())) {
+                        if (lItem.get(3).equals(lParent.getShort())) {
                             lParent.addChild(lTotal);
                         }
                     }
@@ -112,7 +112,7 @@ public class DataFileBuilder {
                     lCat.setGroup((String) lItem.get(3));
                     for (int i = 0; i < lTotalObjectList.size(); i++) {
                         TotalObject lParent = (TotalObject) lTotalObjectList.get(i);
-                        if (((String) lItem.get(3)).equals(lParent.getShort())) {
+                        if (lItem.get(3).equals(lParent.getShort())) {
                             lParent.addChild(lCat);
                         }
                     }

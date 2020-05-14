@@ -20,7 +20,6 @@
  ******************************************************************************/
 package gomule.dropCalc.items;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import gomule.dropCalc.DCNew;
@@ -40,6 +39,7 @@ public class SetItem extends Item {
         iNUS = 2;
     }
     
+    @Override
     public Map<Object, Object> getFinalProbSum(DCNew DC, int monSelection, int MF, int nPlayers, int nGroup, int QRecursions, boolean sevP) {
         
         switch (ItemClass) {

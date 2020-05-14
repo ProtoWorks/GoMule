@@ -661,7 +661,7 @@ public class D2Item implements Comparable, D2ItemInterface {
                 iSet = true;
                 set_id = (short) pFile.read(12);
                 if (gfx_num == -1) {
-                    String s = (String) iItemType.get("setinvfile");
+                    String s = iItemType.get("setinvfile");
                     if (s.compareTo("") != 0) { image_file = s; }
                 }
                 
@@ -968,7 +968,7 @@ public class D2Item implements Comparable, D2ItemInterface {
         String[] statsToRead = {"stat1", "stat2"};
         
         for (int x = 0; x < statsToRead.length; x = x + 1) {
-    
+            
             if ((D2TxtFile.MISC.searchColumns("code", item_type)).get(
                     statsToRead[x]).equals("")) { continue; }
             iProps.add(new D2Prop(Integer.parseInt((D2TxtFile.ITEM_STAT_COST.searchColumns("Stat", (D2TxtFile.MISC
@@ -990,7 +990,7 @@ public class D2Item implements Comparable, D2ItemInterface {
         for (int x = 0; x < gemHeaders.length; x++) {
             
             for (int y = 0; y < gemHeaders[x].length; y++) {
-    
+                
                 if (D2TxtFile.GEMS.searchColumns("code", item_type).get(
                         gemHeaders[x][y] + "Code").equals("")) { continue; }
                 iProps.addAll(D2TxtFile.propToStat(D2TxtFile.GEMS
@@ -1262,8 +1262,8 @@ public class D2Item implements Comparable, D2ItemInterface {
     private StringBuffer generatePropStringNoHtmlTags(boolean extended) {
         iProps.tidy();
         StringBuffer dispStr = new StringBuffer("<center>");
-        String base = (Integer.toHexString(Color.white.getRGB())).substring(2, Integer.toHexString(Color.white.getRGB()).length());
-        String rgb = (Integer.toHexString(getItemColor().getRGB())).substring(2, Integer.toHexString(getItemColor().getRGB()).length());
+        String base = (Integer.toHexString(Color.white.getRGB())).substring(2);
+        String rgb = (Integer.toHexString(getItemColor().getRGB())).substring(2);
         if (personalization == null) {
             dispStr.append("<font color=\"#" + base + "\">" + "<font color=\"#" + rgb + "\">" + iItemName + "</font>" + "<br>&#10;");
         } else {
@@ -1273,7 +1273,7 @@ public class D2Item implements Comparable, D2ItemInterface {
         if (isRuneWord()) {
             dispStr.append("<font color=\"#" + rgb + "\">");
             for (int x = 0; x < iSocketedItems.size(); x++) {
-                dispStr.append((((D2Item) iSocketedItems.get(x)).getName().substring(0, ((D2Item) iSocketedItems.get(x)).getName().length() - 5)));
+                dispStr.append((((D2Item) iSocketedItems.get(x)).getName()), 0, ((D2Item) iSocketedItems.get(x)).getName().length() - 5);
             }
             dispStr.append("</font><br>&#10;");
         }
@@ -1325,7 +1325,7 @@ public class D2Item implements Comparable, D2ItemInterface {
                 if (iSocketedItems != null) {
                     dispStr.append("<br>&#10;");
                     for (int x = 0; x < iSocketedItems.size(); x = x + 1) {
-                        if (((D2Item) iSocketedItems.get(x)) != null) {
+                        if (iSocketedItems.get(x) != null) {
                             dispStr.append(((D2Item) iSocketedItems.get(x)).generatePropStringNoHtmlTags(false));
                             if (x != iSocketedItems.size() - 1) {
                                 dispStr.append("<br>&#10;");
@@ -1341,7 +1341,7 @@ public class D2Item implements Comparable, D2ItemInterface {
     
     private StringBuffer getItemPropertyString() {
         
-        StringBuffer dispStr = new StringBuffer("");
+        StringBuffer dispStr = new StringBuffer();
         
         if (isJewel()) {
             dispStr.append(iProps.generateDisplay(1, iCharLvl));
@@ -1485,7 +1485,7 @@ public class D2Item implements Comparable, D2ItemInterface {
     public void set_row(short r) {
         iItem.set_byte_pos(7);
         iItem.skipBits(13);
-        iItem.write((long) r, 4);
+        iItem.write(r, 4);
         row = r;
     }
     
@@ -1494,28 +1494,28 @@ public class D2Item implements Comparable, D2ItemInterface {
     public void set_col(short c) {
         iItem.set_byte_pos(7);
         iItem.skipBits(9);
-        iItem.write((long) c, 4);
+        iItem.write(c, 4);
         col = c;
     }
     
     public void set_location(short l) {
         iItem.set_byte_pos(7);
         iItem.skipBits(2);
-        iItem.write((long) l, 3);
+        iItem.write(l, 3);
         location = l;
     }
     
     public void set_body_position(short bp) {
         iItem.set_byte_pos(7);
         iItem.skipBits(5);
-        iItem.write((long) bp, 4);
+        iItem.write(bp, 4);
         body_position = bp;
     }
     
     public void set_panel(short p) {
         iItem.set_byte_pos(7);
         iItem.skipBits(17);
-        iItem.write((long) p, 3);
+        iItem.write(p, 3);
         panel = p;
     }
     
@@ -1589,10 +1589,12 @@ public class D2Item implements Comparable, D2ItemInterface {
         return iItemName;
     }
     
+    @Override
     public String getName() {
         return iItemName;
     }
     
+    @Override
     public String getFingerprint() {
         return iFP;
     }
@@ -1701,6 +1703,7 @@ public class D2Item implements Comparable, D2ItemInterface {
         return null;
     }
     
+    @Override
     public boolean isEthereal() {
         return iEthereal;
     }
@@ -1735,6 +1738,7 @@ public class D2Item implements Comparable, D2ItemInterface {
         return false;
     }
     
+    @Override
     public int compareTo(Object pObject) {
         if (pObject instanceof D2Item) {
             String lItemName = ((D2Item) pObject).iItemName;
@@ -1754,7 +1758,7 @@ public class D2Item implements Comparable, D2ItemInterface {
     }
     
     public int getiDef() {
-        return (int) iDef;
+        return iDef;
     }
     
     public boolean isCharacterItem() {
@@ -1791,7 +1795,7 @@ public class D2Item implements Comparable, D2ItemInterface {
     public boolean isEquipped(int wepSlot) {
         
         if (get_location() == 1) {
-    
+            
             if (!isTypeWeapon() && !isShield()) { return true; }
             if (wepSlot == 0) {
                 if (get_body_position() == 4 || get_body_position() == 5) { return true; }
@@ -2517,7 +2521,7 @@ public class D2Item implements Comparable, D2ItemInterface {
             Pattern propertyLinePattern = Pattern.compile("(\\n.*" + prop.toLowerCase() + ".*\\n)", Pattern.UNIX_LINES);
             Matcher propertyPatternMatcher = propertyLinePattern.matcher("\n" + dumpStr.toLowerCase() + "\n");
             while (propertyPatternMatcher.find()) {
-                Pattern pat = Pattern.compile("[^\\(?](\\d+)");
+                Pattern pat = Pattern.compile("[^(?](\\d+)");
                 Matcher mat = pat.matcher(propertyPatternMatcher.group());
                 while (mat.find()) {
                     if (mat.groupCount() > 0) {
@@ -2540,7 +2544,7 @@ public class D2Item implements Comparable, D2ItemInterface {
     }
     
     public int getBlock() {
-        return (int) this.cBlock;
+        return this.cBlock;
     }
     
     public boolean isABelt() {
@@ -2559,10 +2563,12 @@ public class D2Item implements Comparable, D2ItemInterface {
         return iItemQuality;
     }
     
+    @Override
     public String getFileName() {
         return iFileName;
     }
     
+    @Override
     public boolean isCharacter() {
         return iIsChar;
     }

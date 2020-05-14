@@ -20,7 +20,6 @@
  ******************************************************************************/
 package gomule.dropCalc.items;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import gomule.dropCalc.DCNew;
@@ -44,6 +43,7 @@ public class MiscItem extends Item {
         
     }
     
+    @Override
     public Map<Object, Object> getFinalProbSum(DCNew DC, int monSelection, int MF, int nPlayers, int nGroup, int QRecursions, boolean sevP) {
         
         if (ItemCode.startsWith("cm") || ItemCode.equals("jew") || ItemCode.equals("amu") || ItemCode.equals("rin")) {
@@ -57,10 +57,12 @@ public class MiscItem extends Item {
         
     }
     
+    @Override
     public int getqLvl() {
         return 0;
     }
     
+    @Override
     public String getRealName() {
         
         return D2TblFile.getString(ItemCode);

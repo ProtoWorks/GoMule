@@ -35,10 +35,10 @@ public class RandallPanel extends JPanel {
      *
      */
     private static final long serialVersionUID = -6556940562813366360L;
-    public static final Integer NONE = new Integer(100);
-    public static final Integer HORIZONTAL = new Integer(101);
-    public static final Integer VERTICAL = new Integer(102);
-    public static final Integer BOTH = new Integer(103);
+    public static final Integer NONE = 100;
+    public static final Integer HORIZONTAL = 101;
+    public static final Integer VERTICAL = 102;
+    public static final Integer BOTH = 103;
     
     public static final int ANCHOR_NORTHWEST = GridBagConstraints.NORTHWEST;
     public static final int ANCHOR_NORTHEAST = GridBagConstraints.NORTHEAST;

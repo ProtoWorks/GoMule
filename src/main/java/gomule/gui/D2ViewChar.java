@@ -152,6 +152,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         super(pFileName, false, true, false, true);
         
         addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
             public void internalFrameClosing(InternalFrameEvent e) {
                 iFileManager.saveAll();
                 closeView();
@@ -412,6 +413,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         
         iGoldTransferBtns[0] = new JButton("to char");
         iGoldTransferBtns[0].addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 transferToChar(10000);
             }
@@ -420,6 +422,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         lField10000.setEditable(false);
         iGoldTransferBtns[1] = new JButton("from char");
         iGoldTransferBtns[1].addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 transferFromChar(10000);
             }
@@ -427,6 +430,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         
         iGoldTransferBtns[2] = new JButton("to char");
         iGoldTransferBtns[2].addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 transferToChar(100000);
             }
@@ -435,6 +439,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         lField100000.setEditable(false);
         iGoldTransferBtns[3] = new JButton("from char");
         iGoldTransferBtns[3].addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 transferFromChar(100000);
             }
@@ -442,6 +447,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         
         iGoldTransferBtns[4] = new JButton("to char");
         iGoldTransferBtns[4].addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 transferToChar(1000000);
             }
@@ -450,6 +456,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         lField1000000.setEditable(false);
         iGoldTransferBtns[5] = new JButton("from char");
         iGoldTransferBtns[5].addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 transferFromChar(1000000);
             }
@@ -457,6 +464,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         
         iGoldTransferBtns[6] = new JButton("to char");
         iGoldTransferBtns[6].addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 transferToChar(getTransferFree());
             }
@@ -464,6 +472,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         iTransferFree = new JTextField("10000");
         iGoldTransferBtns[7] = new JButton("from char");
         iGoldTransferBtns[7].addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 transferFromChar(getTransferFree());
             }
@@ -514,12 +523,14 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         RandallPanel lMessagePanel = new RandallPanel();
         JButton lConnect = new JButton("Connect");
         lConnect.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 connect();
             }
         });
         JButton lDisconnect = new JButton("Disconnect");
         lDisconnect.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 disconnect(null);
             }
@@ -542,6 +553,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         rightClickItem.add("Cancel");
         
         item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 
                 if (event.getActionCommand().equals("Delete?")) {
@@ -570,6 +582,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         });
         
         item2.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 
                 if (event.getActionCommand().equals("View Item")) {
@@ -605,6 +618,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         });
         
         item3.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 
                 if (event.getActionCommand().equals("Extended Item Info")) {
@@ -731,6 +745,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         
     }
     
+    @Override
     public void connect() {
         if (iCharacter != null) {
             return;
@@ -761,6 +776,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         }
     }
     
+    @Override
     public void disconnect(Exception pEx) {
         if (iCharacter != null) {
             iFileManager.removeItemList(iFileName, this);
@@ -875,31 +891,38 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         }
     }
     
+    @Override
     public boolean isHC() {
         return iCharacter.isHC();
     }
     
+    @Override
     public boolean isSC() {
         return iCharacter.isSC();
     }
     
+    @Override
     public String getFileName() {
         return iFileName;
     }
     
+    @Override
     public boolean isModified() {
         return iCharacter.isModified();
     }
     
+    @Override
     public D2ItemList getItemLists() {
         return iCharacter;
     }
     
+    @Override
     public void closeView() {
         disconnect(null);
         iFileManager.removeFromOpenWindows(this);
     }
     
+    @Override
     public void itemListChanged() {
         
         String lTitle;
@@ -943,6 +966,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
     
     class MyMouse extends MouseAdapter {
         
+        @Override
         public void mouseClicked(MouseEvent e) {
             
             if (lTabs.getSelectedIndex() == 6) {
@@ -1170,6 +1194,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             
             addMouseListener(new MouseAdapter() {
                 
+                @Override
                 public void mouseReleased(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -1326,15 +1351,18 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     }
                 }
                 
+                @Override
                 public void mouseEntered(MouseEvent e) {
                     setCursorNormal();
                 }
                 
+                @Override
                 public void mouseExited(MouseEvent e) {
                     setCursorNormal();
                 }
             });
             addMouseMotionListener(new MouseMotionAdapter() {
+                @Override
                 public void mouseMoved(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -1492,8 +1520,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                                     h = temp_item.get_height();
                                     wbias = 0;
                                     hbias = 0;
-									if (w == 1) { wbias += GRID_SIZE / 2; }
-									if (h == 3) { hbias += GRID_SIZE / 2; } else if (h == 2) { hbias += GRID_SIZE; }
+                                    if (w == 1) { wbias += GRID_SIZE / 2; }
+                                    if (h == 3) { hbias += GRID_SIZE / 2; } else if (h == 2) { hbias += GRID_SIZE; }
                                     lGraphics.drawImage(lImage, R_ARM_X + wbias, R_ARM_Y + hbias, D2CharPainterPanel.this);
                                 }
                                 break;
@@ -1505,8 +1533,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                                     h = temp_item.get_height();
                                     wbias = 0;
                                     hbias = 0;
-									if (w == 1) { wbias += GRID_SIZE / 2; }
-									if (h == 3) { hbias += GRID_SIZE / 2; } else if (h == 2) { hbias += GRID_SIZE; }
+                                    if (w == 1) { wbias += GRID_SIZE / 2; }
+                                    if (h == 3) { hbias += GRID_SIZE / 2; } else if (h == 2) { hbias += GRID_SIZE; }
                                     lGraphics.drawImage(lImage, L_ARM_X + wbias, L_ARM_Y + hbias, D2CharPainterPanel.this);
                                 }
                                 break;
@@ -1537,6 +1565,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             repaint();
         }
         
+        @Override
         public void paint(Graphics pGraphics) {
             super.paint(pGraphics);
             Graphics2D lGraphics = (Graphics2D) pGraphics;
@@ -1559,6 +1588,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             setPreferredSize(lSize);
             
             addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseReleased(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -1642,15 +1672,18 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     }
                 }
                 
+                @Override
                 public void mouseEntered(MouseEvent e) {
                     setCursorNormal();
                 }
                 
+                @Override
                 public void mouseExited(MouseEvent e) {
                     setCursorNormal();
                 }
             });
             addMouseMotionListener(new MouseMotionAdapter() {
+                @Override
                 public void mouseMoved(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -1751,8 +1784,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                                     h = temp_item.get_height();
                                     wbias = 0;
                                     hbias = 0;
-									if (w == 1) { wbias += GRID_SIZE / 2; }
-									if (h == 3) { hbias += GRID_SIZE / 2; } else if (h == 2) { hbias += GRID_SIZE; }
+                                    if (w == 1) { wbias += GRID_SIZE / 2; }
+                                    if (h == 3) { hbias += GRID_SIZE / 2; } else if (h == 2) { hbias += GRID_SIZE; }
                                     lGraphics.drawImage(lImage, R_ARM_X + wbias, R_ARM_Y + hbias, D2MercPainterPanel.this);
                                 }
                                 break;
@@ -1763,8 +1796,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                                     h = temp_item.get_height();
                                     wbias = 0;
                                     hbias = 0;
-									if (w == 1) { wbias += GRID_SIZE / 2; }
-									if (h == 3) { hbias += GRID_SIZE / 2; } else if (h == 2) { hbias += GRID_SIZE; }
+                                    if (w == 1) { wbias += GRID_SIZE / 2; }
+                                    if (h == 3) { hbias += GRID_SIZE / 2; } else if (h == 2) { hbias += GRID_SIZE; }
                                     lGraphics.drawImage(lImage, L_ARM_X + wbias, L_ARM_Y + hbias, D2MercPainterPanel.this);
                                 }
                                 break;
@@ -1785,6 +1818,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             repaint();
         }
         
+        @Override
         public void paint(Graphics pGraphics) {
             super.paint(pGraphics);
             Graphics2D lGraphics = (Graphics2D) pGraphics;
@@ -1807,6 +1841,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             setPreferredSize(lSize);
             
             addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseReleased(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -1829,15 +1864,18 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     }
                 }
                 
+                @Override
                 public void mouseEntered(MouseEvent e) {
                     setCursorNormal();
                 }
                 
+                @Override
                 public void mouseExited(MouseEvent e) {
                     setCursorNormal();
                 }
             });
             addMouseMotionListener(new MouseMotionAdapter() {
+                @Override
                 public void mouseMoved(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -1957,8 +1995,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                                     h = temp_item.get_height();
                                     wbias = 0;
                                     hbias = 0;
-									if (w == 1) { wbias += GRID_SIZE / 2; }
-									if (h == 3) { hbias += GRID_SIZE / 2; } else if (h == 2) { hbias += GRID_SIZE; }
+                                    if (w == 1) { wbias += GRID_SIZE / 2; }
+                                    if (h == 3) { hbias += GRID_SIZE / 2; } else if (h == 2) { hbias += GRID_SIZE; }
                                     lGraphics.drawImage(lImage, R_ARM_X + wbias, R_ARM_Y + hbias, D2DeathPainterPanel.this);
                                 }
                                 break;
@@ -1970,8 +2008,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                                     h = temp_item.get_height();
                                     wbias = 0;
                                     hbias = 0;
-									if (w == 1) { wbias += GRID_SIZE / 2; }
-									if (h == 3) { hbias += GRID_SIZE / 2; } else if (h == 2) { hbias += GRID_SIZE; }
+                                    if (w == 1) { wbias += GRID_SIZE / 2; }
+                                    if (h == 3) { hbias += GRID_SIZE / 2; } else if (h == 2) { hbias += GRID_SIZE; }
                                     lGraphics.drawImage(lImage, L_ARM_X + wbias, L_ARM_Y + hbias, D2DeathPainterPanel.this);
                                 }
                                 break;
@@ -2002,6 +2040,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             repaint();
         }
         
+        @Override
         public void paint(Graphics pGraphics) {
             super.paint(pGraphics);
             Graphics2D lGraphics = (Graphics2D) pGraphics;
@@ -2026,6 +2065,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             //			this.build();
             
             addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseReleased(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -2056,10 +2096,12 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     build();
                 }
                 
+                @Override
                 public void mouseEntered(MouseEvent e) {
                     setCursorNormal();
                 }
                 
+                @Override
                 public void mouseExited(MouseEvent e) {
                     setCursorNormal();
                 }
@@ -2076,7 +2118,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         
         public void build() {
             
-            switch ((int) iCharacter.getCharCode()) {
+            switch (iCharacter.getCharCode()) {
                 
                 case 0:
                     switch (iSkillSlot) {
@@ -2315,6 +2357,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             
         }
         
+        @Override
         public void paint(Graphics pGraphics) {
             super.paint(pGraphics);
             Graphics2D lGraphics = (Graphics2D) pGraphics;
@@ -2356,6 +2399,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             
             addMouseListener(new MouseAdapter() {
                 
+                @Override
                 public void mouseReleased(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -2384,10 +2428,12 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     build();
                 }
                 
+                @Override
                 public void mouseEntered(MouseEvent e) {
                     setCursorNormal();
                 }
                 
+                @Override
                 public void mouseExited(MouseEvent e) {
                     setCursorNormal();
                 }
@@ -2418,7 +2464,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             
             for (int f = 0; f < 3; f = f + 1) {
                 for (int y = 0; y < iCharacter.getQuests()[f][questSlot - 1].length; y = y + 1) {
-					if (iCharacter.getQuests()[f][questSlot - 1][y]) { lGraphics.drawImage(tick, questLoc[f][y].x, questLoc[f][y].y, D2QuestPainterPanel.this); }
+                    if (iCharacter.getQuests()[f][questSlot - 1][y]) { lGraphics.drawImage(tick, questLoc[f][y].x, questLoc[f][y].y, D2QuestPainterPanel.this); }
                 }
                 if (iCharacter.getCowKingDead(f) && (questSlot) == 1) {
                     lGraphics.drawImage(tick, cowKingX + (24 * f), cowkingY, D2QuestPainterPanel.this);
@@ -2426,6 +2472,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             }
         }
         
+        @Override
         public void paint(Graphics pGraphics) {
             super.paint(pGraphics);
             Graphics2D lGraphics = (Graphics2D) pGraphics;
@@ -2473,6 +2520,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             
             addMouseListener(new MouseAdapter() {
                 
+                @Override
                 public void mouseReleased(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -2501,10 +2549,12 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     build();
                 }
                 
+                @Override
                 public void mouseEntered(MouseEvent e) {
                     setCursorNormal();
                 }
                 
+                @Override
                 public void mouseExited(MouseEvent e) {
                     setCursorNormal();
                 }
@@ -2644,6 +2694,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             
         }
         
+        @Override
         public void paint(Graphics pGraphics) {
             super.paint(pGraphics);
             Graphics2D lGraphics = (Graphics2D) pGraphics;
@@ -2667,6 +2718,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             setPreferredSize(lSize);
             
             addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseReleased(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -2756,15 +2808,18 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     }
                 }
                 
+                @Override
                 public void mouseEntered(MouseEvent e) {
                     setCursorNormal();
                 }
                 
+                @Override
                 public void mouseExited(MouseEvent e) {
                     setCursorNormal();
                 }
             });
             addMouseMotionListener(new MouseMotionAdapter() {
+                @Override
                 public void mouseMoved(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -2842,6 +2897,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             repaint();
         }
         
+        @Override
         public void paint(Graphics pGraphics) {
             super.paint(pGraphics);
             Graphics2D lGraphics = (Graphics2D) pGraphics;

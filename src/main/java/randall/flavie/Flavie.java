@@ -26,8 +26,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -122,7 +122,7 @@ public class Flavie {
         //	    System.err.println("checkForRuneWord(" + pName + ", " + pRunes);
         List<Object> lRuneList = new ArrayList<>();
         for (int i = 0; i < lList.size(); i++) {
-            D2TxtFileItemProperties lProps = D2TxtFile.MISC.searchColumns("name", (String) lList.get(i) + " Rune");
+            D2TxtFileItemProperties lProps = D2TxtFile.MISC.searchColumns("name", lList.get(i) + " Rune");
             if (lProps == null) {
                 return false;
             }

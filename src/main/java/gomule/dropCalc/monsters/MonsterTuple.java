@@ -23,9 +23,9 @@ package gomule.dropCalc.monsters;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import gomule.dropCalc.DCNew;
 import gomule.dropCalc.ProbTCRow;
@@ -97,7 +97,7 @@ public class MonsterTuple {
             for (int y = 0; y < ((ProbTCRow) allTCS.get(x)).getTC().size(); y = y + 1) {
                 if (finalTCs.containsKey(((ProbTCRow) allTCS.get(x)).getTC().get(y))) {
                     finalTCs.put(((ProbTCRow) allTCS.get(x)).getTC().get(y),
-                                 new Double(((Double) finalTCs.get(((ProbTCRow) allTCS.get(x)).getTC().get(y))).doubleValue() + ((Double) ((ProbTCRow) allTCS.get(x)).getProb().get(y)).doubleValue()));
+                                 ((Double) finalTCs.get(((ProbTCRow) allTCS.get(x)).getTC().get(y))).doubleValue() + ((Double) ((ProbTCRow) allTCS.get(x)).getProb().get(y)).doubleValue());
                 } else {
                     finalTCs.put(((ProbTCRow) allTCS.get(x)).getTC().get(y), ((ProbTCRow) allTCS.get(x)).getProb().get(y));
                 }
@@ -113,8 +113,8 @@ public class MonsterTuple {
             for (int y = 0; y < ((ProbTCRow) allTCS.get(x)).getTC().size(); y = y + 1) {
                 if (finalTrueMiscTCs.containsKey(((ProbTCRow) allTCS.get(x)).getTC().get(y))) {
                     finalTrueMiscTCs.put(((ProbTCRow) allTCS.get(x)).getTC().get(y),
-                                         new Double(((Double) finalTrueMiscTCs.get(((ProbTCRow) allTCS.get(x)).getTC().get(y))).doubleValue() + ((Double) ((ProbTCRow) allTCS.get(x)).getProb()
-                                                                                                                                                                                     .get(y)).doubleValue()));
+                                         ((Double) finalTrueMiscTCs.get(((ProbTCRow) allTCS.get(x)).getTC().get(y))).doubleValue() + ((Double) ((ProbTCRow) allTCS.get(x)).getProb()
+                                                                                                                                                                          .get(y)).doubleValue());
                 } else {
                     finalTrueMiscTCs.put(((ProbTCRow) allTCS.get(x)).getTC().get(y), ((ProbTCRow) allTCS.get(x)).getProb().get(y));
                 }
@@ -198,15 +198,15 @@ public class MonsterTuple {
                 //				if(initTCRow.get(selector).indexOf("Equip")!=-1 || initTCRow.get(selector).indexOf("weap")!=-1||initTCRow.get(selector).indexOf("armo")!=-1){
                 if (!initTCRow.get(selector).equals("")) {
                     thisSubTC.add(initTCRow.get(selector));
-                    thisSubTCProb.add(new Double(Double.parseDouble(initTCRow.get(probSelector))));
+                    thisSubTCProb.add(Double.parseDouble(initTCRow.get(probSelector)));
                     
                     //					if(((String)thisSubTC.get(x -1)).indexOf("Act")!=-1){
                     //					System.out.println("HM " + lookupTCReturnSUBTCS((String)thisSubTC.get(x-1)));
                     //					}
                 }
                 //				}
-                selector = selector.substring(0, selector.length() - 1) + (new Integer(x + 1));
-                probSelector = probSelector.substring(0, probSelector.length() - 1) + (new Integer(x + 1));
+                selector = selector.substring(0, selector.length() - 1) + (x + 1);
+                probSelector = probSelector.substring(0, probSelector.length() - 1) + (x + 1);
             }
             if (!initTCRow.get("Unique").equals("")) {
                 if (Integer.parseInt(initTCRow.get("Unique")) > mUqual) {
@@ -241,11 +241,11 @@ public class MonsterTuple {
             for (int y = x; y < row.getTC().size(); y = y + 1) {
                 if (row.getTC().get(y).equals(row.getTC().get(x)) && y != x) {
                     row.getTC().remove(y);
-                    row.getProb().set(x, new Double((((Double) row.getProb().get(x)).doubleValue()) + (((Double) row.getProb().get(y)).doubleValue())));
+                    row.getProb().set(x, (((Double) row.getProb().get(x)).doubleValue()) + (((Double) row.getProb().get(y)).doubleValue()));
                     row.getProb().remove(y);
                 }
             }
-            row.getProb().set(x, new Double((((Double) row.getProb().get(x)).doubleValue()) / row.getTotProb()));
+            row.getProb().set(x, (((Double) row.getProb().get(x)).doubleValue()) / row.getTotProb());
         }
         
         //		System.out.println("By jove!");
@@ -372,7 +372,7 @@ public class MonsterTuple {
                 String tc = (String) it.next();
                 
                 if (finalTrueMiscTCs.containsKey(tc)) {
-                    finalTrueMiscTCs.put(tc, new Double(((Double) (finalTrueMiscTCs.get(tc))).doubleValue() + (((Double) (countessArr.get(tc))).doubleValue())));
+                    finalTrueMiscTCs.put(tc, ((Double) (finalTrueMiscTCs.get(tc))).doubleValue() + (((Double) (countessArr.get(tc))).doubleValue()));
                 } else {
                     finalTrueMiscTCs.put(tc, countessArr.get(tc));
                 }
@@ -432,7 +432,7 @@ public class MonsterTuple {
             constructTCPairs((ProbTCRow) runesArr.get(x));
             multiplyOut((ProbTCRow) runesArr.get(x), miscCounter);
             
-            miscCounter = ((((Double) ((ProbTCRow) runesArr.get(x)).getProb().get(((ArrayList) ((ProbTCRow) runesArr.get(x)).getProb()).size() - 1))).doubleValue());
+            miscCounter = ((((Double) ((ProbTCRow) runesArr.get(x)).getProb().get(((ProbTCRow) runesArr.get(x)).getProb().size() - 1))).doubleValue());
             
         }
         
@@ -443,8 +443,8 @@ public class MonsterTuple {
             for (int y = 0; y < ((ProbTCRow) runesArr.get(x)).getTC().size(); y = y + 1) {
                 if (finalTrueMiscTCs.containsKey(((ProbTCRow) runesArr.get(x)).getTC().get(y))) {
                     finalTrueMiscTCs.put(((ProbTCRow) runesArr.get(x)).getTC().get(y),
-                                         new Double(((Double) finalTrueMiscTCs.get(((ProbTCRow) runesArr.get(x)).getTC().get(y))).doubleValue() + ((Double) ((ProbTCRow) runesArr.get(x)).getProb()
-                                                                                                                                                                                         .get(y)).doubleValue()));
+                                         ((Double) finalTrueMiscTCs.get(((ProbTCRow) runesArr.get(x)).getTC().get(y))).doubleValue() + ((Double) ((ProbTCRow) runesArr.get(x)).getProb()
+                                                                                                                                                                              .get(y)).doubleValue());
                 } else {
                     finalTrueMiscTCs.put(((ProbTCRow) runesArr.get(x)).getTC().get(y), ((ProbTCRow) runesArr.get(x)).getProb().get(y));
                 }
@@ -474,7 +474,7 @@ public class MonsterTuple {
             
             //			Math.pow((1- ((Double)finalTrueMiscTCs.get(pickItStr)).doubleValue()), picks)
             
-            finalTrueMiscTCs.put(pickItStr, new Double(1 - (Math.pow((1 - ((Double) finalTrueMiscTCs.get(pickItStr)).doubleValue()), picks))));
+            finalTrueMiscTCs.put(pickItStr, 1 - (Math.pow((1 - ((Double) finalTrueMiscTCs.get(pickItStr)).doubleValue()), picks)));
             
         }
         
@@ -661,7 +661,7 @@ public class MonsterTuple {
             constructTCPairs((ProbTCRow) runesArr.get(x));
             multiplyOut((ProbTCRow) runesArr.get(x), miscCounter);
             
-            miscCounter = ((((Double) ((ProbTCRow) runesArr.get(x)).getProb().get(((ArrayList) ((ProbTCRow) runesArr.get(x)).getProb()).size() - 1))).doubleValue());
+            miscCounter = ((((Double) ((ProbTCRow) runesArr.get(x)).getProb().get(((ProbTCRow) runesArr.get(x)).getProb().size() - 1))).doubleValue());
             
         }
         
@@ -785,7 +785,7 @@ public class MonsterTuple {
         
         for (int x = f; x < miscTCS.size(); x = x + 1) {
             
-            if (!((String) ((ProbTCRow) miscTCS.get(x)).getTC().get(0)).equals("gld")) {
+            if (!((ProbTCRow) miscTCS.get(x)).getTC().get(0).equals("gld")) {
                 constructTCPairs((ProbTCRow) miscTCS.get(x));
                 multiplyOut((ProbTCRow) miscTCS.get(x), miscCounter);
                 //				if(((String)getLastRow(miscTCS).getTC().get(0)).indexOf("Jewelry") !=-1){
@@ -928,7 +928,7 @@ public class MonsterTuple {
             f = 1;
         }
         for (int x = f; x < allTCS.size(); x = x + 1) {
-            if (!((String) ((ProbTCRow) allTCS.get(x)).getTC().get(0)).equals("gld")) {
+            if (!((ProbTCRow) allTCS.get(x)).getTC().get(0).equals("gld")) {
                 constructTCPairs((ProbTCRow) allTCS.get(x));
                 multiplyOut((ProbTCRow) allTCS.get(x), counter);
                 if (((String) ((ProbTCRow) allTCS.get(x)).getTC().get(((ProbTCRow) allTCS.get(x)).getTC().size() - 1)).indexOf("Equip") != -1) {
@@ -975,9 +975,9 @@ public class MonsterTuple {
                         String pickItStr = (String) pickIt.next();
                         this.getFinalTCs()
                             .put(pickItStr,
-                                 new Double((1 - (Math.pow((1 - ((Double) this.getFinalTCs().get(pickItStr)).doubleValue()),
-                                                           6))) + ((1 - (Math.pow((1 - ((double) noDrop / (double) ptcR.getTotProb())), 6))) * ((Double) this.getFinalTCs()
-                                                                                                                                                             .get(pickItStr)).doubleValue())));
+                                 (1 - (Math.pow((1 - ((Double) this.getFinalTCs().get(pickItStr)).doubleValue()),
+                                                6))) + ((1 - (Math.pow((1 - ((double) noDrop / (double) ptcR.getTotProb())), 6))) * ((Double) this.getFinalTCs()
+                                                                                                                                                  .get(pickItStr)).doubleValue()));
                         
                     }
                     return;
@@ -988,7 +988,7 @@ public class MonsterTuple {
             Iterator pickIt = this.getFinalTCs().keySet().iterator();
             while (pickIt.hasNext()) {
                 String pickItStr = (String) pickIt.next();
-                this.getFinalTCs().put(pickItStr, new Double(1 - (Math.pow((1 - ((Double) this.getFinalTCs().get(pickItStr)).doubleValue()), picks))));
+                this.getFinalTCs().put(pickItStr, 1 - (Math.pow((1 - ((Double) this.getFinalTCs().get(pickItStr)).doubleValue()), picks)));
                 
             }
         }
@@ -997,7 +997,7 @@ public class MonsterTuple {
             Iterator pickIt = this.getFinalTCs().keySet().iterator();
             while (pickIt.hasNext()) {
                 String pickItStr = (String) pickIt.next();
-                this.getFinalTCs().put(pickItStr, new Double(1 - (Math.pow((1 - ((Double) this.getFinalTCs().get(pickItStr)).doubleValue()), pow))));
+                this.getFinalTCs().put(pickItStr, 1 - (Math.pow((1 - ((Double) this.getFinalTCs().get(pickItStr)).doubleValue()), pow)));
             }
         }
     }
@@ -1017,9 +1017,9 @@ public class MonsterTuple {
                         String pickItStr = (String) pickIt.next();
                         this.getFinalTCs()
                             .put(pickItStr,
-                                 new Double((1 - (Math.pow((1 - ((Double) this.getFinalTCs().get(pickItStr)).doubleValue()),
-                                                           6))) + ((1 - (Math.pow((1 - ((double) noDrop / (double) ptcR.getTotProb())), 6))) * ((Double) this.getFinalTCs()
-                                                                                                                                                             .get(pickItStr)).doubleValue())));
+                                 (1 - (Math.pow((1 - ((Double) this.getFinalTCs().get(pickItStr)).doubleValue()),
+                                                6))) + ((1 - (Math.pow((1 - ((double) noDrop / (double) ptcR.getTotProb())), 6))) * ((Double) this.getFinalTCs()
+                                                                                                                                                  .get(pickItStr)).doubleValue()));
                         
                     }
                     return;
@@ -1030,7 +1030,7 @@ public class MonsterTuple {
             Iterator pickIt = Tcs.keySet().iterator();
             while (pickIt.hasNext()) {
                 String pickItStr = (String) pickIt.next();
-                Tcs.put(pickItStr, new Double(1 - (Math.pow((1 - ((Double) Tcs.get(pickItStr)).doubleValue()), picks))));
+                Tcs.put(pickItStr, 1 - (Math.pow((1 - ((Double) Tcs.get(pickItStr)).doubleValue()), picks)));
                 
             }
         }
@@ -1039,7 +1039,7 @@ public class MonsterTuple {
             Iterator pickIt = Tcs.keySet().iterator();
             while (pickIt.hasNext()) {
                 String pickItStr = (String) pickIt.next();
-                Tcs.put(pickItStr, new Double(1 - (Math.pow((1 - ((Double) Tcs.get(pickItStr)).doubleValue()), pow))));
+                Tcs.put(pickItStr, 1 - (Math.pow((1 - ((Double) Tcs.get(pickItStr)).doubleValue()), pow)));
             }
         }
     }
@@ -1059,9 +1059,9 @@ public class MonsterTuple {
                         String pickItStr = (String) pickIt.next();
                         this.getFinalTCs()
                             .put(pickItStr,
-                                 new Double((1 - (Math.pow((1 - ((Double) this.getFinalTCs().get(pickItStr)).doubleValue()),
-                                                           6))) + ((1 - (Math.pow((1 - ((double) noDrop / (double) ptcR.getTotProb())), 6))) * ((Double) this.getFinalTCs()
-                                                                                                                                                             .get(pickItStr)).doubleValue())));
+                                 (1 - (Math.pow((1 - ((Double) this.getFinalTCs().get(pickItStr)).doubleValue()),
+                                                6))) + ((1 - (Math.pow((1 - ((double) noDrop / (double) ptcR.getTotProb())), 6))) * ((Double) this.getFinalTCs()
+                                                                                                                                                  .get(pickItStr)).doubleValue()));
                         
                     }
                     return;
@@ -1077,7 +1077,7 @@ public class MonsterTuple {
                 
                 //				}else{
                 
-                this.getFinalMiscTCs().put(pickItStr, new Double((1 - (Math.pow((1 - (((Double) this.getFinalMiscTCs().get(pickItStr)).doubleValue() * input)), picks)))));
+                this.getFinalMiscTCs().put(pickItStr, (1 - (Math.pow((1 - (((Double) this.getFinalMiscTCs().get(pickItStr)).doubleValue() * input)), picks))));
                 //				}
             }
         } else if (picks == -4 && mParent.getClassOfMon() == 4) {
@@ -1085,14 +1085,14 @@ public class MonsterTuple {
             Iterator pickIt = this.getFinalMiscTCs().keySet().iterator();
             while (pickIt.hasNext()) {
                 String pickItStr = (String) pickIt.next();
-                this.getFinalMiscTCs().put(pickItStr, new Double(1 - (Math.pow((1 - (((Double) this.getFinalMiscTCs().get(pickItStr)).doubleValue() * input)), pow))));
+                this.getFinalMiscTCs().put(pickItStr, 1 - (Math.pow((1 - (((Double) this.getFinalMiscTCs().get(pickItStr)).doubleValue() * input)), pow)));
             }
         } else {
             
             Iterator pickIt = this.getFinalMiscTCs().keySet().iterator();
             while (pickIt.hasNext()) {
                 String pickItStr = (String) pickIt.next();
-                this.getFinalMiscTCs().put(pickItStr, new Double(((Double) this.getFinalMiscTCs().get(pickItStr)).doubleValue() * input));
+                this.getFinalMiscTCs().put(pickItStr, ((Double) this.getFinalMiscTCs().get(pickItStr)).doubleValue() * input);
             }
             
         }
@@ -1113,9 +1113,9 @@ public class MonsterTuple {
                         String pickItStr = (String) pickIt.next();
                         this.getFinalTCs()
                             .put(pickItStr,
-                                 new Double((1 - (Math.pow((1 - ((Double) this.getFinalTCs().get(pickItStr)).doubleValue()),
-                                                           6))) + ((1 - (Math.pow((1 - ((double) noDrop / (double) ptcR.getTotProb())), 6))) * ((Double) this.getFinalTCs()
-                                                                                                                                                             .get(pickItStr)).doubleValue())));
+                                 (1 - (Math.pow((1 - ((Double) this.getFinalTCs().get(pickItStr)).doubleValue()),
+                                                6))) + ((1 - (Math.pow((1 - ((double) noDrop / (double) ptcR.getTotProb())), 6))) * ((Double) this.getFinalTCs()
+                                                                                                                                                  .get(pickItStr)).doubleValue()));
                         
                     }
                     return;
@@ -1126,7 +1126,7 @@ public class MonsterTuple {
             Iterator pickIt = this.getFinalTCs().keySet().iterator();
             while (pickIt.hasNext()) {
                 String pickItStr = (String) pickIt.next();
-                this.getFinalTCs().put(pickItStr, new Double(1 - (Math.pow((1 - (((Double) this.getFinalTCs().get(pickItStr)).doubleValue() * input)), picks))));
+                this.getFinalTCs().put(pickItStr, 1 - (Math.pow((1 - (((Double) this.getFinalTCs().get(pickItStr)).doubleValue() * input)), picks)));
                 
             }
         }
@@ -1135,7 +1135,7 @@ public class MonsterTuple {
             Iterator pickIt = this.getFinalTCs().keySet().iterator();
             while (pickIt.hasNext()) {
                 String pickItStr = (String) pickIt.next();
-                this.getFinalTCs().put(pickItStr, new Double(1 - (Math.pow((1 - (((Double) this.getFinalTCs().get(pickItStr)).doubleValue() * input)), pow))));
+                this.getFinalTCs().put(pickItStr, 1 - (Math.pow((1 - (((Double) this.getFinalTCs().get(pickItStr)).doubleValue() * input)), pow)));
             }
             //			}else{
             //			Iterator pickIt = this.getFinalTCs().keySet().iterator();
