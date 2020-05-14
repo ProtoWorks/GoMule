@@ -10,11 +10,12 @@ import randall.flavie.D2ItemInterface;
  */
 public interface FlavieItemFilter {
     
-    public void initialize() throws Exception;
+    void initialize() throws Exception;
     
-    public void finish() throws Exception;
+    // TODO closeable?
+    void finish() throws Exception;
     
-    public boolean check(D2ItemInterface pItemFound);
+    boolean check(D2ItemInterface itemFound);
     
-    public boolean check(String pFingerprint, String pItemname);
+    boolean check(String fingerprint, String itemname);
 }

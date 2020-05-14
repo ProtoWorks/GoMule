@@ -10,5 +10,5 @@ import gomule.gui.D2ViewChar;
 public interface GoMuleViewChar extends GoMuleView {
     
     //	public D2Character	getChar();
-    public D2ViewChar getViewChar();
+    D2ViewChar getViewChar();
 }

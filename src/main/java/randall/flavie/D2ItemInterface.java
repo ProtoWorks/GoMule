@@ -28,13 +28,13 @@ package randall.flavie;
  */
 public interface D2ItemInterface {
     
-    public boolean isCharacter();
+    boolean isCharacter();
     
-    public boolean isEthereal();
+    boolean isEthereal();
     
-    public String getFingerprint();
+    String getFingerprint();
     
-    public String getName();
+    String getName();
     
-    public String getFileName();
+    String getFileName();
 }

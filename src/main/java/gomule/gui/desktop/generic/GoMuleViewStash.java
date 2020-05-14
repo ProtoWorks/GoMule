@@ -10,5 +10,5 @@ import gomule.gui.D2ViewStash;
 public interface GoMuleViewStash extends GoMuleView {
     
     //	public String getStashName();
-    public D2ViewStash getViewStash();
+    D2ViewStash getViewStash();
 }
