@@ -71,14 +71,4 @@ public class FlavieDupeFilter implements FlavieItemFilter {
         }
         return true;
     }
-    
-    @Override
-    public boolean check(String fingerprint, String itemName) {
-        if (dupeList.containsKey(fingerprint)) {
-            dupeOut.println("Item " + fingerprint + "/" + itemName + " is listed as a dupe");
-            dupeCount++;
-            return false;
-        }
-        return true;
-    }
 }

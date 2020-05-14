@@ -156,17 +156,6 @@ public class Flavie {
     }
     
     public String getReportName() {
-        
         return iReportName;
-        
     }
-    
-    public boolean checkFilters(String pFingerprint, String pItemname) {
-        boolean lAllFilters = true;
-        for (int i = 0; i < iFilters.size() && lAllFilters; i++) {
-            lAllFilters = ((FlavieItemFilter) iFilters.get(i)).check(pFingerprint, pItemname);
-        }
-        return lAllFilters;
-    }
-    
 }

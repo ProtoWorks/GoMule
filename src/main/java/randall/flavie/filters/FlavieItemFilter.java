@@ -16,6 +16,4 @@ public interface FlavieItemFilter {
     void finish() throws Exception;
     
     boolean check(D2ItemInterface itemFound);
-    
-    boolean check(String fingerprint, String itemname);
 }
