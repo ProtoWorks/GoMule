@@ -26,6 +26,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -50,12 +52,12 @@ public class Flavie {
     private String iDataFile;
     //    private String iStyleFile;
     
-    //	protected HashMap iAllItems = new HashMap();
-    private ArrayList iDatFile = new ArrayList();
-    protected HashMap iAllItemsFP = new HashMap();
-    protected HashMap iRuneCount = new HashMap();
+    //	protected Map<Object, Object> iAllItems = new HashMap<>();
+    private List<Object> iDatFile = new ArrayList<>();
+    protected Map<Object, Object> iAllItemsFP = new HashMap<>();
+    protected Map<Object, Object> iRuneCount = new HashMap<>();
     
-    protected ArrayList iFilters = new ArrayList();
+    protected List<Object> iFilters = new ArrayList<>();
     
     private DataFileBuilder iDataFileBuilder;
     private DirectD2Files iDirectD2;
@@ -72,7 +74,7 @@ public class Flavie {
                   String pReportTitle,
                   String pDataFile,
                   String pStyleFile,
-                  ArrayList pFileNames,
+                  List<Object> pFileNames,
                   boolean pCountAll,
                   boolean pCountEthereal,
                   boolean pCountStash,
@@ -86,7 +88,7 @@ public class Flavie {
         iDirectD2 = new DirectD2Files(this);
         iDataFileBuilder = new DataFileBuilder(this);
         
-        ArrayList lDataFileObjects = iDataFileBuilder.readDataFileObjects(iDataFile, iDatFile);
+        List<Object> lDataFileObjects = iDataFileBuilder.readDataFileObjects(iDataFile, iDatFile);
         iDirectD2.readDirectD2Files(lDataFileObjects, pFileNames);
         
         File lDupeDirList = new File("dupelists");
@@ -113,12 +115,12 @@ public class Flavie {
     
     public boolean checkForRuneWord(String pName, String pRunes) {
         //	    System.err.println("checkForRuneWord(" + pName + ", " + pRunes);
-        ArrayList lList = RandallUtil.split(pRunes, "-", false);
+        List<Object> lList = RandallUtil.split(pRunes, "-", false);
         if (lList.size() <= 1) {
             return false;
         }
         //	    System.err.println("checkForRuneWord(" + pName + ", " + pRunes);
-        ArrayList lRuneList = new ArrayList();
+        List<Object> lRuneList = new ArrayList<>();
         for (int i = 0; i < lList.size(); i++) {
             D2TxtFileItemProperties lProps = D2TxtFile.MISC.searchColumns("name", (String) lList.get(i) + " Rune");
             if (lProps == null) {

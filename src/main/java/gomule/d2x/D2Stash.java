@@ -23,6 +23,7 @@ package gomule.d2x;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import gomule.gui.D2ItemListAdapter;
 import gomule.item.D2Item;
@@ -39,7 +40,7 @@ import gomule.util.D2Project;
 public class D2Stash extends D2ItemListAdapter {
     
     //    private String		iFileName;
-    private ArrayList iItems;
+    private List<Object> iItems;
     
     private D2BitReader iBR;
     private boolean iHC;
@@ -57,7 +58,7 @@ public class D2Stash extends D2ItemListAdapter {
         if (iFileName == null || !iFileName.toLowerCase().endsWith(".d2x")) {
             throw new Exception("Incorrect Stash file name");
         }
-        iItems = new ArrayList();
+        iItems = new ArrayList<>();
         
         lFile = new File(iFileName);
         
@@ -98,7 +99,7 @@ public class D2Stash extends D2ItemListAdapter {
         return iSC;
     }
     
-    public ArrayList getItemList() {
+    public List<Object> getItemList() {
         return iItems;
     }
     
@@ -119,8 +120,8 @@ public class D2Stash extends D2ItemListAdapter {
         setModified(true);
     }
     
-    public ArrayList removeAllItems() {
-        ArrayList lReturn = new ArrayList();
+    public List<Object> removeAllItems() {
+        List<Object> lReturn = new ArrayList<>();
         lReturn.addAll(iItems);
         
         iItems.clear();

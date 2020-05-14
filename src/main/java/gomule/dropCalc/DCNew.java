@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
 
 import gomule.dropCalc.items.Item;
 import gomule.dropCalc.items.MiscItem;
@@ -47,23 +49,23 @@ public class DCNew {
     //	CalcWriter CW = new CalcWriter("tempTCs.txt");
     
     //	CalcWriter CW = null;
-    ArrayList monID = new ArrayList();
-    ArrayList normLvl = new ArrayList();
-    ArrayList normTC1 = new ArrayList();
+    List<Object> monID = new ArrayList<>();
+    List<Object> normLvl = new ArrayList<>();
+    List<Object> normTC1 = new ArrayList<>();
     
-    ArrayList mainRegMonArray = new ArrayList();
-    ArrayList mainMinMonArray = new ArrayList();
-    ArrayList mainChampMonArray = new ArrayList();
-    ArrayList mainUniqArray = new ArrayList();
-    ArrayList mainSupUniqArray = new ArrayList();
-    ArrayList mainBossArray = new ArrayList();
+    List<Object> mainRegMonArray = new ArrayList<>();
+    List<Object> mainMinMonArray = new ArrayList<>();
+    List<Object> mainChampMonArray = new ArrayList<>();
+    List<Object> mainUniqArray = new ArrayList<>();
+    List<Object> mainSupUniqArray = new ArrayList<>();
+    List<Object> mainBossArray = new ArrayList<>();
     
-    ArrayList regItemArray = new ArrayList();
-    ArrayList magItemArray = new ArrayList();
-    ArrayList rareItemArray = new ArrayList();
-    ArrayList setItemArray = new ArrayList();
-    ArrayList uniqItemArray = new ArrayList();
-    ArrayList miscItemArray = new ArrayList();
+    List<Object> regItemArray = new ArrayList<>();
+    List<Object> magItemArray = new ArrayList<>();
+    List<Object> rareItemArray = new ArrayList<>();
+    List<Object> setItemArray = new ArrayList<>();
+    List<Object> uniqItemArray = new ArrayList<>();
+    List<Object> miscItemArray = new ArrayList<>();
     
     public static void main(String[] args) {
         
@@ -93,7 +95,7 @@ public class DCNew {
     //	CW.writeData(TC+",");
     //	for(int x = 0;x< mainRegMonArray.size();x=x+1){
     //	((Monster)mainRegMonArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers,nGroup,-1);
-    //	ArrayList mTuples = ((Monster)mainRegMonArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainRegMonArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -107,7 +109,7 @@ public class DCNew {
     
     //	for(int x = 0;x< mainMinMonArray.size();x=x+1){
     //	((Monster)mainMinMonArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers,nGroup,-1);
-    //	ArrayList mTuples = ((Monster)mainMinMonArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainMinMonArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -121,7 +123,7 @@ public class DCNew {
     
     //	for(int x = 0;x< mainChampMonArray.size();x=x+1){
     //	((Monster)mainChampMonArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers,nGroup,-1);
-    //	ArrayList mTuples = ((Monster)mainChampMonArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainChampMonArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -135,7 +137,7 @@ public class DCNew {
     
     //	for(int x = 0;x< mainUniqArray.size();x=x+1){
     //	((Monster)mainUniqArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers,nGroup,-1);
-    //	ArrayList mTuples = ((Monster)mainUniqArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainUniqArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -152,7 +154,7 @@ public class DCNew {
     //	continue;
     //	}
     //	((Monster)mainSupUniqArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers,nGroup,-1);
-    //	ArrayList mTuples = ((Monster)mainSupUniqArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainSupUniqArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -166,7 +168,7 @@ public class DCNew {
     
     //	for(int x = 0;x< mainBossArray.size();x=x+1){
     //	((Monster)mainBossArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers,nGroup,-1);
-    //	ArrayList mTuples = ((Monster)mainBossArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainBossArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -181,10 +183,10 @@ public class DCNew {
     //	CW.writeData("\n");
     //	}
     
-    //	public HashMap findMonstersTC(String key, double d, int monSelection, int nPlayers, int nGroup){
+    //	public Map<Object, Object> findMonstersTC(String key, double d, int monSelection, int nPlayers, int nGroup){
     
     //	//SHOULD BE HASHMAP?
-    //	HashMap monsterTCList = new HashMap();
+    //	Map<Object, Object> monsterTCList = new HashMap<>();
     //	/**
     //	* 0:Reg
     //	* 1:Min
@@ -200,7 +202,7 @@ public class DCNew {
     
     //	for(int x = 0;x< mainRegMonArray.size();x=x+1){
     //	((Monster)mainRegMonArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers, nGroup);
-    //	ArrayList mTuples = ((Monster)mainRegMonArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainRegMonArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     //	if(((MonsterTuple)mTuples.get(y)).getFinalTCs().containsKey(key)){
@@ -214,7 +216,7 @@ public class DCNew {
     
     //	for(int x = 0;x< mainMinMonArray.size();x=x+1){
     //	((Monster)mainMinMonArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers, nGroup);
-    //	ArrayList mTuples = ((Monster)mainMinMonArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainMinMonArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -227,7 +229,7 @@ public class DCNew {
     //	case 2:
     //	for(int x = 0;x< mainChampMonArray.size();x=x+1){
     //	((Monster)mainChampMonArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers, nGroup);
-    //	ArrayList mTuples = ((Monster)mainChampMonArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainChampMonArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -240,7 +242,7 @@ public class DCNew {
     //	case 3:
     //	for(int x = 0;x< mainUniqArray.size();x=x+1){
     //	((Monster)mainUniqArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers, nGroup);
-    //	ArrayList mTuples = ((Monster)mainUniqArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainUniqArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -256,7 +258,7 @@ public class DCNew {
     //	continue;
     //	}
     //	((Monster)mainSupUniqArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers, nGroup);
-    //	ArrayList mTuples = ((Monster)mainSupUniqArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainSupUniqArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -269,7 +271,7 @@ public class DCNew {
     //	case 5:
     //	for(int x = 0;x< mainBossArray.size();x=x+1){
     //	((Monster)mainBossArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers, nGroup);
-    //	ArrayList mTuples = ((Monster)mainBossArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainBossArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -284,10 +286,10 @@ public class DCNew {
     //	return monsterTCList;
     //	}
     
-    public HashMap findMonstersTCGeneral(String key, double d, int monSelection, Item item, int MF, int nPlayers, int nGroup, int QRecursions, boolean sevP) {
+    public Map<Object, Object> findMonstersTCGeneral(String key, double d, int monSelection, Item item, int MF, int nPlayers, int nGroup, int QRecursions, boolean sevP) {
         
         //SHOULD BE HASHMAP?
-        HashMap monsterTCList = new HashMap();
+        Map<Object, Object> monsterTCList = new HashMap<>();
         /**
          * 0:Reg
          * 1:Min
@@ -303,7 +305,7 @@ public class DCNew {
                 
                 for (int x = 0; x < mainRegMonArray.size(); x = x + 1) {
                     
-                    ArrayList mTuples = ((Monster) mainRegMonArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainRegMonArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -331,7 +333,7 @@ public class DCNew {
             case 1:
                 
                 for (int x = 0; x < mainMinMonArray.size(); x = x + 1) {
-                    ArrayList mTuples = ((Monster) mainMinMonArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainMinMonArray.get(x)).getmTuples();
                     
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
@@ -356,7 +358,7 @@ public class DCNew {
                 break;
             case 2:
                 for (int x = 0; x < mainChampMonArray.size(); x = x + 1) {
-                    ArrayList mTuples = ((Monster) mainChampMonArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainChampMonArray.get(x)).getmTuples();
                     
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
@@ -380,7 +382,7 @@ public class DCNew {
                 break;
             case 3:
                 for (int x = 0; x < mainUniqArray.size(); x = x + 1) {
-                    ArrayList mTuples = ((Monster) mainUniqArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainUniqArray.get(x)).getmTuples();
                     
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
@@ -407,7 +409,7 @@ public class DCNew {
                     if (((Monster) mainSupUniqArray.get(x)).getMonName().equals("Fangskin") || ((SuperUnique) mainSupUniqArray.get(x)).getSUID().startsWith("ancientbarb")) {
                         continue;
                     }
-                    ArrayList mTuples = ((Monster) mainSupUniqArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainSupUniqArray.get(x)).getmTuples();
                     
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
@@ -455,7 +457,7 @@ public class DCNew {
                 break;
             case 5:
                 for (int x = 0; x < mainBossArray.size(); x = x + 1) {
-                    ArrayList mTuples = ((Monster) mainBossArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainBossArray.get(x)).getmTuples();
                     
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
@@ -481,9 +483,9 @@ public class DCNew {
         return monsterTCList;
     }
     
-    //	public HashMap findMonstersTC(String key, double d, int monSelection, SetItem item, int MF, int nPlayers, int nGroup){
+    //	public Map<Object, Object> findMonstersTC(String key, double d, int monSelection, SetItem item, int MF, int nPlayers, int nGroup){
     
-    //	HashMap monsterTCList = new HashMap();
+    //	Map<Object, Object> monsterTCList = new HashMap<>();
     //	/**
     //	* 0:Reg
     //	* 1:Min
@@ -504,7 +506,7 @@ public class DCNew {
     //	}
     //	}
     //	((Monster)mainRegMonArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers, nGroup);
-    //	ArrayList mTuples = ((Monster)mainRegMonArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainRegMonArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     //	if(((MonsterTuple)mTuples.get(y)).getFinalTCs().containsKey(key)){
@@ -524,7 +526,7 @@ public class DCNew {
     //	}
     //	}
     //	((Monster)mainMinMonArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers, nGroup);
-    //	ArrayList mTuples = ((Monster)mainMinMonArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainMinMonArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -542,7 +544,7 @@ public class DCNew {
     //	}
     //	}
     //	((Monster)mainChampMonArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers, nGroup);
-    //	ArrayList mTuples = ((Monster)mainChampMonArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainChampMonArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -560,7 +562,7 @@ public class DCNew {
     //	}
     //	}
     //	((Monster)mainUniqArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers, nGroup);
-    //	ArrayList mTuples = ((Monster)mainUniqArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainUniqArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -581,7 +583,7 @@ public class DCNew {
     //	continue;
     //	}
     //	((Monster)mainSupUniqArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers, nGroup);
-    //	ArrayList mTuples = ((Monster)mainSupUniqArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainSupUniqArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -599,7 +601,7 @@ public class DCNew {
     //	}
     //	}
     //	((Monster)mainBossArray.get(x)).lookupBASETCReturnATOMICTCS(nPlayers, nGroup);
-    //	ArrayList mTuples = ((Monster)mainBossArray.get(x)).getmTuples();
+    //	List<Object> mTuples = ((Monster)mainBossArray.get(x)).getmTuples();
     
     //	for(int y = 0;y<mTuples.size();y=y+1){
     
@@ -723,8 +725,8 @@ public class DCNew {
     
     public void populateArrays() {
         
-        ArrayList SuBossCross = new ArrayList();
-        ArrayList uniqueCheck = new ArrayList();
+        List<Object> SuBossCross = new ArrayList<>();
+        List<Object> uniqueCheck = new ArrayList<>();
         
         SuBossCross.add("Radament");
         SuBossCross.add("The Summoner");
@@ -976,7 +978,7 @@ public class DCNew {
     
     public double generateRarityList(MonsterTuple monT, Item item) {
         
-        ArrayList list = new ArrayList();
+        List<Object> list = new ArrayList<>();
         switch (item.getiNUS()) {
             case 1:
                 list = D2TxtFile.UNIQUES.searchColumnsMultipleHits("code", item.getItemCode());
@@ -1104,51 +1106,51 @@ public class DCNew {
     
     //	}
     
-    public ArrayList getRegItemArray() {
+    public List<Object> getRegItemArray() {
         return regItemArray;
     }
     
-    public ArrayList getSetItemArray() {
+    public List<Object> getSetItemArray() {
         return setItemArray;
     }
     
-    public ArrayList getUniqItemArray() {
+    public List<Object> getUniqItemArray() {
         return uniqItemArray;
     }
     
-    public ArrayList getMainRegMonArray() {
+    public List<Object> getMainRegMonArray() {
         return mainRegMonArray;
     }
     
-    public ArrayList getMainMinMonArray() {
+    public List<Object> getMainMinMonArray() {
         return mainMinMonArray;
     }
     
-    public ArrayList getMainChampMonArray() {
+    public List<Object> getMainChampMonArray() {
         return mainChampMonArray;
     }
     
-    public ArrayList getMainUniqArray() {
+    public List<Object> getMainUniqArray() {
         return mainUniqArray;
     }
     
-    public ArrayList getMainSupUniqArray() {
+    public List<Object> getMainSupUniqArray() {
         return mainSupUniqArray;
     }
     
-    public ArrayList getMainBossArray() {
+    public List<Object> getMainBossArray() {
         return mainBossArray;
     }
     
-    public HashMap findMonstersTCTrueMisc(int monSelection, Item item, int MF, int nPlayers, int nGroup, int QRecursions, boolean sevP) {
+    public Map<Object, Object> findMonstersTCTrueMisc(int monSelection, Item item, int MF, int nPlayers, int nGroup, int QRecursions, boolean sevP) {
         
-        HashMap monsterTCList = new HashMap();
+        Map<Object, Object> monsterTCList = new HashMap<>();
         
         switch (monSelection) {
             
             case 0:
                 for (int x = 0; x < mainRegMonArray.size(); x = x + 1) {
-                    ArrayList mTuples = ((Monster) mainRegMonArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainRegMonArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1163,7 +1165,7 @@ public class DCNew {
                 break;
             case 1:
                 for (int x = 0; x < mainMinMonArray.size(); x = x + 1) {
-                    ArrayList mTuples = ((Monster) mainMinMonArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainMinMonArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1178,7 +1180,7 @@ public class DCNew {
                 break;
             case 2:
                 for (int x = 0; x < mainChampMonArray.size(); x = x + 1) {
-                    ArrayList mTuples = ((Monster) mainChampMonArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainChampMonArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1193,7 +1195,7 @@ public class DCNew {
                 break;
             case 3:
                 for (int x = 0; x < mainUniqArray.size(); x = x + 1) {
-                    ArrayList mTuples = ((Monster) mainUniqArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainUniqArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1211,7 +1213,7 @@ public class DCNew {
                     if (((Monster) mainSupUniqArray.get(x)).getMonName().equals("Fangskin") || ((SuperUnique) mainSupUniqArray.get(x)).getSUID().startsWith("ancientbarb")) {
                         continue;
                     }
-                    ArrayList mTuples = ((Monster) mainSupUniqArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainSupUniqArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1226,7 +1228,7 @@ public class DCNew {
                 break;
             case 5:
                 for (int x = 0; x < mainBossArray.size(); x = x + 1) {
-                    ArrayList mTuples = ((Monster) mainBossArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainBossArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1243,16 +1245,16 @@ public class DCNew {
         return monsterTCList;
     }
     
-    public HashMap findMonstersTCMisc(int monSelection, Item item, int MF, int nPlayers, int nGroup, int QRecursions, boolean sevP) {
+    public Map<Object, Object> findMonstersTCMisc(int monSelection, Item item, int MF, int nPlayers, int nGroup, int QRecursions, boolean sevP) {
         
-        HashMap monsterTCList = new HashMap();
+        Map<Object, Object> monsterTCList = new HashMap<>();
         
         switch (monSelection) {
             
             case 0:
                 for (int x = 0; x < mainRegMonArray.size(); x = x + 1) {
                     
-                    ArrayList mTuples = ((Monster) mainRegMonArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainRegMonArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
@@ -1279,7 +1281,7 @@ public class DCNew {
                 break;
             case 1:
                 for (int x = 0; x < mainMinMonArray.size(); x = x + 1) {
-                    ArrayList mTuples = ((Monster) mainMinMonArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainMinMonArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1316,7 +1318,7 @@ public class DCNew {
                 break;
             case 2:
                 for (int x = 0; x < mainChampMonArray.size(); x = x + 1) {
-                    ArrayList mTuples = ((Monster) mainChampMonArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainChampMonArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1342,7 +1344,7 @@ public class DCNew {
                 break;
             case 3:
                 for (int x = 0; x < mainUniqArray.size(); x = x + 1) {
-                    ArrayList mTuples = ((Monster) mainUniqArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainUniqArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1371,7 +1373,7 @@ public class DCNew {
                     if (((Monster) mainSupUniqArray.get(x)).getMonName().equals("Fangskin") || ((SuperUnique) mainSupUniqArray.get(x)).getSUID().startsWith("ancientbarb")) {
                         continue;
                     }
-                    ArrayList mTuples = ((Monster) mainSupUniqArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainSupUniqArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1390,7 +1392,7 @@ public class DCNew {
                 break;
             case 5:
                 for (int x = 0; x < mainBossArray.size(); x = x + 1) {
-                    ArrayList mTuples = ((Monster) mainBossArray.get(x)).getmTuples();
+                    List<Object> mTuples = ((Monster) mainBossArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1408,7 +1410,7 @@ public class DCNew {
         return monsterTCList;
     }
     
-    public ArrayList getMiscItemArray() {
+    public List<Object> getMiscItemArray() {
         return miscItemArray;
     }
 }

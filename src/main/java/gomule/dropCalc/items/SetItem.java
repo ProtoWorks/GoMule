@@ -21,6 +21,7 @@
 package gomule.dropCalc.items;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import gomule.dropCalc.DCNew;
 import randall.d2files.D2TxtFileItemProperties;
@@ -39,7 +40,7 @@ public class SetItem extends Item {
         iNUS = 2;
     }
     
-    public HashMap getFinalProbSum(DCNew DC, int monSelection, int MF, int nPlayers, int nGroup, int QRecursions, boolean sevP) {
+    public Map<Object, Object> getFinalProbSum(DCNew DC, int monSelection, int MF, int nPlayers, int nGroup, int QRecursions, boolean sevP) {
         
         switch (ItemClass) {
             case 0:

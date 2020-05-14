@@ -21,6 +21,7 @@
 package gomule.dropCalc.items;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import gomule.dropCalc.DCNew;
 import randall.d2files.D2TblFile;
@@ -43,7 +44,7 @@ public class MiscItem extends Item {
         
     }
     
-    public HashMap getFinalProbSum(DCNew DC, int monSelection, int MF, int nPlayers, int nGroup, int QRecursions, boolean sevP) {
+    public Map<Object, Object> getFinalProbSum(DCNew DC, int monSelection, int MF, int nPlayers, int nGroup, int QRecursions, boolean sevP) {
         
         if (ItemCode.startsWith("cm") || ItemCode.equals("jew") || ItemCode.equals("amu") || ItemCode.equals("rin")) {
             mDrops = DC.findMonstersTCMisc(monSelection, this, MF, nPlayers, nGroup, QRecursions, sevP);

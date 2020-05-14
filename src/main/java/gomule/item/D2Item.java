@@ -24,6 +24,7 @@ package gomule.item;
 import java.awt.Color;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,7 +50,7 @@ public class D2Item implements Comparable, D2ItemInterface {
     
     private D2PropCollection iProps = new D2PropCollection();
     
-    private ArrayList iSocketedItems;
+    private List<Object> iSocketedItems;
     
     private int flags;
     
@@ -482,7 +483,7 @@ public class D2Item implements Comparable, D2ItemInterface {
         int lLastItem = pFile.get_byte_pos();
         
         if (iSocketNrFilled > 0) {
-            iSocketedItems = new ArrayList();
+            iSocketedItems = new ArrayList<>();
             
             for (int i = 0; i < iSocketNrFilled; i++) {
                 int lStartNewItem = pFile.findNextFlag("JM", lLastItem);
@@ -512,7 +513,7 @@ public class D2Item implements Comparable, D2ItemInterface {
         }
         
         if (iRuneWord) {
-            ArrayList lList = new ArrayList();
+            List<Object> lList = new ArrayList<>();
             for (int i = 0; i < iSocketedItems.size(); i++) {
                 lList.add(((D2Item) iSocketedItems.get(i)).getRuneCode());
             }
@@ -1858,9 +1859,9 @@ public class D2Item implements Comparable, D2ItemInterface {
         }
     }
     
-    // public ArrayList getPerfectStringUS() {
+    // public List<Object> getPerfectStringUS() {
     // D2ItemProperty[] outProp;
-    // ArrayList outArrL = new ArrayList();
+    // List<Object> outArrL = new ArrayList<>();
     // D2TxtFileItemProperties pRow;
     // if (this.isUnique()) {
     // pRow = D2TxtFile.UNIQUES.getRow(unique_id);
@@ -2231,15 +2232,15 @@ public class D2Item implements Comparable, D2ItemInterface {
     // return outArrL;
     // }
     
-    public String[] getPerfectDef(ArrayList outArrL) {
+    public String[] getPerfectDef(List<Object> outArrL) {
         return null;
-        //		ArrayList tempProp = new ArrayList();
+        //		List<Object> tempProp = new ArrayList<>();
         //		String[] out = new String[2];
         //		for (int x = 0; x < outArrL.size(); x++) {
         //		tempProp.add(((D2ItemProperty[]) outArrL.get(x))[0]);
         //		}
         //		out[1] = Long.toString(applyPerfDef(tempProp));
-        //		tempProp = new ArrayList();
+        //		tempProp = new ArrayList<>();
         //		for (int x = 0; x < outArrL.size(); x++) {
         //		tempProp.add(((D2ItemProperty[]) outArrL.get(x))[1]);
         //		}
@@ -2248,9 +2249,9 @@ public class D2Item implements Comparable, D2ItemInterface {
         //		return out;
     }
     
-    public String[] getPerfectDmg(ArrayList outArrL) {
+    public String[] getPerfectDmg(List<Object> outArrL) {
         return null;
-        //		ArrayList tempProp = new ArrayList();
+        //		List<Object> tempProp = new ArrayList<>();
         //		String[] out = new String[2];
         //		for (int x = 0; x < outArrL.size(); x++) {
         //		tempProp.add(((D2ItemProperty[]) outArrL.get(x))[0]);
@@ -2275,7 +2276,7 @@ public class D2Item implements Comparable, D2ItemInterface {
         //		}
         //		}
         //		out[0] = outStr;
-        //		tempProp = new ArrayList();
+        //		tempProp = new ArrayList<>();
         //		for (int x = 0; x < outArrL.size(); x++) {
         //		tempProp.add(((D2ItemProperty[]) outArrL.get(x))[1]);
         //		}
@@ -2304,13 +2305,13 @@ public class D2Item implements Comparable, D2ItemInterface {
         //		return out;
     }
     
-    public ArrayList getPerfectString() {
+    public List<Object> getPerfectString() {
         
         // if (isUnique() || isSet()) {
         // return sortStats(getPerfectStringUS());
         // }else if(isRuneWord()){
         //
-        // ArrayList perfArr = getPerfectStringUS();
+        // List<Object> perfArr = getPerfectStringUS();
         // for(int x = 0;x<iGemProps.size();x=x+1){
         // //D2ItemProperty[] tempP =
         // {(D2ItemProperty)iGemProps.get(x),(D2ItemProperty)iGemProps.get(x)};
@@ -2324,10 +2325,10 @@ public class D2Item implements Comparable, D2ItemInterface {
         return null;
     }
     
-    // private ArrayList sortStats(ArrayList perfectStringUS) {
+    // private List<Object> sortStats(List<Object> perfectStringUS) {
     //
     // int[] sortArr = new int[perfectStringUS.size()];
-    // ArrayList outSorted = new ArrayList();
+    // List<Object> outSorted = new ArrayList<>();
     // for (int x = 0; x < perfectStringUS.size(); x = x + 1) {
     // sortArr[x] = (((D2ItemProperty[]) perfectStringUS.get(x))[0])
     // .getiProp();
@@ -2345,7 +2346,7 @@ public class D2Item implements Comparable, D2ItemInterface {
     // return outSorted;
     // }
     
-    // private D2ItemProperty[] findObjProp(int i, ArrayList perfectStringUS) {
+    // private D2ItemProperty[] findObjProp(int i, List<Object> perfectStringUS) {
     //
     // for (int x = 0; x < perfectStringUS.size(); x = x + 1) {
     // if ((((D2ItemProperty[]) perfectStringUS.get(x))[0]).getiProp() == i) {
@@ -2357,13 +2358,13 @@ public class D2Item implements Comparable, D2ItemInterface {
     // return null;
     // }
     
-    //	private ArrayList applyPerfEDmg(ArrayList iProperties) {
+    //	private List<Object> applyPerfEDmg(List<Object> iProperties) {
     
     //	int ENDam = 0;
     //	int ENMaxDam = 0;
     //	int MinDam = 0;
     //	int MaxDam = 0;
-    //	ArrayList out = new ArrayList();
+    //	List<Object> out = new ArrayList<>();
     
     //	for (int x = 0; x < iProperties.size(); x = x + 1) {
     //	if (((D2ItemProperty) iProperties.get(x)).getiProp() == 17) {
@@ -2416,7 +2417,7 @@ public class D2Item implements Comparable, D2ItemInterface {
     
     //	}
     
-    //	private long applyPerfDef(ArrayList iProperties) {
+    //	private long applyPerfDef(List<Object> iProperties) {
     
     //	// int ENDef = 0;
     //	// int Def = 0;

@@ -27,6 +27,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
 import javax.swing.JFileChooser;
@@ -54,8 +55,8 @@ public class D2Project {
     private JFileChooser iCharDialog;
     private JFileChooser iStashDialog;
     
-    private ArrayList iCharList = new ArrayList();
-    private ArrayList iStashList = new ArrayList();
+    private List<Object> iCharList = new ArrayList<>();
+    private List<Object> iStashList = new ArrayList<>();
     
     private int iBank;
     
@@ -132,7 +133,7 @@ public class D2Project {
                 lLoading = false;
             }
         }
-        Collections.sort(iCharList);
+        Collections.sort((List) iCharList);
         
         lLoading = true;
         iStashList.clear();
@@ -144,7 +145,7 @@ public class D2Project {
                 lLoading = false;
             }
         }
-        Collections.sort(iStashList);
+        Collections.sort((List) iStashList);
         
         if (lNew) {
             iBank = 0;
@@ -280,18 +281,18 @@ public class D2Project {
         iBackup = pBackup;
     }
     
-    public ArrayList getCharList() {
+    public List<Object> getCharList() {
         return iCharList;
     }
     
-    public ArrayList getStashList() {
+    public List<Object> getStashList() {
         return iStashList;
     }
     
     public void addChar(String pCharFileName) {
         if (!iCharList.contains(pCharFileName)) {
             iCharList.add(pCharFileName);
-            Collections.sort(iCharList);
+            Collections.sort((List) iCharList);
             iFileManager.getViewProject().refreshTreeModel(true, false);
         }
     }
@@ -302,7 +303,7 @@ public class D2Project {
         }
         if (!iStashList.contains(pStashFileName)) {
             iStashList.add(pStashFileName);
-            Collections.sort(iStashList);
+            Collections.sort((List) iStashList);
             iFileManager.getViewProject().refreshTreeModel(false, true);
             //			D2ItemListAll lListAll = iFileManager.getAllItemList();
             //			if ( lListAll != null )

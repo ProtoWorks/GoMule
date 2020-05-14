@@ -24,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import randall.util.RandallUtil;
 
@@ -47,12 +48,12 @@ public class DataFileBuilder {
         return "Unknown";
     }
     
-    public ArrayList readDataFileObjects(String pFileName, ArrayList pDatFile) throws Exception {
+    public List<Object> readDataFileObjects(String pFileName, List<Object> pDatFile) throws Exception {
         if (pFileName == null || "".equals(pFileName.trim())) {
             throw new Exception("No data file set, please set the data file in the Flavie tab");
         }
         
-        ArrayList lList = new ArrayList();
+        List<Object> lList = new ArrayList<>();
         
         File lData = new File(pFileName);
         
@@ -69,7 +70,7 @@ public class DataFileBuilder {
         CatObject lCat = null;
         SubCatObject lSubCat = null;
         
-        ArrayList lTotalObjectList = new ArrayList();
+        List<Object> lTotalObjectList = new ArrayList<>();
         
         String lLine = lIn.readLine();
         while (lLine != null) {
@@ -78,7 +79,7 @@ public class DataFileBuilder {
                 String lWork = RandallUtil.merge(RandallUtil.split(lLine, "]", true), "");
                 lWork = lWork.substring(3);
                 
-                ArrayList lItem = RandallUtil.split(lWork, "[", false);
+                List<Object> lItem = RandallUtil.split(lWork, "[", false);
                 
                 if (lItem.size() != 3 && lItem.size() != 4) {
                     throw new Exception("Incorrect line format " + lLine);
@@ -99,7 +100,7 @@ public class DataFileBuilder {
                 String lWork = RandallUtil.merge(RandallUtil.split(lLine, "]", true), "");
                 
                 lWork = lWork.substring(2);
-                ArrayList lItem = RandallUtil.split(lWork, "[", false);
+                List<Object> lItem = RandallUtil.split(lWork, "[", false);
                 
                 if (lItem.size() != 3 && lItem.size() != 4) {
                     throw new Exception("Incorrect line format " + lLine);
@@ -125,7 +126,7 @@ public class DataFileBuilder {
                 pDatFile.add(lSubCat);
             } else {
                 // TODO: Start item
-                ArrayList lItem = RandallUtil.split(lLine, ",", false);
+                List<Object> lItem = RandallUtil.split(lLine, ",", false);
                 if (lItem.size() == 1) {
                     // Ok, found a item definition
                     ItemObject lItemObject = new ItemObject((String) lItem.get(0), "", lSubCat);
@@ -159,7 +160,7 @@ public class DataFileBuilder {
                                 lDetectStart < lDetectEnd
                         ) {
                             String lDisplay = lExtra.substring(lDisplayStart + 1, lDisplayEnd);
-                            ArrayList lDetect = RandallUtil.split(lExtra.substring(lDetectStart + 1, lDetectEnd), "/", true);
+                            List<Object> lDetect = RandallUtil.split(lExtra.substring(lDetectStart + 1, lDetectEnd), "/", true);
                             
                             lItemObject.setExtraDisplay(lDisplay);
                             lItemObject.setExtraDetect(lDetect);
@@ -182,7 +183,7 @@ public class DataFileBuilder {
     }
     
     public void checkForTC(ItemObject pItemObject, String lLine) {
-        ArrayList lList = RandallUtil.split(lLine, "(", false);
+        List<Object> lList = RandallUtil.split(lLine, "(", false);
         if (lList.size() == 2 && ((String) lList.get(1)).toUpperCase().startsWith("TC")) {
             pItemObject.setItemType(((String) lList.get(0)).trim());
         } else {

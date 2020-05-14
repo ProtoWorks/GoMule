@@ -8,6 +8,7 @@ package gomule.item;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Marco
@@ -20,7 +21,7 @@ public class D2BodyLocations {
     private String iLocation;
     private String iDisplay;
     
-    public static final ArrayList sListAll = new ArrayList();
+    public static final List<Object> sListAll = new ArrayList<>();
     
     public static final D2BodyLocations BODY_HEAD = new D2BodyLocations("head", "Head", sListAll);
     public static final D2BodyLocations BODY_TORS = new D2BodyLocations("tors", "Body", sListAll);
@@ -34,7 +35,7 @@ public class D2BodyLocations {
     public static final D2BodyLocations BODY_NECK = new D2BodyLocations("neck", "Amulet", null);
     public static final D2BodyLocations BODY_LRIN = new D2BodyLocations("lrin", "Ring", null);
     
-    private D2BodyLocations(String pLocation, String pDisplay, ArrayList pListAll) {
+    private D2BodyLocations(String pLocation, String pDisplay, List<Object> pListAll) {
         iLocation = pLocation;
         iDisplay = pDisplay;
         if (pListAll != null) {
@@ -50,7 +51,7 @@ public class D2BodyLocations {
         return iDisplay;
     }
     
-    public static ArrayList getArmorFilterList() {
+    public static List<Object> getArmorFilterList() {
         return sListAll;
     }
     

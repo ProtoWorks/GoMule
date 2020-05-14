@@ -36,7 +36,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.AbstractButton;
@@ -121,10 +123,10 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
     private JRadioButton iCatAll;
     
     private RandallPanel iArmorFilter;
-    private ArrayList iArmorFilterList;
+    private List<Object> iArmorFilterList;
     
     private RandallPanel iWeaponFilter;
-    private ArrayList iWeaponFilterList;
+    private List<Object> iWeaponFilterList;
     
     private RandallPanel iSocketFilter;
     private JRadioButton iCatSocketJewel;
@@ -354,7 +356,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
     }
     
     public static String getStashName(String pFileName) {
-        ArrayList lList = RandallUtil.split(pFileName, File.separator, true);
+        List<Object> lList = RandallUtil.split(pFileName, File.separator, true);
         return (String) lList.get(lList.size() - 1);
     }
     
@@ -398,7 +400,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
             if (isStash()) {
                 iFileManager.removeItemList(iFileName, this);
             } else {
-                ArrayList lList = ((D2ItemListAll) iStash).getAllContainers();
+                List<Object> lList = ((D2ItemListAll) iStash).getAllContainers();
                 for (int i = 0; i < lList.size(); i++) {
                     D2ItemList lItemList = (D2ItemList) lList.get(i);
                     iFileManager.removeItemList(lItemList.getFilename(), this);
@@ -447,7 +449,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
             public void actionPerformed(ActionEvent pEvent) {
                 try {
                     iStash.ignoreItemListEvents();
-                    ArrayList lItemList = D2ViewClipboard.removeAllItems();
+                    List<Object> lItemList = D2ViewClipboard.removeAllItems();
                     while (lItemList.size() > 0) {
                         ((D2Stash) iStash).addItem((D2Item) lItemList.remove(0));
                     }
@@ -495,7 +497,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                     return;
                 }
                 
-                HashMap lItemList = new HashMap();
+                Map<Object, Object> lItemList = new HashMap<>();
                 
                 for (int i = 0; i < iTable.getRowCount(); i++) {
                     if (iItemModel.getItem(i).getFingerprint() != null && !iItemModel.getItem(i).getFingerprint().equals("")) {
@@ -691,8 +693,8 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         ButtonGroup lCatArmorBtnGroup = new ButtonGroup();
         RandallPanel lCategoriesArmor = new RandallPanel(true);
         
-        iArmorFilterList = new ArrayList();
-        ArrayList lArmorFilterList = D2BodyLocations.getArmorFilterList();
+        iArmorFilterList = new ArrayList<>();
+        List<Object> lArmorFilterList = D2BodyLocations.getArmorFilterList();
         for (int i = 0; i < lArmorFilterList.size(); i++) {
             D2BodyLocations lArmor = (D2BodyLocations) lArmorFilterList.get(i);
             D2RadioButton lBtn = new D2RadioButton(lArmor);
@@ -718,8 +720,8 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         RandallPanel lCurrentRow = new RandallPanel(true);
         lCategoriesWeapon.addToPanel(lCurrentRow, 0, lCurrentRowNr++, 1, RandallPanel.HORIZONTAL);
         
-        iWeaponFilterList = new ArrayList();
-        ArrayList lWeaponFilterList = D2WeaponTypes.getWeaponTypeList();
+        iWeaponFilterList = new ArrayList<>();
+        List<Object> lWeaponFilterList = D2WeaponTypes.getWeaponTypeList();
         for (int i = 0; i < lWeaponFilterList.size(); i++) {
             if (lWeaponFilterList.get(i) instanceof D2WeaponTypes) {
                 D2WeaponTypes lWeapon = (D2WeaponTypes) lWeaponFilterList.get(i);
@@ -918,12 +920,12 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
     class D2ItemModel implements TableModel {
         
         //        private D2ItemList   iStash;
-        private ArrayList iItems;
-        private ArrayList iTableModelListeners = new ArrayList();
-        private ArrayList iSortList = new ArrayList();
+        private List<Object> iItems;
+        private List<Object> iTableModelListeners = new ArrayList<>();
+        private List<Object> iSortList = new ArrayList<>();
         
         private final Object HEADER[] = new Object[]{new Object(), new Object(), new Object(), new Object(), new Object()};
-        private final ArrayList iCusFilterList = new ArrayList();
+        private final List<Object> iCusFilterList = new ArrayList<>();
         
         public D2ItemModel() {
             //            iStash = pStash;
@@ -969,9 +971,9 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                 lMaxReqDex = getInteger(iReqMaxDex);
             }
             
-            iItems = new ArrayList();
+            iItems = new ArrayList<>();
             if (iStash != null) {
-                ArrayList lList = iStash.getItemList();
+                List<Object> lList = iStash.getItemList();
                 for (int i = 0; i < lList.size(); i++) {
                     D2Item lItem = (D2Item) lList.get(i);
                     

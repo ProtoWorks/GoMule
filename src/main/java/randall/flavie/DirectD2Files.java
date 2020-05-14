@@ -23,7 +23,7 @@ package randall.flavie;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -49,7 +49,7 @@ public class DirectD2Files {
         iFlavie = pFlavie;
     }
     
-    public void readDirectD2Files(ArrayList pDataObjects, ArrayList pFileNames) throws Exception {
+    public void readDirectD2Files(List<Object> pDataObjects, List<Object> pFileNames) throws Exception {
         String errStr = "";
         File lMatchedDir = new File(Flavie.sMatchedDir);
         if (lMatchedDir.exists() && !lMatchedDir.isDirectory()) {
@@ -92,7 +92,7 @@ public class DirectD2Files {
                 //					throw new Exception("File " + lD2FileName + " can not be read");
                 //				}
                 
-                ArrayList lItems = null;
+                List<Object> lItems = null;
                 
                 if (lD2FileName.endsWith(".d2s")) {
                     try {
@@ -135,7 +135,7 @@ public class DirectD2Files {
         }
     }
     
-    public void matchItem(ArrayList pDataObjects, D2Item pItem, PrintStream pOutDualFP) {
+    public void matchItem(List<Object> pDataObjects, D2Item pItem, PrintStream pOutDualFP) {
         if (pItem.getName() == null) {
             System.err.println("Item: null");
         }

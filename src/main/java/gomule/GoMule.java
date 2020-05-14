@@ -26,7 +26,7 @@ import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
@@ -111,7 +111,7 @@ public class GoMule {
             String lLine = lIn.readLine();
             lIn.close();
             
-            ArrayList lString = RandallUtil.split(lLine, " ", false);
+            List<Object> lString = RandallUtil.split(lLine, " ", false);
             
             // Convert here
             String lReturn[] = new String[lString.size()];

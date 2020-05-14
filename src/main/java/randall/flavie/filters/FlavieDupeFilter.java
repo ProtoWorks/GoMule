@@ -7,8 +7,9 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
 
 import randall.flavie.D2ItemInterface;
 import randall.flavie.Flavie;
@@ -21,7 +22,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
     
     //	private String			iDupeFile;
     private PrintStream iDupeOut = null;
-    private HashMap iDupeList = new HashMap();
+    private Map<Object, Object> iDupeList = new HashMap<>();
     private int iDupeCounter = 0;
     
     public FlavieDupeFilter(String pDupeName, Reader pDupeFile) throws Exception {
@@ -33,7 +34,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
             if (!lLine.trim().equals("")) {
                 //				System.err.println("Test: " + lLine );
                 // Find fingerprint in this line
-                ArrayList lSplit = RandallUtil.split(lLine, " ", false);
+                List<Object> lSplit = RandallUtil.split(lLine, " ", false);
                 for (int i = 0; i < lSplit.size(); i++) {
                     if ((String) lSplit.get(i) != null) {
                         String lSplitted = ((String) lSplit.get(i)).trim();
@@ -49,7 +50,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
         System.err.println("Dupelist " + pDupeName + " contains " + iDupeList.size() + " items.");
     }
     
-    public HashMap getDupeList() {
+    public Map<Object, Object> getDupeList() {
         return iDupeList;
     }
     

@@ -8,6 +8,7 @@ package gomule.gui;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import gomule.util.D2Project;
 
@@ -23,7 +24,7 @@ public abstract class D2ItemListAdapter implements D2ItemList {
     
     private long iTimestamp;
     
-    private ArrayList iListeners = new ArrayList();
+    private List<Object> iListeners = new ArrayList<>();
     private boolean iModified;
     
     private boolean iIgnoreItemListEvents = false;

@@ -29,6 +29,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -76,12 +78,12 @@ public class RealGUI extends JFrame {
     JButton bSearch = new JButton("Find");
     JButton bClear = new JButton("Clear");
     final DCNew DC = new DCNew();
-    ArrayList nMonsterKey = new ArrayList();
+    List<Object> nMonsterKey = new ArrayList<>();
     private JPanel pMonsters;
     private Box hM2;
     Box hMI1;
     Box hMI2;
-    ArrayList nMItemKey = new ArrayList();
+    List<Object> nMItemKey = new ArrayList<>();
     private Box vMonsters;
     private JCheckBoxMenuItem cbMenuItem;
     private JCheckBoxMenuItem cbDec;
@@ -474,7 +476,7 @@ public class RealGUI extends JFrame {
             
         } else {
             Item mISelected = (Item) nMItemKey.get(nMItem.getSelectedIndex());
-            HashMap mTuple = mISelected.getFinalProbSum(DC,
+            Map<Object, Object> mTuple = mISelected.getFinalProbSum(DC,
                                                         nClass.getSelectedIndex(),
                                                         mf,
                                                         nPlayers.getSelectedIndex() + 1,

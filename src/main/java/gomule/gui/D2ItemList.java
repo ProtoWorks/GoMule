@@ -7,7 +7,7 @@
 package gomule.gui;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.List;
 
 import gomule.item.D2Item;
 import gomule.util.D2Project;
@@ -30,7 +30,7 @@ public interface D2ItemList {
     
     public void addItem(D2Item pItem);
     
-    public ArrayList getItemList();
+    public List<Object> getItemList();
     
     public int getNrItems();
     

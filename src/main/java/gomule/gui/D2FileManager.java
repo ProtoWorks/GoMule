@@ -40,7 +40,9 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -95,8 +97,8 @@ public class D2FileManager extends JFrame {
     
     private static final String CURRENT_VERSION = "R0.43: Donkey";
     
-    private HashMap iItemLists = new HashMap();
-    private ArrayList iOpenWindows;
+    private Map<Object, Object> iItemLists = new HashMap<>();
+    private List<Object> iOpenWindows;
     private JMenuBar iMenuBar;
     private JPanel iContentPane;
     private JDesktopPane iDesktopPane;
@@ -144,7 +146,7 @@ public class D2FileManager extends JFrame {
         D2TxtFile.constructTxtFiles("d2111");
         D2TblFile.readAllFiles("d2111");
         
-        iOpenWindows = new ArrayList();
+        iOpenWindows = new ArrayList<>();
         iContentPane = new JPanel();
         iDesktopPane = new JDesktopPane();
         iDesktopPane.setDragMode(1);
@@ -323,13 +325,13 @@ public class D2FileManager extends JFrame {
         lFlavie.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent pEvent) {
                 
-                ArrayList dFileNames = new ArrayList();
+                List<Object> dFileNames = new ArrayList<>();
                 
-                ArrayList lCharList = iProject.getCharList();
+                List<Object> lCharList = iProject.getCharList();
                 if (lCharList != null) {
                     dFileNames.addAll(lCharList);
                 }
-                ArrayList lStashList = iProject.getStashList();
+                List<Object> lStashList = iProject.getStashList();
                 if (lStashList != null) {
                     dFileNames.addAll(lStashList);
                 }
@@ -349,7 +351,7 @@ public class D2FileManager extends JFrame {
         projTextDump.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent pEvent) {
                 workCursor();
-                ArrayList lDumpList = iProject.getCharList();
+                List<Object> lDumpList = iProject.getCharList();
                 String errStr = "";
                 if (lDumpList != null) {
                     for (int x = 0; x < lDumpList.size(); x++) {
@@ -407,7 +409,7 @@ public class D2FileManager extends JFrame {
         iLeftPane.addToPanel(projControl, 0, 2, 1, RandallPanel.NONE);
     }
     
-    private void flavieDump(ArrayList dFileNames, boolean singleDump) {
+    private void flavieDump(List<Object> dFileNames, boolean singleDump) {
         try {
             String reportName;
             if (singleDump) {
@@ -517,7 +519,7 @@ public class D2FileManager extends JFrame {
                                 iCharacter.putOnCharacter(x, D2ViewClipboard.getItemList());
                             }
                         } else {
-                            ArrayList lItemList = D2ViewClipboard.removeAllItems();
+                            List<Object> lItemList = D2ViewClipboard.removeAllItems();
                             while (lItemList.size() > 0) {
                                 iList.addItem((D2Item) lItemList.remove(0));
                             }
@@ -635,7 +637,7 @@ public class D2FileManager extends JFrame {
             
             public void actionPerformed(ActionEvent arg0) {
                 if (iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()) > -1) {
-                    ArrayList dFileNames = new ArrayList();
+                    List<Object> dFileNames = new ArrayList<>();
                     dFileNames.add(((D2ItemContainer) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()))).getFileName());
                     flavieDump(dFileNames, true);
                 }

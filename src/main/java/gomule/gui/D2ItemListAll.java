@@ -8,6 +8,7 @@ package gomule.gui;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import gomule.d2s.D2Character;
 import gomule.d2x.D2Stash;
@@ -25,15 +26,15 @@ public class D2ItemListAll implements D2ItemList {
     private D2FileManager iFileManager;
     private D2Project iProject;
     
-    private ArrayList iList = new ArrayList();
-    private ArrayList iD2ItemListListenerList = new ArrayList();
+    private List<Object> iList = new ArrayList<>();
+    private List<Object> iD2ItemListListenerList = new ArrayList<>();
     private boolean iIgnoreItemListEvents = false;
     
     public D2ItemListAll(D2FileManager pFileManager, D2Project pProject) {
         iFileManager = pFileManager;
         iProject = pProject;
         
-        ArrayList lFileNames = new ArrayList();
+        List<Object> lFileNames = new ArrayList<>();
         
         lFileNames.addAll(iProject.getCharList());
         lFileNames.addAll(iProject.getStashList());
@@ -86,7 +87,7 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
     
-    public ArrayList getAllContainers() {
+    public List<Object> getAllContainers() {
         return iList;
     }
     
@@ -132,8 +133,8 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
     
-    public ArrayList getItemList() {
-        ArrayList lList = new ArrayList();
+    public List<Object> getItemList() {
+        List<Object> lList = new ArrayList<>();
         
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {

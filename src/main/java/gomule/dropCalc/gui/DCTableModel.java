@@ -24,7 +24,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -40,16 +42,16 @@ public class DCTableModel extends AbstractTableModel {
     private static final long serialVersionUID = -6556329099541788418L;
     
     /**
-     * Getting an ArrayList of MonsterTuples
-     * Or A HashMap of (Tuple,Prob) pairs for items
+     * Getting an List<Object> of MonsterTuples
+     * Or A Map<Object, Object> of (Tuple,Prob) pairs for items
      */
-    //	public ArrayList mNames;
-    //	public ArrayList mAreas;
-    //	public ArrayList mProbs;
+    //	public List<Object> mNames;
+    //	public List<Object> mAreas;
+    //	public List<Object> mProbs;
     
-    public ArrayList tmRows;
+    public List<Object> tmRows;
     
-    public ArrayList iTableModelListeners = new ArrayList();
+    public List<Object> iTableModelListeners = new ArrayList<>();
     public int type = 0;
     public int iSelected = 2;
     public boolean dec = true;
@@ -80,10 +82,10 @@ public class DCTableModel extends AbstractTableModel {
         fireTableStructureChanged();
     }
     
-    public void refresh(HashMap iItems, int nDiff, int classKey, boolean dec) {
+    public void refresh(Map<Object, Object> iItems, int nDiff, int classKey, boolean dec) {
         this.dec = dec;
         type = 1;
-        tmRows = new ArrayList();
+        tmRows = new ArrayList<>();
         
         Iterator it = iItems.keySet().iterator();
         while (it.hasNext()) {
@@ -127,10 +129,10 @@ public class DCTableModel extends AbstractTableModel {
         sortCol(iSelected);
     }
     
-    public void refresh(ArrayList mTuples, boolean dec) {
+    public void refresh(List<Object> mTuples, boolean dec) {
         this.dec = dec;
         type = 0;
-        tmRows = new ArrayList();
+        tmRows = new ArrayList<>();
         
         for (int x = 0; x < mTuples.size(); x = x + 1) {
             
@@ -240,7 +242,7 @@ public class DCTableModel extends AbstractTableModel {
     
     public void reset() {
         //		type = (type * -1) + 1;
-        tmRows = new ArrayList();
+        tmRows = new ArrayList<>();
         fireTableChanged();
         this.fireTableStructureChanged();
         
@@ -316,7 +318,7 @@ public class DCTableModel extends AbstractTableModel {
         //		switch(headerCol){
         
         //		case 0:
-        ////		ArrayList mNamesOld = mNames;
+        ////		List<Object> mNamesOld = mNames;
         ////		Collections.sort(mNames);
         ////		OrderColumns()
         //		break;

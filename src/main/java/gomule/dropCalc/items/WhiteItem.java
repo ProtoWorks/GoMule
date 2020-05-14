@@ -21,6 +21,7 @@
 package gomule.dropCalc.items;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import gomule.dropCalc.DCNew;
 import gomule.dropCalc.monsters.MonsterTuple;
@@ -64,7 +65,7 @@ public class WhiteItem extends Item {
         
     }
     
-    public HashMap getFinalProbSum(DCNew DC, int monSelection, int MF, int nPlayers, int nGroup, int QRecursions, boolean sevP) {
+    public Map<Object, Object> getFinalProbSum(DCNew DC, int monSelection, int MF, int nPlayers, int nGroup, int QRecursions, boolean sevP) {
         
         switch (ItemClass) {
             case 0:
@@ -83,7 +84,7 @@ public class WhiteItem extends Item {
         
     }
     
-    public HashMap getTuplesDrop() {
+    public Map<Object, Object> getTuplesDrop() {
         return mDrops;
     }
     

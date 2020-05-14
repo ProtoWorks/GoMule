@@ -25,6 +25,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -63,7 +64,7 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
     
     private static D2ViewClipboard iMouseItem;
     
-    private ArrayList iItems;
+    private List<Object> iItems;
     
     private String iFileName;
     private D2Stash iStash;
@@ -170,14 +171,14 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
     
     class D2ItemModel implements TableModel {
         
-        private ArrayList iTableModelListeners = new ArrayList();
-        private ArrayList iItems;
+        private List<Object> iTableModelListeners = new ArrayList<>();
+        private List<Object> iItems;
         
-        public D2ItemModel(ArrayList pItems) {
+        public D2ItemModel(List<Object> pItems) {
             setItems(pItems);
         }
         
-        public void setItems(ArrayList pItems) {
+        public void setItems(List<Object> pItems) {
             iItems = pItems;
         }
         
@@ -307,11 +308,11 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
         }
     }
     
-    public static ArrayList getItemList() {
+    public static List<Object> getItemList() {
         return iMouseItem.iItems;
     }
     
-    public static ArrayList removeAllItems() {
+    public static List<Object> removeAllItems() {
         return iMouseItem.iStash.removeAllItems();
         
     }

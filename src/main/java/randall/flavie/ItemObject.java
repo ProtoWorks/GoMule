@@ -21,18 +21,19 @@
 package randall.flavie;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ItemObject {
     
     private String iName;
     private String iInfo;
-    private ArrayList iItemInstances = new ArrayList();
+    private List<Object> iItemInstances = new ArrayList<>();
     private SubCatObject iSubCatObject;
     private boolean iRuneWord = false;
     private String iItemType;
     
     private String iExtraDisplay;
-    private ArrayList iExtraDetect;
+    private List<Object> iExtraDetect;
     
     public ItemObject(String pName, String pInfo, SubCatObject pSubCatObject) {
         iName = pName;
@@ -52,7 +53,7 @@ public class ItemObject {
         iItemInstances.add(pInstance);
     }
     
-    public ArrayList getInstances() {
+    public List<Object> getInstances() {
         return iItemInstances;
     }
     
@@ -99,14 +100,14 @@ public class ItemObject {
     /**
      * @return Returns the extraDetect.
      */
-    public ArrayList getExtraDetect() {
+    public List<Object> getExtraDetect() {
         return iExtraDetect;
     }
     
     /**
      * @param pExtraDetect The extraDetect to set.
      */
-    public void setExtraDetect(ArrayList pExtraDetect) {
+    public void setExtraDetect(List<Object> pExtraDetect) {
         iExtraDetect = pExtraDetect;
     }
     

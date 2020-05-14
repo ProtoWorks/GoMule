@@ -21,6 +21,7 @@
 package randall.flavie;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Marco
@@ -34,7 +35,7 @@ public class TotalObject {
     private String iShort;
     private String iStyle;
     
-    private ArrayList iChildren = new ArrayList();
+    private List<Object> iChildren = new ArrayList<>();
     
     public TotalObject(String pDisplay, String pShort, String pStyle) {
         iDisplay = pDisplay;
@@ -49,7 +50,7 @@ public class TotalObject {
     /**
      * @return Returns the children.
      */
-    public ArrayList getChildren() {
+    public List<Object> getChildren() {
         return iChildren;
     }
     

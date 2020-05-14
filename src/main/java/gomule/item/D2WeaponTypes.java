@@ -7,6 +7,7 @@
 package gomule.item;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Marco
@@ -20,7 +21,7 @@ public class D2WeaponTypes {
     private String iType2;
     private String iDisplay;
     
-    public static final ArrayList sListAll = new ArrayList();
+    public static final List<Object> sListAll = new ArrayList<>();
     
     public static final D2WeaponTypes WEAP_SWOR = new D2WeaponTypes("swor", "Sword");
     public static final D2WeaponTypes WEAP_SCEP = new D2WeaponTypes("scep", "Scepter");
@@ -98,7 +99,7 @@ public class D2WeaponTypes {
         return iDisplay;
     }
     
-    public static ArrayList getWeaponTypeList() {
+    public static List<Object> getWeaponTypeList() {
         return sListAll;
     }
     

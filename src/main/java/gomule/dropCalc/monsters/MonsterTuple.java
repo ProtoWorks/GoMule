@@ -23,7 +23,9 @@ package gomule.dropCalc.monsters;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Iterator;
+import java.util.List;
 
 import gomule.dropCalc.DCNew;
 import gomule.dropCalc.ProbTCRow;
@@ -44,9 +46,9 @@ public class MonsterTuple {
     int mSqual;
     
     //SO FOR EVERY INIT TC THERE IS A SETOF FINAL TCS MAPPED TO A SET OF FINAL TC PROBs
-    HashMap finalTCs = new HashMap();
-    HashMap finalMiscTCs = new HashMap();
-    HashMap finalTrueMiscTCs = new HashMap();
+    Map<Object, Object> finalTCs = new HashMap<>();
+    Map<Object, Object> finalMiscTCs = new HashMap<>();
+    Map<Object, Object> finalTrueMiscTCs = new HashMap<>();
     //	private int mPicks;
     private String calcdM = "";
     
@@ -87,7 +89,7 @@ public class MonsterTuple {
         return initTC;
     }
     
-    public void setFinalTCs(ArrayList allTCS) {
+    public void setFinalTCs(List<Object> allTCS) {
         
         allTCS = deleteDuplicated(allTCS);
         
@@ -103,7 +105,7 @@ public class MonsterTuple {
         }
     }
     
-    public void setFinalTrueMiscTCs(ArrayList allTCS) {
+    public void setFinalTrueMiscTCs(List<Object> allTCS) {
         
         allTCS = deleteMiscDuplicated(allTCS);
         
@@ -120,7 +122,7 @@ public class MonsterTuple {
         }
     }
     
-    public void setFinalMiscTCs(ArrayList miscTCS) {
+    public void setFinalMiscTCs(List<Object> miscTCS) {
         
         for (int x = 0; x < miscTCS.size(); x = x + 1) {
             for (int y = 0; y < ((ProbTCRow) miscTCS.get(x)).getTC().size(); y = y + 1) {
@@ -132,7 +134,7 @@ public class MonsterTuple {
         
     }
     
-    public ArrayList deleteDuplicated(ArrayList allTCS) {
+    public List<Object> deleteDuplicated(List<Object> allTCS) {
         
         for (int x = 0; x < allTCS.size(); x = x + 1) {
             
@@ -150,7 +152,7 @@ public class MonsterTuple {
         
     }
     
-    public ArrayList deleteMiscDuplicated(ArrayList allTCS) {
+    public List<Object> deleteMiscDuplicated(List<Object> allTCS) {
         
         for (int x = 0; x < allTCS.size(); x = x + 1) {
             
@@ -171,7 +173,7 @@ public class MonsterTuple {
         
     }
     
-    public HashMap getFinalTCs() {
+    public Map<Object, Object> getFinalTCs() {
         
         return finalTCs;
     }
@@ -187,8 +189,8 @@ public class MonsterTuple {
         D2TxtFileItemProperties initTCRow = D2TxtFile.TCS.searchColumns("Treasure Class", tcQuery);
         String selector = "Item1";
         String probSelector = "Prob1";
-        ArrayList thisSubTC = new ArrayList();
-        ArrayList thisSubTCProb = new ArrayList();
+        List<Object> thisSubTC = new ArrayList<>();
+        List<Object> thisSubTCProb = new ArrayList<>();
         
         if (initTCRow != null) {
             for (int x = 1; x < 11; x = x + 1) {
@@ -250,7 +252,7 @@ public class MonsterTuple {
         return (row);
     }
     
-    public ProbTCRow getLastRow(ArrayList arr) {
+    public ProbTCRow getLastRow(List<Object> arr) {
         
         return ((ProbTCRow) arr.get(arr.size() - 1));
         
@@ -272,7 +274,7 @@ public class MonsterTuple {
         String initCountess = null;
         //		double miscCounter = 1;
         int keyRow = -1;
-        ArrayList miscTCS = new ArrayList();
+        List<Object> miscTCS = new ArrayList<>();
         
         if (mParent.getID().equals("duriel")) {
             if (getInitTC().indexOf("Base") == -1) {
@@ -322,7 +324,7 @@ public class MonsterTuple {
         //		miscTCS.add(lookupTCReturnSUBATOMICTCROW(((String)getLastRow(miscTCS).getTC().get(3))));
         //		}
         
-        ArrayList gemTree = new ArrayList();
+        List<Object> gemTree = new ArrayList<>();
         for (int x = 0; x < miscTCS.size(); x++) {
             gemTree.add(new ProbTCRow((ProbTCRow) miscTCS.get(x)));
         }
@@ -333,8 +335,8 @@ public class MonsterTuple {
                                                                                                                                                       .get(getLastRow(miscTCS).getTC()
                                                                                                                                                                               .size() - 2)).indexOf(
                 "Runes") != -1) {
-            ArrayList runesArr1 = new ArrayList();
-            ArrayList runesArr2 = new ArrayList();
+            List<Object> runesArr1 = new ArrayList<>();
+            List<Object> runesArr2 = new ArrayList<>();
             for (int x = 0; x < miscTCS.size(); x++) {
                 runesArr1.add(new ProbTCRow((ProbTCRow) miscTCS.get(x)));
                 runesArr2.add(new ProbTCRow((ProbTCRow) miscTCS.get(x)));
@@ -361,7 +363,7 @@ public class MonsterTuple {
         
         if (mParent.getID().equals("The Countess")) {
             
-            HashMap countessArr = parseCountessRuneTree((String) lookupTCReturnSUBATOMICTCROW(initCountess).getTC().get(1));
+            Map<Object, Object> countessArr = parseCountessRuneTree((String) lookupTCReturnSUBATOMICTCROW(initCountess).getTC().get(1));
             
             Iterator it = countessArr.keySet().iterator();
             
@@ -403,9 +405,9 @@ public class MonsterTuple {
         
     }
     
-    private HashMap parseCountessRuneTree(String initTC) {
+    private Map<Object, Object> parseCountessRuneTree(String initTC) {
         
-        ArrayList runesArr = new ArrayList();
+        List<Object> runesArr = new ArrayList<>();
         
         //		System.out.println(initTC);
         
@@ -435,7 +437,7 @@ public class MonsterTuple {
         }
         
         runesArr = deleteMiscDuplicated(runesArr);
-        HashMap finalTrueMiscTCs = new HashMap();
+        Map<Object, Object> finalTrueMiscTCs = new HashMap<>();
         
         for (int x = 0; x < runesArr.size(); x = x + 1) {
             for (int y = 0; y < ((ProbTCRow) runesArr.get(x)).getTC().size(); y = y + 1) {
@@ -479,7 +481,7 @@ public class MonsterTuple {
         return finalTrueMiscTCs;
     }
     
-    private void parseGemTree(ArrayList gemArr, int keyRow) {
+    private void parseGemTree(List<Object> gemArr, int keyRow) {
         
         //		if(initTC.indexOf("Wraith")&&mParent.getRealName().indexOf("Ghost")){
         //		System.out.println();
@@ -582,7 +584,7 @@ public class MonsterTuple {
         
     }
     
-    private void parseRuneTree(ArrayList runesArr, int key, int keyRow) {
+    private void parseRuneTree(List<Object> runesArr, int key, int keyRow) {
         
         double miscCounter = 1;
         
@@ -675,7 +677,7 @@ public class MonsterTuple {
         String initCountess = null;
         double miscCounter = 1;
         int keyRow = -1;
-        ArrayList miscTCS = new ArrayList();
+        List<Object> miscTCS = new ArrayList<>();
         
         if (mParent.getID().equals("duriel")) {
             if (getInitTC().indexOf("Base") == -1) {
@@ -833,7 +835,7 @@ public class MonsterTuple {
         mParent.clearFinal(this);
         String initCountess = null;
         double counter = 1;
-        ArrayList allTCS = new ArrayList();
+        List<Object> allTCS = new ArrayList<>();
         
         if (mParent.getID().equals("duriel")) {
             if (getInitTC().indexOf("Base") == -1) {
@@ -1000,7 +1002,7 @@ public class MonsterTuple {
         }
     }
     
-    public void applyMPicks(HashMap Tcs, boolean sevP) {
+    public void applyMPicks(Map<Object, Object> Tcs, boolean sevP) {
         
         int picks = Integer.parseInt(D2TxtFile.TCS.searchColumns("Treasure Class", this.getInitTC()).get("Picks"));
         
@@ -1165,11 +1167,11 @@ public class MonsterTuple {
         return Level;
     }
     
-    public HashMap getFinalMiscTCs() {
+    public Map<Object, Object> getFinalMiscTCs() {
         return finalMiscTCs;
     }
     
-    public HashMap getFinalTrueMiscTCs() {
+    public Map<Object, Object> getFinalTrueMiscTCs() {
         return finalTrueMiscTCs;
     }
 }

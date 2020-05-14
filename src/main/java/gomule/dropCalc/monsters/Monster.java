@@ -22,7 +22,9 @@ package gomule.dropCalc.monsters;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Iterator;
+import java.util.List;
 
 import randall.d2files.D2TxtFile;
 import randall.d2files.D2TxtFileItemProperties;
@@ -33,7 +35,7 @@ public class Monster {
     protected String monDiff;
     protected String monID;
     protected String monName;
-    protected ArrayList mTuples;
+    protected List<Object> mTuples;
     
     /**
      * CLASS is now:
@@ -70,17 +72,17 @@ public class Monster {
     }
     
     //	protected void setUpTuples() {
-    //	mTuples = new ArrayList();
-    //	HashMap areas = findLocsMonster();
+    //	mTuples = new ArrayList<>();
+    //	Map<Object, Object> areas = findLocsMonster();
     //	enterMonLevel(areas);
-    //	ArrayList initTCs = getInitTC(areas);
+    //	List<Object> initTCs = getInitTC(areas);
     //	mTuples = createTuples(areas, initTCs);
     
     //	}
     
-    protected ArrayList createTuples(HashMap areas, ArrayList initTCs) {
+    protected List<Object> createTuples(Map<Object, Object> areas, List<Object> initTCs) {
         
-        ArrayList tOut = new ArrayList();
+        List<Object> tOut = new ArrayList<>();
         Iterator it = areas.keySet().iterator();
         int counter = 0;
         while (it.hasNext()) {
@@ -93,9 +95,9 @@ public class Monster {
         return tOut;
     }
     
-    protected HashMap findLocsMonster(int cFlag) {
-        ArrayList monSearch = new ArrayList();
-        HashMap monLvlAreas = new HashMap();
+    protected Map<Object, Object> findLocsMonster(int cFlag) {
+        List<Object> monSearch = new ArrayList<>();
+        Map<Object, Object> monLvlAreas = new HashMap<>();
         
         String selector = "mon1";
         
@@ -121,10 +123,10 @@ public class Monster {
         return monLvlAreas;
     }
     
-    protected ArrayList getInitTC(HashMap monLvlAreas, String header) {
+    protected List<Object> getInitTC(Map<Object, Object> monLvlAreas, String header) {
         
         String initTC = "";
-        ArrayList tcArr = new ArrayList();
+        List<Object> tcArr = new ArrayList<>();
         Iterator it = monLvlAreas.keySet().iterator();
         while (it.hasNext()) {
             String area = (String) it.next();
@@ -170,12 +172,12 @@ public class Monster {
         return initTCRow.get("Treasure Class");
     }
     
-    //	public ArrayList getRealInitTC(){
+    //	public List<Object> getRealInitTC(){
     //	return initTC;
     //	}
     
-    protected HashMap findLocsBossMonster() {
-        HashMap monLvlAreas = new HashMap();
+    protected Map<Object, Object> findLocsBossMonster() {
+        Map<Object, Object> monLvlAreas = new HashMap<>();
         
         if (monID.equals("andariel")) {
             monLvlAreas.put("Act 1 - Catacombs 4", new Integer(0));
@@ -217,7 +219,7 @@ public class Monster {
         return monLvlAreas;
     }
     
-    protected void findLevelsBossMonster(HashMap monLvlAreas) {
+    protected void findLevelsBossMonster(Map<Object, Object> monLvlAreas) {
         
         for (int x = 0; x < monLvlAreas.size(); x++) {
             String selector = "Level";
@@ -266,9 +268,9 @@ public class Monster {
         
     }
     
-    public HashMap getFinal() {
+    public Map<Object, Object> getFinal() {
         
-        HashMap finalList = new HashMap();
+        Map<Object, Object> finalList = new HashMap<>();
         for (int x = 0; x < mTuples.size(); x = x + 1) {
             
             finalList.putAll(((MonsterTuple) mTuples.get(x)).getFinalTCs());
@@ -279,9 +281,9 @@ public class Monster {
         
     }
     
-    protected void findLocsSU(int i, HashMap lvlArr, String ID) {
+    protected void findLocsSU(int i, Map<Object, Object> lvlArr, String ID) {
         
-        HashMap areaSUPair = new HashMap();
+        Map<Object, Object> areaSUPair = new HashMap<>();
         
         areaSUPair.put("Bishibosh", "Act 1 - Wilderness 2");
         areaSUPair.put("Bonebreak", "Act 1 - Crypt 1 A");
@@ -364,7 +366,7 @@ public class Monster {
         
     }
     
-    public ArrayList getmTuples() {
+    public List<Object> getmTuples() {
         return this.mTuples;
     }
     

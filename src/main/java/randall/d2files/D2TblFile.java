@@ -22,6 +22,7 @@ package randall.d2files;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
 import gomule.gui.D2FileManager;
 
@@ -39,7 +40,7 @@ public class D2TblFile {
     private static D2TblFile ENG_EXP;
     private static D2TblFile ENG_STRING;
     
-    private HashMap iHashMap = new HashMap();
+    private Map<Object, Object> iHashMap = new HashMap<>();
     
     public static void readAllFiles(String pMod) {
         sMod = pMod;

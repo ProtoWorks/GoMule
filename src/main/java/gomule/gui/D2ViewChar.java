@@ -39,7 +39,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
@@ -630,7 +630,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     
                     //					try{
                     //					if(lTemp.isUnique() || lTemp.isSet() || lTemp.isRuneWord()){
-                    //					ArrayList perfect = lTemp.getPerfectString();
+                    //					List<Object> perfect = lTemp.getPerfectString();
                     //					JTextPane reportBest = new JTextPane();
                     //					JScrollPane SPBest = new JScrollPane(reportBest);
                     //					reportBest.setBackground(Color.getHSBColor(bGrey[0], bGrey[1], bGrey[2]));
@@ -2862,7 +2862,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         return iCharacter;
     }
     
-    public void putOnCharacter(int areaCode, ArrayList dropList) {
+    public void putOnCharacter(int areaCode, List<Object> dropList) {
         
         iCharacter.ignoreItemListEvents();
         int dPanel = 0;

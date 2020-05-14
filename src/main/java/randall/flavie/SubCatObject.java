@@ -21,11 +21,12 @@
 package randall.flavie;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SubCatObject implements Comparable {
     
     private String iSubCat;
-    private ArrayList iItemObjects = new ArrayList();
+    private List<Object> iItemObjects = new ArrayList<>();
     private CatObject iCatObject;
     
     public SubCatObject(String pSubCat, CatObject pCatObject) {
@@ -41,7 +42,7 @@ public class SubCatObject implements Comparable {
         iItemObjects.add(pItemObject);
     }
     
-    public ArrayList getItemObjects() {
+    public List<Object> getItemObjects() {
         return iItemObjects;
     }
     

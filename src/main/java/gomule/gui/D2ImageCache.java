@@ -26,6 +26,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -42,9 +43,9 @@ import gomule.item.D2dc6;
  */
 public class D2ImageCache {
     
-    private static HashMap sImages = new HashMap();
-    private static HashMap sDC6Images = new HashMap();
-    private static HashMap sIcon = new HashMap();
+    private static Map<Object, Object> sImages = new HashMap<>();
+    private static Map<Object, Object> sDC6Images = new HashMap<>();
+    private static Map<Object, Object> sIcon = new HashMap<>();
     
     public static Image getImage(String pImageName) {
         return getImageAbsolute("resources" + File.separator + pImageName);

@@ -22,7 +22,9 @@ package gomule.dropCalc.monsters;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Iterator;
+import java.util.List;
 
 import randall.d2files.D2TblFile;
 import randall.d2files.D2TxtFile;
@@ -34,14 +36,14 @@ public class Regular extends Monster {
         super(monRow, monDiff, monClass, flag);
         this.monName = D2TblFile.getString(monRow.get("NameStr"));
         
-        mTuples = new ArrayList();
-        HashMap areas = findLocsMonster(0);
+        mTuples = new ArrayList<>();
+        Map<Object, Object> areas = findLocsMonster(0);
         enterMonLevel(areas);
-        ArrayList initTCs = getInitTC(areas, "TreasureClass1");
+        List<Object> initTCs = getInitTC(areas, "TreasureClass1");
         mTuples = createTuples(areas, initTCs);
     }
     
-    public void enterMonLevel(HashMap monLvlAreas) {
+    public void enterMonLevel(Map<Object, Object> monLvlAreas) {
         
         Iterator it = monLvlAreas.keySet().iterator();
         while (it.hasNext()) {
