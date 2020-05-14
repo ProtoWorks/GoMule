@@ -115,7 +115,7 @@ public class Flavie {
     
     public boolean checkForRuneWord(String pName, String pRunes) {
         //	    System.err.println("checkForRuneWord(" + pName + ", " + pRunes);
-        List<Object> lList = RandallUtil.split(pRunes, "-", false);
+        List<String> lList = RandallUtil.split(pRunes, "-", false);
         if (lList.size() <= 1) {
             return false;
         }

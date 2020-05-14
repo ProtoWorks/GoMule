@@ -112,12 +112,12 @@ public class GoMule {
             String lLine = lIn.readLine();
             lIn.close();
             
-            List<Object> lString = RandallUtil.split(lLine, " ", false);
+            List<String> lString = RandallUtil.split(lLine, " ", false);
             
             // Convert here
             String lReturn[] = new String[lString.size()];
             for (int i = 0; i < lString.size(); i++) {
-                lReturn[i] = (String) lString.get(i);
+                lReturn[i] = lString.get(i);
             }
             return lReturn;
         } catch (Exception e) {

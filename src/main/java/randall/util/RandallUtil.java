@@ -20,154 +20,65 @@
  ******************************************************************************/
 package randall.util;
 
+import lombok.NonNull;
+import lombok.experimental.UtilityClass;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
+@UtilityClass
 public class RandallUtil {
-    //	private static final String ICON_PATH = "/randall/images/";
-    //	private static Map<Object, Object> iIcons = new HashMap<>();
     
-    //   public static ImageIcon getIcon( String iconName )
-    //    throws IOException
-    //    {
-    //        if( iIcons.containsKey( iconName))
-    //        {
-    //            return (ImageIcon) iIcons.get( iconName);
-    //        }
-    //
-    //        ImageIcon icon = null;
-    //        icon = loadImageIcon( iconName);
-    //        iIcons.put( iconName, icon);
-    //        return icon;
-    //    }
-    
-    //    private static ImageIcon loadImageIcon( String iconName)
-    //    throws IOException
-    //	{
-    //	    ImageIcon icon = null;
-    //	    //Class klasse = getClass();
-    //	    InputStream inputStream =  InputStream.class.getResourceAsStream(ICON_PATH + iconName);
-    //	    if (inputStream != null)
-    //	    {
-    //	        byte[] buffer = new byte[0];
-    //	        byte[] tmpbuf = new byte[1024];
-    //	        while (true)
-    //	        {
-    //	            int laenge = inputStream.read(tmpbuf);
-    //	            if (laenge <= 0)
-    //	            {
-    //	                break;
-    //	            }
-    //	            byte[] newbuf = new byte[buffer.length + laenge];
-    //	            System.arraycopy(buffer, 0, newbuf, 0, buffer.length);
-    //	            System.arraycopy(tmpbuf, 0, newbuf, buffer.length, laenge);
-    //	            buffer = newbuf;
-    //	        }
-    //	        //create image
-    //	        icon = new ImageIcon(buffer);
-    //	        inputStream.close();
-    //	    }
-    //	    return icon;
-    //	}
-    
-    public static String merge(List<Object> pArrayList, String pJoin) {
-        String lReturn = "";
-        if (pArrayList.size() > 0) {
-            lReturn += (String) pArrayList.get(0);
-            for (int i = 1; i < pArrayList.size(); i++) {
-                lReturn += pJoin + pArrayList.get(i);
-            }
-        }
-        return lReturn;
+    public String merge(@NonNull List<String> list, @NonNull String join) {
+        return String.join(join, list);
     }
     
-    //	public static int count(String pString, String pOccurance, boolean pIgnoreCase)
-    //	{
-    //	    int lCount = 0;
-    //
-    //	    int lIndex = pString.indexOf(pOccurance, 0);
-    //	    while ( lIndex != -1 )
-    //	    {
-    //	        lCount++;
-    //	        lIndex = pString.indexOf(pOccurance, lIndex+1);
-    //	    }
-    //
-    //	    return lCount;
-    //	}
-    
-    public static List<Object> split(String pString, String pSeparator, boolean pIgnoreCase) {
-        List<Object> lSplit = new ArrayList<>();
-        int lIndex = 0;
-        int lSeparator;
-        String lSubString;
+    public List<String> split(@NonNull String input, @NonNull String separator, boolean ignoreCase) {
+        if (!ignoreCase) {
+            return Arrays.asList(input.split(Pattern.quote(separator)));
+        }
+        String lowerInput = input.toLowerCase();
+        String lowerSeparator = separator.toLowerCase();
         
-        // For (faster) uppercase comparing
-        String pCompStr;
-        String pCompSep;
-        if (pIgnoreCase) {
-            pCompStr = (pString == null) ? null : pString.toLowerCase();
-            pCompSep = (pSeparator == null) ? "," : pSeparator.toLowerCase();
-        } else {
-            pCompStr = pString;
-            pCompSep = pSeparator;
+        // fast quit
+        if (!lowerInput.contains(lowerSeparator)) {
+            return Collections.singletonList(input);
         }
         
-        // In case of lengths not being equal, split while not ignoring case.
-        if (pString != null && pCompStr != null && pCompStr.length() != pString.length()) {
-            // The compare without lowercase
-            pCompStr = pString;
-            pCompSep = pSeparator;
+        int index = 0;
+        List<String> result = new ArrayList<>();
+        while (lowerInput.indexOf(lowerSeparator, index) > -1) {
+            result.add(input.substring(index, lowerInput.indexOf(lowerSeparator, index)));
+            index = lowerInput.indexOf(lowerSeparator, index) + lowerSeparator.length();
         }
-        
-        if (pString != null) {
-            while (lIndex < pString.length()) {
-                // find first Separator starting from lIndex
-                lSeparator = pCompStr.indexOf(pCompSep, lIndex); // pCompStr.length()
-                if (lSeparator == -1) {
-                    lSubString = pString.substring(lIndex);
-                    lIndex = pString.length();
-                } else {
-                    lSubString = pString.substring(lIndex, lSeparator);
-                    lIndex = lSeparator + pSeparator.length();
-                }
-                lSplit.add(lSubString.trim());
-            }
-        }
-        return lSplit;
+        result.add(input.substring(index));
+        return result;
     }
     
-    public static String fill(int pValue, int pDigits) {
-        String lValue = Integer.toString(pValue);
-        
-        if (lValue.length() > pDigits) {
-            return lValue.substring(lValue.length() - pDigits);
-        }
-        
-        while (lValue.length() < pDigits) {
-            lValue = "0" + lValue;
-        }
-        
-        return lValue;
+    public String fill(int value, int digits) {
+        return String.format("%" + digits + "s", value % Math.pow(10, digits));
     }
     
-    public static void checkDir(String pDir) throws Exception {
-        File lDir = new File(pDir);
+    public void checkDir(@NonNull String dir) throws Exception {
+        File lDir = new File(dir);
         
         if (!lDir.exists()) {
             if (!lDir.mkdirs()) {
-                throw new Exception("Can not create backup dir: " + pDir);
+                throw new Exception("Can not create backup dir: " + dir);
             }
         }
         if (!lDir.isDirectory()) {
-            throw new Exception("File exists with name of backup dir: " + pDir);
+            throw new Exception("File exists with name of backup dir: " + dir);
         }
         if (!lDir.canRead()) {
-            throw new Exception("Can not read backup dir: " + pDir);
+            throw new Exception("Can not read backup dir: " + dir);
         }
         if (!lDir.canWrite()) {
-            throw new Exception("Can not write backup dir: " + pDir);
+            throw new Exception("Can not write backup dir: " + dir);
         }
     }
-    
 }

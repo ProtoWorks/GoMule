@@ -34,10 +34,10 @@ public class FlavieDupeFilter implements FlavieItemFilter {
             if (!lLine.trim().equals("")) {
                 //				System.err.println("Test: " + lLine );
                 // Find fingerprint in this line
-                List<Object> lSplit = RandallUtil.split(lLine, " ", false);
+                List<String> lSplit = RandallUtil.split(lLine, " ", false);
                 for (int i = 0; i < lSplit.size(); i++) {
                     if (lSplit.get(i) != null) {
-                        String lSplitted = ((String) lSplit.get(i)).trim();
+                        String lSplitted = lSplit.get(i).trim();
                         if (lSplitted.startsWith("0x")) {
                             iDupeList.put(lSplitted, lLine.trim());
                         }

@@ -366,8 +366,8 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
     }
     
     public static String getStashName(String pFileName) {
-        List<Object> lList = RandallUtil.split(pFileName, File.separator, true);
-        return (String) lList.get(lList.size() - 1);
+        List<String> lList = RandallUtil.split(pFileName, File.separator, true);
+        return lList.get(lList.size() - 1);
     }
     
     public void activateView() {
