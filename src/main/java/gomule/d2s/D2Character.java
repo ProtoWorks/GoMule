@@ -332,16 +332,16 @@ public class D2Character extends D2ItemListAdapter {
         cStats[20] = cStats[20] + (10 * resCounter);
         cStats[21] = cStats[21] + (10 * resCounter);
         if (hasMerc()) {
-            List<Object> hireArr = D2TxtFile.HIRE.searchColumnsMultipleHits("SubType", getMercType());
+            List<D2TxtFileItemProperties> hireArr = D2TxtFile.HIRE.searchColumnsMultipleHits("SubType", getMercType());
             for (int x = 0; x < hireArr.size(); x = x + 1) {
-                if (((D2TxtFileItemProperties) hireArr.get(x)).get("Version").equals("100") && Integer.parseInt(((D2TxtFileItemProperties) hireArr.get(x)).get("Level")) <= getMercLevel()) {
-                    mercHireCol = (D2TxtFileItemProperties) hireArr.get(x);
+                if (hireArr.get(x).get("Version").equals("100") && Integer.parseInt(hireArr.get(x).get("Level")) <= getMercLevel()) {
+                    mercHireCol = hireArr.get(x);
                 }
             }
             if (mercHireCol == null) {
                 for (int x = 0; x < hireArr.size(); x = x + 1) {
-                    if (((D2TxtFileItemProperties) hireArr.get(x)).get("Version").equals("100") && Integer.parseInt(((D2TxtFileItemProperties) hireArr.get(x)).get("Level")) > getMercLevel()) {
-                        mercHireCol = (D2TxtFileItemProperties) hireArr.get(x);
+                    if (hireArr.get(x).get("Version").equals("100") && Integer.parseInt(hireArr.get(x).get("Level")) > getMercLevel()) {
+                        mercHireCol = hireArr.get(x);
                         break;
                     }
                 }
@@ -1472,7 +1472,7 @@ public class D2Character extends D2ItemListAdapter {
         out.append(getStatString());
         out.append("\n\n");
         
-        List<Object> skillArr = D2TxtFile.SKILLS.searchColumnsMultipleHits("charclass", cClass);
+        List<D2TxtFileItemProperties> skillArr = D2TxtFile.SKILLS.searchColumnsMultipleHits("charclass", cClass);
         String[] skillTrees = new String[]{"", "", ""};
         int[] skillCounter = new int[3];
         

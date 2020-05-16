@@ -20,10 +20,10 @@
  ******************************************************************************/
 package randall.flavie;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -32,10 +32,10 @@ import java.util.List;
 
 @Getter
 @Builder
-@RequiredArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of = "cat")
 @ToString(of = "cat")
-public class CatObject implements Comparable<CatObject> {
+public class CatObject implements HasCounter, Comparable<CatObject> {
     
     private final String cat;
     private final List<SubCatObject> subCats = new ArrayList<>();

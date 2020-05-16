@@ -990,7 +990,7 @@ public class DCNew {
     
     public double generateRarityList(MonsterTuple monT, Item item) {
         
-        List<Object> list = new ArrayList<>();
+        List<D2TxtFileItemProperties> list = new ArrayList<>();
         switch (item.getiNUS()) {
             case 1:
                 list = D2TxtFile.UNIQUES.searchColumnsMultipleHits("code", item.getItemCode());
@@ -1006,8 +1006,8 @@ public class DCNew {
         
         double count = 0;
         for (int x = 0; x < list.size(); x++) {
-            if (Integer.parseInt(((D2TxtFileItemProperties) list.get(x)).get("lvl")) <= monT.getLevel()) {
-                count = count + Integer.parseInt(((D2TxtFileItemProperties) list.get(x)).get("rarity"));
+            if (Integer.parseInt(list.get(x).get("lvl")) <= monT.getLevel()) {
+                count = count + Integer.parseInt(list.get(x).get("rarity"));
             }
         }
         

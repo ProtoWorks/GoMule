@@ -96,7 +96,7 @@ public class Monster {
     }
     
     protected Map<Object, Object> findLocsMonster(int cFlag) {
-        List<Object> monSearch = new ArrayList<>();
+        List<D2TxtFileItemProperties> monSearch = new ArrayList<>();
         Map<Object, Object> monLvlAreas = new HashMap<>();
         
         String selector = "mon1";

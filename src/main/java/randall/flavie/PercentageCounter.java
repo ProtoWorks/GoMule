@@ -69,7 +69,7 @@ public class PercentageCounter {
         //        String lClass = "cat";
         
         if (iTotalObject != null) {
-            PercentageCounter lCounter = iTotalObject.getPercentageCounter();
+            PercentageCounter lCounter = iTotalObject.getCounter();
             iNrItemsFound = lCounter.iNrItemsFound;
             iNrItems = lCounter.iNrItems;
             

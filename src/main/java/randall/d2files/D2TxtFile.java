@@ -292,8 +292,8 @@ public final class D2TxtFile {
         return null;
     }
     
-    public List<Object> searchColumnsMultipleHits(String pCol, String pText) {
-        List<Object> hits = new ArrayList<>();
+    public List<D2TxtFileItemProperties> searchColumnsMultipleHits(String pCol, String pText) {
+        List<D2TxtFileItemProperties> hits = new ArrayList<>();
         int lColNr = getCol(pCol);
         
         if (lColNr != -1) {

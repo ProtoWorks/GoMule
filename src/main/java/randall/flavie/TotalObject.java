@@ -20,72 +20,31 @@
  ******************************************************************************/
 package randall.flavie;
 
+import lombok.Value;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Marco
- * <p>
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
-public class TotalObject {
+@Value
+public class TotalObject implements HasCounter {
     
-    private String iDisplay;
-    private String iShort;
-    private String iStyle;
+    String display;
+    String shortString;
+    String style;
     
-    private List<Object> iChildren = new ArrayList<>();
+    List<HasCounter> children = new ArrayList<>();
     
-    public TotalObject(String pDisplay, String pShort, String pStyle) {
-        iDisplay = pDisplay;
-        iShort = pShort;
-        iStyle = pStyle;
+    public void addChild(HasCounter child) {
+        children.add(child);
     }
     
-    public void addChild(Object pChild) {
-        iChildren.add(pChild);
-    }
-    
-    /**
-     * @return Returns the children.
-     */
-    public List<Object> getChildren() {
-        return iChildren;
-    }
-    
-    /**
-     * @return Returns the display.
-     */
-    public String getDisplay() {
-        return iDisplay;
-    }
-    
-    /**
-     * @return Returns the short.
-     */
-    public String getShort() {
-        return iShort;
-    }
-    
-    /**
-     * @return Returns the type.
-     */
-    public String getStyle() {
-        return iStyle;
-    }
-    
-    public PercentageCounter getPercentageCounter() {
-        PercentageCounter lCounter = new PercentageCounter();
-        
-        for (int i = 0; i < iChildren.size(); i++) {
-            if (iChildren.get(i) instanceof TotalObject) {
-                lCounter.add(((TotalObject) iChildren.get(i)).getPercentageCounter());
-            } else if (iChildren.get(i) instanceof CatObject) {
-                lCounter.add(((CatObject) iChildren.get(i)).getCounter());
-            }
-        }
-        
-        return lCounter;
+    @Override
+    public PercentageCounter getCounter() {
+        PercentageCounter counter = new PercentageCounter();
+        children.stream().map(HasCounter::getCounter).forEach(counter::add);
+        return counter;
     }
 }
