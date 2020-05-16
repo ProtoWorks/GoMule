@@ -20,108 +20,34 @@
  ******************************************************************************/
 package randall.flavie;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@ToString(of = "name")
 public class ItemObject {
     
-    private String iName;
-    private String iInfo;
-    private List<Object> iItemInstances = new ArrayList<>();
-    private SubCatObject iSubCatObject;
-    private boolean iRuneWord = false;
-    private String iItemType;
+    private final String name;
+    private final String info;
+    private final List<D2ItemInterface> itemInstances = new ArrayList<>();
+    private final SubCatObject subCatObject;
+    @Setter private boolean runeWord = false;
+    @Setter private String itemType;
     
-    private String iExtraDisplay;
-    private List<Object> iExtraDetect;
+    @Setter private String extraDisplay;
+    @Setter private List<String> extraDetect;
     
-    public ItemObject(String pName, String pInfo, SubCatObject pSubCatObject) {
-        iName = pName;
-        iInfo = pInfo;
-        iSubCatObject = pSubCatObject;
+    public ItemObject(String name, String info, SubCatObject subCatObject) {
+        this.name = name;
+        this.info = info;
+        this.subCatObject = subCatObject;
     }
     
-    public String getName() {
-        return iName;
-    }
-    
-    public String getInfo() {
-        return iInfo;
-    }
-    
-    public void addItemInstance(D2ItemInterface pInstance) {
-        iItemInstances.add(pInstance);
-    }
-    
-    public List<Object> getInstances() {
-        return iItemInstances;
-    }
-    
-    public String toString() {
-        return iName;
-    }
-    
-    public SubCatObject getSubCatObject() {
-        return iSubCatObject;
-    }
-    
-    public void setSubCatObject(SubCatObject pSubCatObject) {
-        iSubCatObject = pSubCatObject;
-    }
-    
-    /**
-     * @return Returns the runeWord.
-     */
-    public boolean isRuneWord() {
-        return iRuneWord;
-    }
-    
-    /**
-     * @param pRuneWord The runeWord to set.
-     */
-    public void setRuneWord(boolean pRuneWord) {
-        iRuneWord = pRuneWord;
-    }
-    
-    /**
-     * @return Returns the itemType.
-     */
-    public String getItemType() {
-        return iItemType;
-    }
-    
-    /**
-     * @param pItemType The itemType to set.
-     */
-    public void setItemType(String pItemType) {
-        iItemType = pItemType;
-    }
-    
-    /**
-     * @return Returns the extraDetect.
-     */
-    public List<Object> getExtraDetect() {
-        return iExtraDetect;
-    }
-    
-    /**
-     * @param pExtraDetect The extraDetect to set.
-     */
-    public void setExtraDetect(List<Object> pExtraDetect) {
-        iExtraDetect = pExtraDetect;
-    }
-    
-    /**
-     * @return Returns the extraDisplay.
-     */
-    public String getExtraDisplay() {
-        return iExtraDisplay;
-    }
-    
-    /**
-     * @param pExtraDisplay The extraDisplay to set.
-     */
-    public void setExtraDisplay(String pExtraDisplay) {
-        iExtraDisplay = pExtraDisplay;
+    public void addItemInstance(D2ItemInterface instance) {
+        itemInstances.add(instance);
     }
 }

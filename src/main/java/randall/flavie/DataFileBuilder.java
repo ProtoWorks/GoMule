@@ -164,7 +164,7 @@ public class DataFileBuilder {
                             List<String> lDetect = RandallUtil.split(lExtra.substring(lDetectStart + 1, lDetectEnd), "/", true);
                             
                             lItemObject.setExtraDisplay(lDisplay);
-                            lItemObject.setExtraDetect((List) lDetect);
+                            lItemObject.setExtraDetect(lDetect);
                         }
                     }
                     lList.add(lItemObject);

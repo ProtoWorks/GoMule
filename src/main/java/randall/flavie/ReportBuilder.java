@@ -115,10 +115,10 @@ public class ReportBuilder {
                         int lNrItemsFoundCharacter = 0;
                         int lNrItemsFoundEthereal = 0;
                         
-                        List<Object> lItemInstanceList = lItemObjectCompare.getInstances();
+                        List<D2ItemInterface> lItemInstanceList = lItemObjectCompare.getItemInstances();
                         for (int l = 0; l < lItemInstanceList.size(); l++) {
                             lNrItemsFoundTotal++;
-                            D2ItemInterface lInstance = (D2ItemInterface) lItemInstanceList.get(l);
+                            D2ItemInterface lInstance = lItemInstanceList.get(l);
                             if (lInstance.isCharacter()) {
                                 lNrItemsFoundCharacter++;
                             } else {
@@ -191,10 +191,10 @@ public class ReportBuilder {
                     int lNrItemsFoundCharacter = 0;
                     int lNrItemsFoundEthereal = 0;
                     
-                    List<Object> lItemInstanceList = lItemObjectCompare.getInstances();
+                    List<D2ItemInterface> lItemInstanceList = lItemObjectCompare.getItemInstances();
                     for (int l = 0; l < lItemInstanceList.size(); l++) {
                         lNrItemsFoundTotal++;
-                        D2ItemInterface lInstance = (D2ItemInterface) lItemInstanceList.get(l);
+                        D2ItemInterface lInstance = lItemInstanceList.get(l);
                         if (lInstance.isCharacter()) {
                             lNrItemsFoundCharacter++;
                         } else {
@@ -229,10 +229,10 @@ public class ReportBuilder {
                 int lNrItemsFoundCharacter = 0;
                 int lNrItemsFoundEthereal = 0;
                 
-                List<Object> lItemInstanceList = lItemObject.getInstances();
+                List<D2ItemInterface> lItemInstanceList = lItemObject.getItemInstances();
                 for (int l = 0; l < lItemInstanceList.size(); l++) {
                     lNrItemsFoundTotal++;
-                    D2ItemInterface lInstance = (D2ItemInterface) lItemInstanceList.get(l);
+                    D2ItemInterface lInstance = lItemInstanceList.get(l);
                     if (lInstance.isCharacter()) {
                         lNrItemsFoundCharacter++;
                     } else {

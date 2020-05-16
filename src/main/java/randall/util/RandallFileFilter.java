@@ -20,11 +20,7 @@
  ******************************************************************************/
 package randall.util;
 
-/**
- * @author Marco
- * @version 1.0
- */
-
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Value;
 
@@ -32,7 +28,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Marco
+ * @version 1.0
+ */
 @Value
+@EqualsAndHashCode(callSuper = false)
 public class RandallFileFilter extends javax.swing.filechooser.FileFilter {
     
     List<String> extensions = new ArrayList<>();
@@ -43,8 +44,7 @@ public class RandallFileFilter extends javax.swing.filechooser.FileFilter {
         if (file.isDirectory()) {
             return true;
         }
-        return extensions.stream()
-                         .anyMatch(extension -> file.getAbsolutePath().toLowerCase().endsWith(extension));
+        return extensions.stream().anyMatch(extension -> file.getAbsolutePath().toLowerCase().endsWith(extension));
     }
     
     public void addExtension(@NonNull String extension) {
