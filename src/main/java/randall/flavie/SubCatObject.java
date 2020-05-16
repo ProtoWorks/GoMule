@@ -20,45 +20,34 @@
  ******************************************************************************/
 package randall.flavie;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.Value;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubCatObject implements Comparable {
+import com.google.common.collect.ImmutableList;
+
+@Value
+@ToString(of = "subCat")
+@EqualsAndHashCode(of = "subCat")
+public class SubCatObject implements Comparable<SubCatObject> {
     
-    private String iSubCat;
-    private List<Object> iItemObjects = new ArrayList<>();
-    private CatObject iCatObject;
+    String subCat;
+    List<ItemObject> itemObjects = new ArrayList<>();
+    CatObject catObject;
     
-    public SubCatObject(String pSubCat, CatObject pCatObject) {
-        iSubCat = pSubCat;
-        iCatObject = pCatObject;
+    public void addItemObject(ItemObject itemObject) {
+        itemObjects.add(itemObject);
     }
     
-    public String toString() {
-        return iSubCat;
+    public ImmutableList<ItemObject> getItemObjects() {
+        return ImmutableList.copyOf(itemObjects);
     }
     
-    public void addItemObject(ItemObject pItemObject) {
-        iItemObjects.add(pItemObject);
-    }
-    
-    public List<Object> getItemObjects() {
-        return iItemObjects;
-    }
-    
-    public int compareTo(Object pObject) {
-        return toString().compareTo(pObject.toString());
-    }
-    
-    public boolean equals(Object pObject) {
-        return toString().equals(pObject.toString());
-    }
-    
-    public CatObject getCatObject() {
-        return iCatObject;
-    }
-    
-    public void setCatObject(CatObject pCatObject) {
-        iCatObject = pCatObject;
+    @Override
+    public int compareTo(SubCatObject object) {
+        return subCat.compareTo(object.subCat);
     }
 }

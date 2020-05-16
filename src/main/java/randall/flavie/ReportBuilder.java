@@ -106,10 +106,10 @@ public class ReportBuilder {
                 for (int j = 0; j < lSubCatList.size(); j++) {
                     SubCatObject lSubCatCompare = lSubCatList.get(j);
                     
-                    List<Object> lItemObjectList = lSubCatCompare.getItemObjects();
+                    List<ItemObject> lItemObjectList = lSubCatCompare.getItemObjects();
                     for (int k = 0; k < lItemObjectList.size(); k++) {
                         lNrItems++;
-                        ItemObject lItemObjectCompare = (ItemObject) lItemObjectList.get(k);
+                        ItemObject lItemObjectCompare = lItemObjectList.get(k);
                         int lNrItemsFoundTotal = 0;
                         int lNrItemsFoundStash = 0;
                         int lNrItemsFoundCharacter = 0;
@@ -182,10 +182,10 @@ public class ReportBuilder {
                 
                 //				List<Object> lSubCatList = lCatObject.getSubCats();
                 
-                List<Object> lItemObjectList = lSubCatObject.getItemObjects();
+                List<ItemObject> lItemObjectList = lSubCatObject.getItemObjects();
                 for (int k = 0; k < lItemObjectList.size(); k++) {
                     lNrItems++;
-                    ItemObject lItemObjectCompare = (ItemObject) lItemObjectList.get(k);
+                    ItemObject lItemObjectCompare = lItemObjectList.get(k);
                     int lNrItemsFoundTotal = 0;
                     int lNrItemsFoundStash = 0;
                     int lNrItemsFoundCharacter = 0;
