@@ -10,10 +10,12 @@ import randall.flavie.D2ItemInterface;
  */
 public interface FlavieItemFilter {
     
-    void initialize() throws Exception;
+    int getDupeCount();
+    
+    void initialize();
     
     // TODO closeable?
-    void finish() throws Exception;
+    void finish();
     
     boolean check(D2ItemInterface itemFound);
 }

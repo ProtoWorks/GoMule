@@ -140,7 +140,7 @@ public class DataFileBuilder {
                     }
                     // Ok, found a item definition
                     ItemObject lItemObject = new ItemObject(lItem.get(0), lItem.get(1), lSubCat);
-                    if (iFlavie.checkForRuneWord(lItem.get(0), lItem.get(1))) {
+                    if (iFlavie.checkForRuneWord(lItem.get(1))) {
                         lItemObject.setRuneWord(true);
                     } else {
                         checkForTC(lItemObject, lItem.get(1));

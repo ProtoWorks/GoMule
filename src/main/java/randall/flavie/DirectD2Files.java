@@ -51,7 +51,7 @@ public class DirectD2Files {
     
     public void readDirectD2Files(List<Object> pDataObjects, List<Object> pFileNames) throws Exception {
         String errStr = "";
-        File lMatchedDir = new File(Flavie.sMatchedDir);
+        File lMatchedDir = new File(Flavie.MATCHED_DIR);
         if (lMatchedDir.exists() && !lMatchedDir.isDirectory()) {
             throw new Exception("If there is a file called matched in the Flavie directory, please delete it");
         }
@@ -59,7 +59,7 @@ public class DirectD2Files {
             throw new Exception("The directory called matched is missing, please create it");
         }
         
-        File lDualFP = new File(Flavie.sMatchedDir + "matched.dualFP.txt");
+        File lDualFP = new File(Flavie.MATCHED_DIR + "matched.dualFP.txt");
         if (!lDualFP.exists()) {
             lDualFP.createNewFile();
         }

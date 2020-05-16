@@ -20,14 +20,15 @@
  ******************************************************************************/
 package randall.flavie;
 
+import lombok.Getter;
+import lombok.SneakyThrows;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -39,123 +40,88 @@ import randall.util.RandallUtil;
 
 /**
  * @author Marco
- * <p>
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public class Flavie {
     
-    public static final String sMatchedDir = "." + File.separator;
+    public static final String MATCHED_DIR = "." + File.separator;
     
-    private String iReportName;
-    //    private String iReportTitle;
-    private String iDataFile;
-    //    private String iStyleFile;
+    @Getter private final String reportName;
+    private final List<FlavieItemFilter> filters = new ArrayList<>();
     
-    //	protected Map<Object, Object> iAllItems = new HashMap<>();
-    private List<Object> iDatFile = new ArrayList<>();
-    protected Map<Object, Object> iAllItemsFP = new HashMap<>();
-    protected Map<Object, Object> iRuneCount = new HashMap<>();
-    
-    protected List<Object> iFilters = new ArrayList<>();
-    
-    private DataFileBuilder iDataFileBuilder;
-    private DirectD2Files iDirectD2;
-    private ReportBuilder iReportBuilder;
-    
-    protected int iNotMatched = 0;
-    protected int iNotMatchedType = 0;
-    protected int iNormalMatched = 0;
-    protected int iMultipleMatched = 0;
-    protected int iDualFPMatched = 0;
-    protected int iDupeMatched = 0;
-    
-    public Flavie(String pReportName,
-                  String pReportTitle,
-                  String pDataFile,
-                  String pStyleFile,
-                  List<Object> pFileNames,
-                  boolean pCountAll,
-                  boolean pCountEthereal,
-                  boolean pCountStash,
-                  boolean pCountChar) throws Exception {
-        iReportName = pReportName;
-        //        iReportTitle = pReportTitle;
-        iDataFile = pDataFile;
-        //        iStyleFile = pStyleFile;
+    @SneakyThrows
+    public Flavie(String reportName,
+                  String reportTitle,
+                  String dataFile,
+                  String styleFile,
+                  List<Object> fileNames,
+                  boolean countAll,
+                  boolean countEthereal,
+                  boolean countStash,
+                  boolean countChar) {
+        this.reportName = reportName;
         
-        iReportBuilder = new ReportBuilder(this);
-        iDirectD2 = new DirectD2Files(this);
-        iDataFileBuilder = new DataFileBuilder(this);
+        ReportBuilder reportBuilder = new ReportBuilder(this);
+        DirectD2Files directD2 = new DirectD2Files(this);
+        DataFileBuilder dataFileBuilder = new DataFileBuilder(this);
         
-        List<Object> lDataFileObjects = iDataFileBuilder.readDataFileObjects(iDataFile, iDatFile);
-        iDirectD2.readDirectD2Files(lDataFileObjects, pFileNames);
+        List<Object> datFile = new ArrayList<>();
+        List<Object> dataFileObjects = dataFileBuilder.readDataFileObjects(dataFile, datFile);
+        directD2.readDirectD2Files(dataFileObjects, fileNames);
         
-        File lDupeDirList = new File("dupelists");
-        File lDupeFiles[] = lDupeDirList.listFiles();
+        File dupeDirList = new File("dupelists");
+        File[] dupeFiles = dupeDirList.listFiles();
         
-        for (int i = 0; i < lDupeFiles.length; i++) {
-            if (lDupeFiles[i].getCanonicalPath().endsWith(".txt")) {
-                iFilters.add(new FlavieDupeFilter(lDupeFiles[i].getCanonicalPath(), new FileReader(lDupeFiles[i].getCanonicalPath())));
-            }
-            if (lDupeFiles[i].getCanonicalPath().endsWith(".zip")) {
-                ZipFile lZip = new ZipFile(lDupeFiles[i].getCanonicalPath());
-                Enumeration lEnum = lZip.entries();
-                while (lEnum.hasMoreElements()) {
-                    ZipEntry lEntry = (ZipEntry) lEnum.nextElement();
-                    if (lEntry.getName().endsWith(".txt")) {
-                        iFilters.add(new FlavieDupeFilter(lDupeFiles[i].getCanonicalPath() + ":" + lEntry.getName(), new InputStreamReader(lZip.getInputStream(lEntry))));
+        if (dupeFiles != null) {
+            for (File dupeFile : dupeFiles) {
+                if (dupeFile.getCanonicalPath().endsWith(".txt")) {
+                    filters.add(new FlavieDupeFilter(dupeFile.getCanonicalPath(), new FileReader(dupeFile.getCanonicalPath())));
+                }
+                if (dupeFile.getCanonicalPath().endsWith(".zip")) {
+                    ZipFile zip = new ZipFile(dupeFile.getCanonicalPath());
+                    Enumeration<? extends ZipEntry> entries = zip.entries();
+                    while (entries.hasMoreElements()) {
+                        ZipEntry entry = entries.nextElement();
+                        if (entry.getName().endsWith(".txt")) {
+                            filters.add(new FlavieDupeFilter(dupeFile.getCanonicalPath() + ":" + entry.getName(), new InputStreamReader(zip.getInputStream(entry))));
+                        }
                     }
                 }
             }
         }
         
-        iReportBuilder.buildReport(pReportTitle, pReportName, pDataFile, pStyleFile, iDatFile, pCountAll, pCountEthereal, pCountStash, pCountChar);
+        reportBuilder.buildReport(reportTitle, reportName, dataFile, styleFile, datFile, countAll, countEthereal, countStash, countChar);
     }
     
-    public boolean checkForRuneWord(String pName, String pRunes) {
-        //	    System.err.println("checkForRuneWord(" + pName + ", " + pRunes);
-        List<String> lList = RandallUtil.split(pRunes, "-", false);
-        if (lList.size() <= 1) {
+    @Deprecated
+    public boolean checkForRuneWord(String runes) {
+        List<String> list = RandallUtil.split(runes, "-", false);
+        return checkForRuneWord(list);
+    }
+    
+    public boolean checkForRuneWord(List<String> runes) {
+        if (runes.size() <= 1) {
             return false;
         }
-        //	    System.err.println("checkForRuneWord(" + pName + ", " + pRunes);
-        List<Object> lRuneList = new ArrayList<>();
-        for (int i = 0; i < lList.size(); i++) {
-            D2TxtFileItemProperties lProps = D2TxtFile.MISC.searchColumns("name", lList.get(i) + " Rune");
-            if (lProps == null) {
+        List<String> runeList = new ArrayList<>();
+        for (String rune : runes) {
+            D2TxtFileItemProperties props = D2TxtFile.MISC.searchColumns("name", rune + " Rune");
+            if (props == null) {
                 return false;
             }
-            lRuneList.add(lProps.get("code"));
+            runeList.add(props.get("code"));
         }
-        //	    System.err.println("checkForRuneWord(" + pName + ", " + pRunes);
-        return (D2TxtFile.RUNES.searchRuneWord(lRuneList) != null);
+        return D2TxtFile.RUNES.searchRuneWord((List) runeList) != null;
     }
     
-    public void initializeFilters() throws Exception {
-        for (int i = 0; i < iFilters.size(); i++) {
-            ((FlavieItemFilter) iFilters.get(i)).initialize();
-        }
+    public void initializeFilters() {
+        filters.forEach(FlavieItemFilter::initialize);
     }
     
-    public void finishFilters() throws Exception {
-        for (int i = 0; i < iFilters.size(); i++) {
-            if (iFilters.get(i) instanceof FlavieDupeFilter) {
-                iDupeMatched += ((FlavieDupeFilter) iFilters.get(i)).getDupeCount();
-            }
-            ((FlavieItemFilter) iFilters.get(i)).finish();
-        }
+    public boolean checkFilters(D2ItemInterface itemFound) {
+        return filters.stream().allMatch(filter -> filter.check(itemFound));
     }
     
-    public boolean checkFilters(D2ItemInterface pItemFound) {
-        boolean lAllFilters = true;
-        for (int i = 0; i < iFilters.size() && lAllFilters; i++) {
-            lAllFilters = ((FlavieItemFilter) iFilters.get(i)).check(pItemFound);
-        }
-        return lAllFilters;
-    }
-    
-    public String getReportName() {
-        return iReportName;
+    public void finishFilters() {
+        filters.forEach(FlavieItemFilter::finish);
     }
 }

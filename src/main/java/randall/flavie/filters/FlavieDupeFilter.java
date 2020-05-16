@@ -4,6 +4,7 @@
 package randall.flavie.filters;
 
 import lombok.Getter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
@@ -48,15 +49,16 @@ public class FlavieDupeFilter implements FlavieItemFilter {
         log.debug("Dupelist {} contains {} items.", dupeName, dupeList.size());
     }
     
+    @SneakyThrows
     @Override
-    public void initialize() throws Exception {
+    public void initialize() {
         Preconditions.checkState(dupeOut == null, "Dupe file already initialised!");
-        dupeOut = new PrintStream(new FileOutputStream(Flavie.sMatchedDir + "matched.dupe.txt"));
+        dupeOut = new PrintStream(new FileOutputStream(Flavie.MATCHED_DIR + "matched.dupe.txt"));
         dupeCount = 0;
     }
     
     @Override
-    public void finish() throws Exception {
+    public void finish() {
         Preconditions.checkState(dupeOut != null, "Dupe file not initialised!");
         dupeOut.close();
         dupeCount = -1;
