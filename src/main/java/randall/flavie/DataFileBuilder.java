@@ -105,11 +105,12 @@ public class DataFileBuilder {
                 if (lItem.size() != 3 && lItem.size() != 4) {
                     throw new Exception("Incorrect line format " + lLine);
                 }
-                lCat = new CatObject(lItem.get(0));
-                lCat.setStyle(lItem.get(1));
-                lCat.setNewRow(lItem.get(2).equals("newrow"));
+                lCat = CatObject.builder().cat(lItem.get(0))
+                                .style(lItem.get(1))
+                                .newRow(lItem.get(2).equals("newrow"))
+                                .group(lItem.size() == 4 ? lItem.get(3) : null)
+                                .build();
                 if (lItem.size() == 4) {
-                    lCat.setGroup(lItem.get(3));
                     for (int i = 0; i < lTotalObjectList.size(); i++) {
                         TotalObject lParent = (TotalObject) lTotalObjectList.get(i);
                         if (lItem.get(3).equals(lParent.getShort())) {

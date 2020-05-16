@@ -20,129 +20,66 @@
  ******************************************************************************/
 package randall.flavie;
 
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class CatObject implements Comparable {
+@Getter
+@Builder
+@RequiredArgsConstructor
+@EqualsAndHashCode(of = "cat")
+@ToString(of = "cat")
+public class CatObject implements Comparable<CatObject> {
     
-    private String iCat;
-    private List<Object> iSubCats = new ArrayList<>();
-    private String iStyle;
-    private String iGroup;
+    private final String cat;
+    private final List<SubCatObject> subCats = new ArrayList<>();
+    private final String style;
+    private final String group;
     
-    private boolean iUnique;
-    private boolean iSet;
-    private boolean iRune;
-    private boolean iRuneWord;
-    private boolean iMisc;
-    private boolean iGem;
-    private boolean iSkiller;
+    private final boolean newRow;
     
-    private boolean iNewRow;
+    @Setter private PercentageCounter counter;
     
-    private PercentageCounter iCounter;
-    
-    public CatObject(String pCat) {
-        iCat = pCat;
-    }
-    
-    public String toString() {
-        return iCat;
-    }
-    
-    public void addSubCat(SubCatObject pSubCatObject) {
-        iSubCats.add(pSubCatObject);
-    }
-    
-    public List<Object> getSubCats() {
-        return iSubCats;
-    }
-    
-    public int compareTo(Object pObject) {
-        return toString().compareTo(pObject.toString());
-    }
-    
-    public boolean equals(Object pObject) {
-        return toString().equals(pObject.toString());
-    }
-    
-    public String getStyle() {
-        return iStyle;
-    }
-    
-    public void setStyle(String pStyle) {
-        iStyle = pStyle;
-    }
-    
-    /**
-     * @return Returns the newRow.
-     */
-    public boolean isNewRow() {
-        return iNewRow;
-    }
-    
-    /**
-     * @param pNewRow The newRow to set.
-     */
-    public void setNewRow(boolean pNewRow) {
-        iNewRow = pNewRow;
-    }
-    
-    /**
-     * @return Returns the counter.
-     */
-    public PercentageCounter getCounter() {
-        return iCounter;
-    }
-    
-    /**
-     * @param pCounter The counter to set.
-     */
-    public void setCounter(PercentageCounter pCounter) {
-        iCounter = pCounter;
-    }
-    
-    public String getGroup() {
-        return iGroup;
-    }
-    
-    public void setGroup(String pGroup) {
-        iGroup = pGroup;
-        iUnique = "unique".equals(iGroup);
-        iSet = "set".equals(iGroup);
-        iRune = "rune".equals(iGroup);
-        iRuneWord = "runeword".equals(iGroup);
-        iGem = "gem".equals(iGroup);
-        iMisc = "misc".equals(iGroup);
-        iSkiller = "skiller".equals(iGroup);
+    public void addSubCat(SubCatObject subCatObject) {
+        subCats.add(subCatObject);
     }
     
     public boolean isUnique() {
-        return iUnique;
+        return "unique".equals(group);
     }
     
     public boolean isSet() {
-        return iSet;
-    }
-    
-    public boolean isRuneWord() {
-        return iRuneWord;
+        return "set".equals(group);
     }
     
     public boolean isRune() {
-        return iRune;
+        return "rune".equals(group);
     }
     
-    public boolean isGem() {
-        return iGem;
+    public boolean isRuneWord() {
+        return "runeword".equals(group);
     }
     
     public boolean isMisc() {
-        return iMisc;
+        return "misc".equals(group);
+    }
+    
+    public boolean isGem() {
+        return "gem".equals(group);
     }
     
     public boolean isSkiller() {
-        return iSkiller;
+        return "skiller".equals(group);
     }
     
+    @Override
+    public int compareTo(CatObject object) {
+        return getCat().compareTo(object.getCat());
+    }
 }

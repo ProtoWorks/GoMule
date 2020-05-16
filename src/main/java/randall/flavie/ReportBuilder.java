@@ -102,9 +102,9 @@ public class ReportBuilder {
                 
                 lCatObject = (CatObject) lObject;
                 
-                List<Object> lSubCatList = lCatObject.getSubCats();
+                List<SubCatObject> lSubCatList = lCatObject.getSubCats();
                 for (int j = 0; j < lSubCatList.size(); j++) {
-                    SubCatObject lSubCatCompare = (SubCatObject) lSubCatList.get(j);
+                    SubCatObject lSubCatCompare = lSubCatList.get(j);
                     
                     List<Object> lItemObjectList = lSubCatCompare.getItemObjects();
                     for (int k = 0; k < lItemObjectList.size(); k++) {
