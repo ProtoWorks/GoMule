@@ -21,11 +21,14 @@
 package randall.flavie;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nonnull;
 
 @Getter
 @ToString(of = "name")
@@ -34,14 +37,14 @@ public class ItemObject {
     private final String name;
     private final String info;
     private final List<D2ItemInterface> itemInstances = new ArrayList<>();
-    private final SubCatObject subCatObject;
+    @Nonnull private final SubCatObject subCatObject;
     @Setter private boolean runeWord = false;
     @Setter private String itemType;
     
     @Setter private String extraDisplay;
     @Setter private List<String> extraDetect;
     
-    public ItemObject(String name, String info, SubCatObject subCatObject) {
+    public ItemObject(String name, String info, @NonNull SubCatObject subCatObject) {
         this.name = name;
         this.info = info;
         this.subCatObject = subCatObject;

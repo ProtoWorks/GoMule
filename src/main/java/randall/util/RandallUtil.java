@@ -26,9 +26,11 @@ import lombok.experimental.UtilityClass;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import com.google.common.collect.Lists;
 
 @UtilityClass
 public class RandallUtil {
@@ -38,15 +40,22 @@ public class RandallUtil {
     }
     
     public List<String> split(@NonNull String input, @NonNull String separator, boolean ignoreCase) {
+        
+        if (input.equals("")) {
+            return Lists.newArrayList();
+        }
+        
         if (!ignoreCase) {
-            return Arrays.asList(input.split(Pattern.quote(separator)));
+            return Arrays.stream(input.split(Pattern.quote(separator)))
+                         .map(String::trim)
+                         .collect(Collectors.toList());
         }
         String lowerInput = input.toLowerCase();
         String lowerSeparator = separator.toLowerCase();
         
         // fast quit
         if (!lowerInput.contains(lowerSeparator)) {
-            return Collections.singletonList(input);
+            return Lists.newArrayList(input.trim());
         }
         
         int index = 0;
@@ -56,7 +65,9 @@ public class RandallUtil {
             index = lowerInput.indexOf(lowerSeparator, index) + lowerSeparator.length();
         }
         result.add(input.substring(index));
-        return result;
+        return result.stream()
+                     .map(String::trim)
+                     .collect(Collectors.toList());
     }
     
     public String fill(int value, int digits) {

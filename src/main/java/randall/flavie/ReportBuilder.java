@@ -165,7 +165,7 @@ public class ReportBuilder {
                 lOutReport.println("<td valign=top>");
                 PercentageCounter lPerc = new PercentageCounter(lCatObject, lNrItems, lNrItemsFound);
                 lPercentages.add(lPerc);
-                lOutReport.println("<div class=cat>" + lCatObject.toString() + "(" + lNrItemsFound + " of " + lNrItems + ") (" + lPerc.getPercentage(lNrItemsFound, lNrItems) + "%)</div>");
+                lOutReport.println("<div class=cat>" + lCatObject.getCat() + "(" + lNrItemsFound + " of " + lNrItems + ") (" + lPerc.getPercentage(lNrItemsFound, lNrItems) + "%)</div>");
                 lOutReport.println("<p>");
             } else if (lObject instanceof SubCatObject) {
                 lSubCatObject = (SubCatObject) lObject;
@@ -216,7 +216,7 @@ public class ReportBuilder {
                 }
                 
                 PercentageCounter lPerc = new PercentageCounter(lNrItems, lNrItemsFound);
-                lOutReport.println("<div class=subcat>" + lSubCatObject.toString() + " (" + lNrItemsFound + " of " + lNrItems + ") (" + lPerc.getPercentage(lNrItemsFound, lNrItems) + "%)</div>");
+                lOutReport.println("<div class=subcat>" + lSubCatObject.getSubCat() + " (" + lNrItemsFound + " of " + lNrItems + ") (" + lPerc.getPercentage(lNrItemsFound, lNrItems) + "%)</div>");
                 lOutReport.println("<p>");
                 lOutReport.println("<table>");
             } else if (lObject instanceof ItemObject) {

@@ -20,7 +20,8 @@ class TestRandallUtil {
         return Stream.of(Arguments.of("BBBAaabnb", "Aaa"),
                          Arguments.of("bbbaaabnb", "a"),
                          Arguments.of("123.*456", ".*"),
-                         Arguments.of("123.*456", "\\"));
+                         Arguments.of("123.*456", "\\"),
+                         Arguments.of("", ","));
     }
     
     @ParameterizedTest
