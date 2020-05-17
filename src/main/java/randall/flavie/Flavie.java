@@ -21,6 +21,7 @@
 package randall.flavie;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 
 import java.io.File;
@@ -28,10 +29,13 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import gomule.item.D2Item;
 import randall.d2files.D2TxtFile;
 import randall.d2files.D2TxtFileItemProperties;
 import randall.flavie.filters.FlavieDupeFilter;
@@ -46,7 +50,36 @@ public class Flavie {
     public static final String MATCHED_DIR = "." + File.separator;
     
     @Getter private final String reportName;
-    private final List<FlavieItemFilter> filters = new ArrayList<>();
+    private String dataFile;
+    
+    private final List<Object> datFile = new ArrayList<>();
+    @Getter private final Map<String, D2Item> allItemsFP = new HashMap<>();
+    @Getter private final Map<String, Long> runeCount = new HashMap<>();
+    
+    protected List<FlavieDupeFilter> filters = new ArrayList<>();
+    
+    private DataFileBuilder dataFileBuilder;
+    private DirectD2Files directD2;
+    private ReportBuilder reportBuilder;
+    
+    @Getter
+    @Setter
+    private int notMatched = 0;
+    @Getter
+    @Setter
+    private int notMatchedType = 0;
+    @Getter
+    @Setter
+    private int normalMatched = 0;
+    @Getter
+    @Setter
+    private int multipleMatched = 0;
+    @Getter
+    @Setter
+    private int dualFPMatched = 0;
+    @Getter
+    @Setter
+    private int dupeMatched = 0;
     
     @SneakyThrows
     public Flavie(String reportName,
@@ -122,6 +155,12 @@ public class Flavie {
     }
     
     public void finishFilters() {
-        filters.forEach(FlavieItemFilter::finish);
+        dupeMatched += filters.stream()
+                              .mapToInt(filter -> {
+                                  int dupeCount = filter.getDupeCount();
+                                  filter.finish();
+                                  return dupeCount;
+                              })
+                              .sum();
     }
 }

@@ -146,13 +146,13 @@ public class DirectD2Files {
         {
             if (iFlavie.checkFilters(pItem)) {
                 if (pItem.getFingerprint() != null) {
-                    if (iFlavie.iAllItemsFP.containsKey(pItem.getFingerprint())) {
-                        D2Item lOriginal = (D2Item) iFlavie.iAllItemsFP.get(pItem.getFingerprint());
+                    if (iFlavie.getAllItemsFP().containsKey(pItem.getFingerprint())) {
+                        D2Item lOriginal = iFlavie.getAllItemsFP().get(pItem.getFingerprint());
                         pOutDualFP.println("*** Item matched : " + pItem + " with FP " + pItem.getFingerprint() + "(" + pItem.getFileName() + ") Fingerprint was allready used by another item: " + lOriginal + " from file " + lOriginal
                                 .getFileName() + ". Item is different type and both are listed anyways.");
-                        iFlavie.iDualFPMatched++;
+                        iFlavie.setDualFPMatched(iFlavie.getDualFPMatched() + 1);
                     } else {
-                        iFlavie.iAllItemsFP.put(pItem.getFingerprint(), pItem);
+                        iFlavie.getAllItemsFP().put(pItem.getFingerprint(), pItem);
                     }
                     
                     //Rainbow facet fix.
@@ -175,13 +175,13 @@ public class DirectD2Files {
                     
                 } else {
                     if (pItem.isRune()) {
-                        Long lRuneCount = (Long) iFlavie.iRuneCount.get(pItem.getName());
+                        Long lRuneCount = iFlavie.getRuneCount().get(pItem.getName());
                         if (lRuneCount == null) {
                             lRuneCount = 1L;
                         } else {
-                            lRuneCount = lRuneCount.longValue() + 1;
+                            lRuneCount = lRuneCount + 1;
                         }
-                        iFlavie.iRuneCount.put(pItem.getName(), lRuneCount);
+                        iFlavie.getRuneCount().put(pItem.getName(), lRuneCount);
                     }
                 }
                 for (int lDataObjectNr = 0; lDataObjectNr < pDataObjects.size(); lDataObjectNr++) {
