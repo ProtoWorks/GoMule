@@ -371,7 +371,7 @@ public class ReportBuilder {
             String lKey = (String) lIterator.next();
             D2ItemInterface lItem = (D2ItemInterface) lAllItems.get(lKey);
             
-            lOutItemlist.println(lItem.getFingerprint() + " " + lItem.getName());
+            lOutItemlist.println(lItem.getFingerprint() + " " + lItem.getItemName());
         }
         
         lOutItemlist.close();

@@ -31,7 +31,7 @@ public interface D2ItemInterface {
     
     String getFingerprint();
     
-    String getName();
+    String getItemName();
     
     String getFileName();
 }

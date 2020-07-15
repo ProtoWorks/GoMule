@@ -298,7 +298,7 @@ public class DCTableModel extends AbstractTableModel {
                 
                 //				if ( lSort ==  HEADER[0] )
                 //				{
-                //				return lItem1.getName().compareTo(lItem2.getName());
+                //				return lItem1.getItemName().compareTo(lItem2.getItemName());
                 //				}
                 //				else if ( lSort ==  HEADER[1] )
                 //				{

@@ -560,26 +560,26 @@ public class D2FileManager extends JFrame {
                             }
                             switch (pickChooser.getSelectedIndex()) {
                                 case 0:
-                                    
-                                    if (remItem.get_location() == 0 && remItem.get_panel() == 5) {
+    
+                                    if (remItem.getLocation() == 0 && remItem.getPanel() == 5) {
                                         moveToClipboard(remItem, iList);
                                         x--;
                                     }
                                     break;
                                 case 1:
-                                    if (remItem.get_location() == 0 && remItem.get_panel() == 1) {
+                                    if (remItem.getLocation() == 0 && remItem.getPanel() == 1) {
                                         moveToClipboard(remItem, iList);
                                         x--;
                                     }
                                     break;
                                 case 2:
-                                    if (remItem.get_location() == 0 && remItem.get_panel() == 4) {
+                                    if (remItem.getLocation() == 0 && remItem.getPanel() == 4) {
                                         moveToClipboard(remItem, iList);
                                         x--;
                                     }
                                     break;
                                 case 3:
-                                    if (remItem.get_location() == 1) {
+                                    if (remItem.getLocation() == 1) {
                                         moveToClipboard(remItem, iList);
                                         x--;
                                     }

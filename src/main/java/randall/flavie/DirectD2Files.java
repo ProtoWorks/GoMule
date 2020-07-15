@@ -136,7 +136,7 @@ public class DirectD2Files {
     }
     
     public void matchItem(List<Object> pDataObjects, D2Item pItem, PrintStream pOutDualFP) {
-        if (pItem.getName() == null) {
+        if (pItem.getItemName() == null) {
             System.err.println("Item: null");
         }
         ItemObject lFound = null;
@@ -175,13 +175,13 @@ public class DirectD2Files {
                     
                 } else {
                     if (pItem.isRune()) {
-                        Long lRuneCount = iFlavie.getRuneCount().get(pItem.getName());
+                        Long lRuneCount = iFlavie.getRuneCount().get(pItem.getItemName());
                         if (lRuneCount == null) {
                             lRuneCount = 1L;
                         } else {
                             lRuneCount = lRuneCount + 1;
                         }
-                        iFlavie.getRuneCount().put(pItem.getName(), lRuneCount);
+                        iFlavie.getRuneCount().put(pItem.getItemName(), lRuneCount);
                     }
                 }
                 for (int lDataObjectNr = 0; lDataObjectNr < pDataObjects.size(); lDataObjectNr++) {
@@ -196,7 +196,7 @@ public class DirectD2Files {
                         if (fitsSkiller(lCatObj, lItemObject, pItem)) {
                             lFound = lItemObject;
                         }
-                    } else if (lItemObject.getName().equals(pItem.getName())) {
+                    } else if (lItemObject.getName().equals(pItem.getItemName())) {
                         if (pItem.isUnique() && pItem.isJewel() && matchStr[0].equals(lItemObject.getExtraDetect().get(0)) && matchStr[1].equals(lItemObject.getExtraDetect().get(1))) {
                             lFound = lItemObject;
                         }
@@ -218,7 +218,7 @@ public class DirectD2Files {
                 if (lFound != null) {
                     lFound.addItemInstance(pItem);
                 } else {
-                    //		    System.err.println("Name not found: " + pItem.getName() );
+                    //		    System.err.println("Name not found: " + pItem.getItemName() );
                 }
             }
         }
@@ -231,7 +231,7 @@ public class DirectD2Files {
     }
     
     private boolean fitsSkiller(CatObject pCatObj, ItemObject pItemObject, D2Item pItem) {
-        return (pItem.getName().startsWith(pItemObject.getInfo()));
+        return (pItem.getItemName().startsWith(pItemObject.getInfo()));
         
         //		return false;
     }

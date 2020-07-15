@@ -67,7 +67,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
     @Override
     public boolean check(D2ItemInterface itemFound) {
         if (dupeList.containsKey(itemFound.getFingerprint())) {
-            dupeOut.println("Item " + itemFound.getFingerprint() + "/" + itemFound.getName() + " from file " + itemFound.getFileName() + " is listed as a dupe");
+            dupeOut.println("Item " + itemFound.getFingerprint() + "/" + itemFound.getItemName() + " from file " + itemFound.getFileName() + " is listed as a dupe");
             dupeCount++;
             return false;
         }

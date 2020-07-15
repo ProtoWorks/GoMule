@@ -564,7 +564,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                         if (lItemPanel.isItem()) {
                             D2Item lTemp = lItemPanel.getItem();
                             
-                            int check = JOptionPane.showConfirmDialog(null, "Delete " + lTemp.getName() + "?");
+                            int check = JOptionPane.showConfirmDialog(null, "Delete " + lTemp.getItemName() + "?");
                             if (check == 0) {
                                 iCharacter.unmarkCharGrid(lTemp);
                                 iCharacter.removeCharItem(lItemPanel.getItemIndex());
@@ -1281,20 +1281,20 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                                     if (iCharacter.checkCharGrid(lItemPanel.getPanel(), lItemPanel.getRow(), lItemPanel.getColumn(), lDropItem)) {
                                         switch (lItemPanel.getPanel()) {
                                             case 2:
-                                                lDropItem.set_location((short) 2);
+                                                lDropItem.setLocation((short) 2);
                                                 lDropItem.set_body_position((short) 0);
-                                                lDropItem.set_col((short) (4 * lItemPanel.getColumn() + lItemPanel.getRow()));
-                                                lDropItem.set_row((short) 0);
-                                                lDropItem.set_panel((short) 0);
+                                                lDropItem.setCol((short) (4 * lItemPanel.getColumn() + lItemPanel.getRow()));
+                                                lDropItem.setRow((short) 0);
+                                                lDropItem.setPanel((short) 0);
                                                 break;
                                             case 1:
                                             case 4:
                                             case 5:
-                                                lDropItem.set_location((short) 0);
+                                                lDropItem.setLocation((short) 0);
                                                 lDropItem.set_body_position((short) 0);
-                                                lDropItem.set_row((short) lItemPanel.getColumn());
-                                                lDropItem.set_col((short) lItemPanel.getRow());
-                                                lDropItem.set_panel((short) lItemPanel.getPanel());
+                                                lDropItem.setRow((short) lItemPanel.getColumn());
+                                                lDropItem.setCol((short) lItemPanel.getRow());
+                                                lDropItem.setPanel((short) lItemPanel.getPanel());
                                                 break;
                                         }
                                         drop = true;
@@ -1309,11 +1309,11 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                                 // (note lack of item-type checking)
                                 else {
                                     if (!iCharacter.checkCharPanel(lItemPanel.getPanel(), 0, 0, lDropItem)) {
-                                        lDropItem.set_location((short) 1);
+                                        lDropItem.setLocation((short) 1);
                                         lDropItem.set_body_position((short) (lItemPanel.getPanel() - 10));
-                                        lDropItem.set_col((short) 0);
-                                        lDropItem.set_row((short) 0);
-                                        lDropItem.set_panel((short) 0);
+                                        lDropItem.setCol((short) 0);
+                                        lDropItem.setRow((short) 0);
+                                        lDropItem.setPanel((short) 0);
                                         drop = true;
                                         //	                                r = lDropWidth;
                                         //	                                c = lDropHeight;
@@ -1453,15 +1453,15 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                 for (int i = 0; i < iCharacter.getCharItemNr(); i++) {
                     D2Item temp_item = iCharacter.getCharItem(i);
                     Image lImage = D2ImageCache.getDC6Image(temp_item);
-                    int location = temp_item.get_location();
+                    int location = temp_item.getLocation();
                     // on one of the grids
                     // these items have varying height and width
                     // and a variable position, indexed from the
                     // top left
                     if (location == 0) {
-                        int panel = temp_item.get_panel();
-                        int x = temp_item.get_col();
-                        int y = temp_item.get_row();
+                        int panel = temp_item.getPanel();
+                        int x = temp_item.getCol();
+                        int y = temp_item.getRow();
                         //						int w = temp_item.get_width();
                         //						int h = temp_item.get_height();
                         switch (panel) {
@@ -1489,14 +1489,14 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     // placed in the bottom belt row)
                     // these items can all be assumed to be 1x1
                     else if (location == 2) {
-                        int x = temp_item.get_col();
+                        int x = temp_item.getCol();
                         int y = x / 4;
                         x = x % 4;
                         lGraphics.drawImage(lImage, BELT_GRID_X + x * GRID_SIZE + x * GRID_SPACER, BELT_GRID_Y + (3 - y) * GRID_SIZE + (3 - y) * GRID_SPACER, D2CharPainterPanel.this);
                     }
                     // on the body
                     else {
-                        int body_position = temp_item.get_body_position();
+                        int body_position = temp_item.getBodyPosition();
                         int w, h, wbias, hbias;
                         switch (body_position) {
                             // head (assume 2x2)
@@ -1516,8 +1516,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                             case 4:
                             case 11:
                                 if ((iWeaponSlot == 1 && body_position == 4) || (iWeaponSlot == 2 && body_position == 11)) {
-                                    w = temp_item.get_width();
-                                    h = temp_item.get_height();
+                                    w = temp_item.getWidth();
+                                    h = temp_item.getHeight();
                                     wbias = 0;
                                     hbias = 0;
                                     if (w == 1) { wbias += GRID_SIZE / 2; }
@@ -1529,8 +1529,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                             case 5:
                             case 12:
                                 if ((iWeaponSlot == 1 && body_position == 5) || (iWeaponSlot == 2 && body_position == 12)) {
-                                    w = temp_item.get_width();
-                                    h = temp_item.get_height();
+                                    w = temp_item.getWidth();
+                                    h = temp_item.getHeight();
                                     wbias = 0;
                                     hbias = 0;
                                     if (w == 1) { wbias += GRID_SIZE / 2; }
@@ -1641,11 +1641,11 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                                 // objects in the hands
                                 // (note lack of item-type checking)
                                 if (!iCharacter.checkMercPanel(lItemPanel.getPanel(), 0, 0, lDropItem)) {
-                                    lDropItem.set_location((short) 1);
+                                    lDropItem.setLocation((short) 1);
                                     lDropItem.set_body_position((short) (lItemPanel.getPanel() - 10));
-                                    lDropItem.set_col((short) 0);
-                                    lDropItem.set_row((short) 0);
-                                    lDropItem.set_panel((short) 0);
+                                    lDropItem.setCol((short) 0);
+                                    lDropItem.setRow((short) 0);
+                                    lDropItem.setPanel((short) 0);
                                     drop = true;
                                     //	                                r = lDropWidth;
                                     //	                                c = lDropHeight;
@@ -1765,7 +1765,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     //					int location = temp_item.get_location();
                     // on the body
                     {
-                        int body_position = temp_item.get_body_position();
+                        int body_position = temp_item.getBodyPosition();
                         int w, h, wbias, hbias;
                         switch (body_position) {
                             // head (assume 2x2)
@@ -1780,8 +1780,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                             // biases are to center non-2x4 items
                             case 4:
                                 if ((iWeaponSlot == 1 && body_position == 4) || (iWeaponSlot == 2 && body_position == 11)) {
-                                    w = temp_item.get_width();
-                                    h = temp_item.get_height();
+                                    w = temp_item.getWidth();
+                                    h = temp_item.getHeight();
                                     wbias = 0;
                                     hbias = 0;
                                     if (w == 1) { wbias += GRID_SIZE / 2; }
@@ -1792,8 +1792,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                             // left arm (give the whole 2x4)
                             case 5:
                                 if ((iWeaponSlot == 1 && body_position == 5) || (iWeaponSlot == 2 && body_position == 12)) {
-                                    w = temp_item.get_width();
-                                    h = temp_item.get_height();
+                                    w = temp_item.getWidth();
+                                    h = temp_item.getHeight();
                                     wbias = 0;
                                     hbias = 0;
                                     if (w == 1) { wbias += GRID_SIZE / 2; }
@@ -1928,15 +1928,15 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                 for (int i = 0; i < iCharacter.getCorpseItemNr(); i++) {
                     D2Item temp_item = iCharacter.getCorpseItem(i);
                     Image lImage = D2ImageCache.getDC6Image(temp_item);
-                    int location = temp_item.get_location();
+                    int location = temp_item.getLocation();
                     // on one of the grids
                     // these items have varying height and width
                     // and a variable position, indexed from the
                     // top left
                     if (location == 0) {
-                        int panel = temp_item.get_panel();
-                        int x = temp_item.get_col();
-                        int y = temp_item.get_row();
+                        int panel = temp_item.getPanel();
+                        int x = temp_item.getCol();
+                        int y = temp_item.getRow();
                         //						int w = temp_item.get_width();
                         //						int h = temp_item.get_height();
                         switch (panel) {
@@ -1964,14 +1964,14 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     // placed in the bottom belt row)
                     // these items can all be assumed to be 1x1
                     else if (location == 2) {
-                        int x = temp_item.get_col();
+                        int x = temp_item.getCol();
                         int y = x / 4;
                         x = x % 4;
                         lGraphics.drawImage(lImage, BELT_GRID_X + x * GRID_SIZE + x * GRID_SPACER, BELT_GRID_Y + (3 - y) * GRID_SIZE + (3 - y) * GRID_SPACER, D2DeathPainterPanel.this);
                     }
                     // on the body
                     else {
-                        int body_position = temp_item.get_body_position();
+                        int body_position = temp_item.getBodyPosition();
                         int w, h, wbias, hbias;
                         switch (body_position) {
                             // head (assume 2x2)
@@ -1991,8 +1991,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                             case 4:
                             case 11:
                                 if ((iWeaponSlot == 1 && body_position == 4) || (iWeaponSlot == 2 && body_position == 11)) {
-                                    w = temp_item.get_width();
-                                    h = temp_item.get_height();
+                                    w = temp_item.getWidth();
+                                    h = temp_item.getHeight();
                                     wbias = 0;
                                     hbias = 0;
                                     if (w == 1) { wbias += GRID_SIZE / 2; }
@@ -2004,8 +2004,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                             case 5:
                             case 12:
                                 if ((iWeaponSlot == 1 && body_position == 5) || (iWeaponSlot == 2 && body_position == 12)) {
-                                    w = temp_item.get_width();
-                                    h = temp_item.get_height();
+                                    w = temp_item.getWidth();
+                                    h = temp_item.getHeight();
                                     wbias = 0;
                                     hbias = 0;
                                     if (w == 1) { wbias += GRID_SIZE / 2; }
@@ -2777,12 +2777,12 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                         //						// (!iChar.checkCharPanel(lItemPanel.getPanel(),
                         //						// 0, 0, lDropItem))
                         //						//	                            {
-                        //						//	                            	lDropItem.set_location((short) 1);
+                        //						//	                            	lDropItem.setLocation((short) 1);
                         //						//	                            	lDropItem.set_body_position((short)
                         //						// (lItemPanel.getPanel() - 10));
-                        //						//	                            	lDropItem.set_col((short) 0);
-                        //						//	                            	lDropItem.set_row((short) 0);
-                        //						//	                            	lDropItem.set_panel((short) 0);
+                        //						//	                            	lDropItem.setCol((short) 0);
+                        //						//	                            	lDropItem.setRow((short) 0);
+                        //						//	                            	lDropItem.setPanel((short) 0);
                         //						//	                                drop = true;
                         //						//// r = lDropWidth;
                         //						//// c = lDropHeight;
@@ -2950,11 +2950,11 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                 for (int x = 0; x < rMax; x++) {
                     for (int y = 0; y < cMax; y++) {
                         if (iCharacter.checkCharGrid(dPanel, y, x, lDropItem)) {
-                            lDropItem.set_panel((short) dPanel);
-                            lDropItem.set_location((short) 0);
+                            lDropItem.setPanel((short) dPanel);
+                            lDropItem.setLocation((short) 0);
                             lDropItem.set_body_position((short) 0);
-                            lDropItem.set_row((short) x);
-                            lDropItem.set_col((short) y);
+                            lDropItem.setRow((short) x);
+                            lDropItem.setCol((short) y);
                             iCharacter.markCharGrid(lDropItem);
                             D2ViewClipboard.removeItem(lDropItem);
                             iCharacter.addCharItem(lDropItem);

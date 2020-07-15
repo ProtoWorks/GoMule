@@ -194,14 +194,14 @@ public class D2Stash extends D2ItemListAdapter {
         D2Backup.backup(pProject, iFileName, iBR);
         
         int size = 0;
-        for (int i = 0; i < iItems.size(); i++) { size += ((D2Item) iItems.get(i)).get_bytes().length; }
+        for (int i = 0; i < iItems.size(); i++) { size += ((D2Item) iItems.get(i)).getBytes().length; }
         byte[] newbytes = new byte[size + 11];
         newbytes[0] = 'D';
         newbytes[1] = '2';
         newbytes[2] = 'X';
         int pos = 11;
         for (int i = 0; i < iItems.size(); i++) {
-            byte[] item_bytes = ((D2Item) iItems.get(i)).get_bytes();
+            byte[] item_bytes = ((D2Item) iItems.get(i)).getBytes();
             for (int j = 0; j < item_bytes.length; j++) { newbytes[pos++] = item_bytes[j]; }
         }
         

@@ -763,26 +763,26 @@ public class D2Character extends D2ItemListAdapter {
         switch (curWep) {
             case 0:
                 for (int x = 0; x < getCharItemNr(); x = x + 1) {
-                    if (getCharItem(x).get_body_position() == 4 || getCharItem(x).get_body_position() == 5) {
+                    if (getCharItem(x).getBodyPosition() == 4 || getCharItem(x).getBodyPosition() == 5) {
                         updateCharStats("P", getCharItem(x));
                     }
                 }
                 curWep = 1;
                 for (int x = 0; x < getCharItemNr(); x = x + 1) {
-                    if (getCharItem(x).get_body_position() == 11 || getCharItem(x).get_body_position() == 12) {
+                    if (getCharItem(x).getBodyPosition() == 11 || getCharItem(x).getBodyPosition() == 12) {
                         updateCharStats("D", getCharItem(x));
                     }
                 }
                 return;
             case 1:
                 for (int x = 0; x < iCharItems.size(); x = x + 1) {
-                    if (getCharItem(x).get_body_position() == 11 || getCharItem(x).get_body_position() == 12) {
+                    if (getCharItem(x).getBodyPosition() == 11 || getCharItem(x).getBodyPosition() == 12) {
                         updateCharStats("P", getCharItem(x));
                     }
                 }
                 curWep = 0;
                 for (int x = 0; x < iCharItems.size(); x = x + 1) {
-                    if (getCharItem(x).get_body_position() == 4 || getCharItem(x).get_body_position() == 5) {
+                    if (getCharItem(x).getBodyPosition() == 4 || getCharItem(x).getBodyPosition() == 5) {
                         updateCharStats("D", getCharItem(x));
                     }
                 }
@@ -835,7 +835,7 @@ public class D2Character extends D2ItemListAdapter {
         iCharCursorItem = pItem;
         setModified(true);
         if (iCharCursorItem != null) {
-            iCharCursorItem.set_location((short) 4);
+            iCharCursorItem.setLocation((short) 4);
             iCharCursorItem.set_body_position((short) 0);
         }
     }
@@ -863,17 +863,17 @@ public class D2Character extends D2ItemListAdapter {
     }
     
     public boolean markCharGrid(D2Item i) {
-        short panel = i.get_panel();
+        short panel = i.getPanel();
         int row, col, width, height, j, k;
         switch (panel) {
             case 0: // equipped or on belt
-                int location = i.get_location();
+                int location = i.getLocation();
                 if (location == 2) {
-                    col = i.get_col();
+                    col = i.getCol();
                     row = col / 4;
                     col = col % 4;
-                    width = i.get_width();
-                    height = i.get_height();
+                    width = i.getWidth();
+                    height = i.getHeight();
                     if ((row + height) > 4) { return false; }
                     if ((col + width) > 4) { return false; }
                     for (j = row; j < row + height; j++) {
@@ -882,7 +882,7 @@ public class D2Character extends D2ItemListAdapter {
                 } else if (location == 6) {
                 
                 } else {
-                    int body_position = i.get_body_position();
+                    int body_position = i.getBodyPosition();
                     if (iEquipped[body_position] == true) {
                         return false;
                     } else {
@@ -891,10 +891,10 @@ public class D2Character extends D2ItemListAdapter {
                 }
                 break;
             case BODY_INV_CONTENT: // inventory
-                row = i.get_row();
-                col = i.get_col();
-                width = i.get_width();
-                height = i.get_height();
+                row = i.getRow();
+                col = i.getCol();
+                width = i.getWidth();
+                height = i.getHeight();
                 if ((row + height) > 4) { return false; }
                 if ((col + width) > 10) { return false; }
                 for (j = row; j < row + height; j++) {
@@ -902,10 +902,10 @@ public class D2Character extends D2ItemListAdapter {
                 }
                 break;
             case BODY_CUBE_CONTENT: // cube
-                row = i.get_row();
-                col = i.get_col();
-                width = i.get_width();
-                height = i.get_height();
+                row = i.getRow();
+                col = i.getCol();
+                width = i.getWidth();
+                height = i.getHeight();
                 if ((row + height) > 4) { return false; }
                 if ((col + width) > 3) { return false; }
                 for (j = row; j < row + height; j++) {
@@ -913,10 +913,10 @@ public class D2Character extends D2ItemListAdapter {
                 }
                 break;
             case BODY_STASH_CONTENT: // stash
-                row = i.get_row();
-                col = i.get_col();
-                width = i.get_width();
-                height = i.get_height();
+                row = i.getRow();
+                col = i.getCol();
+                width = i.getWidth();
+                height = i.getHeight();
                 if ((row + height) > 8) { return false; }
                 if ((col + width) > 6) { return false; }
                 for (j = row; j < row + height; j++) {
@@ -928,9 +928,9 @@ public class D2Character extends D2ItemListAdapter {
     }
     
     public boolean markMercGrid(D2Item i) {
-        short panel = i.get_panel();
+        short panel = i.getPanel();
         if (panel == 0) {
-            int body_position = i.get_body_position();
+            int body_position = i.getBodyPosition();
             if (iMerc[body_position - 1] == true) {
                 return false;
             } else {
@@ -941,15 +941,15 @@ public class D2Character extends D2ItemListAdapter {
     }
     
     public boolean markCorpseGrid(D2Item i) {
-        short panel = i.get_panel();
+        short panel = i.getPanel();
         switch (panel) {
             case 0: // equipped or on belt
-                int location = i.get_location();
+                int location = i.getLocation();
                 if (location == 2) {
                 } else if (location == 6) {
                     //				in socket
                 } else {
-                    int body_position = i.get_body_position();
+                    int body_position = i.getBodyPosition();
                     if (iCorpse[body_position] == true) {
                         return false;
                     } else {
@@ -973,18 +973,18 @@ public class D2Character extends D2ItemListAdapter {
     }
     
     public boolean unmarkCharGrid(D2Item i) {
-        short panel = i.get_panel();
+        short panel = i.getPanel();
         int row, col, width, height, j, k;
         switch (panel) {
             case 0: // equipped or on belt
-                int location = i.get_location();
+                int location = i.getLocation();
                 // on the belt
                 if (location == 2) {
-                    col = i.get_col();
+                    col = i.getCol();
                     row = col / 4;
                     col = col % 4;
-                    width = i.get_width();
-                    height = i.get_height();
+                    width = i.getWidth();
+                    height = i.getHeight();
                     if ((row + height) > 4) { return false; }
                     if ((col + width) > 4) { return false; }
                     for (j = row; j < row + height; j++) {
@@ -993,15 +993,15 @@ public class D2Character extends D2ItemListAdapter {
                 } else if (location == 6) {
                     //				in socket?
                 } else {
-                    int body_position = i.get_body_position();
+                    int body_position = i.getBodyPosition();
                     iEquipped[body_position] = false;
                 }
                 break;
             case BODY_INV_CONTENT: // inventory
-                row = i.get_row();
-                col = i.get_col();
-                width = i.get_width();
-                height = i.get_height();
+                row = i.getRow();
+                col = i.getCol();
+                width = i.getWidth();
+                height = i.getHeight();
                 if ((row + height) > 4) { return false; }
                 if ((col + width) > 10) { return false; }
                 for (j = row; j < row + height; j++) {
@@ -1009,10 +1009,10 @@ public class D2Character extends D2ItemListAdapter {
                 }
                 break;
             case BODY_CUBE_CONTENT: // cube
-                row = i.get_row();
-                col = i.get_col();
-                width = i.get_width();
-                height = i.get_height();
+                row = i.getRow();
+                col = i.getCol();
+                width = i.getWidth();
+                height = i.getHeight();
                 if ((row + height) > 4) { return false; }
                 if ((col + width) > 3) { return false; }
                 for (j = row; j < row + height; j++) {
@@ -1020,10 +1020,10 @@ public class D2Character extends D2ItemListAdapter {
                 }
                 break;
             case BODY_STASH_CONTENT: // stash
-                row = i.get_row();
-                col = i.get_col();
-                width = i.get_width();
-                height = i.get_height();
+                row = i.getRow();
+                col = i.getCol();
+                width = i.getWidth();
+                height = i.getHeight();
                 if ((row + height) > 8) { return false; }
                 if ((col + width) > 6) { return false; }
                 for (j = row; j < row + height; j++) {
@@ -1035,9 +1035,9 @@ public class D2Character extends D2ItemListAdapter {
     }
     
     public boolean unmarkMercGrid(D2Item i) {
-        short panel = i.get_panel();
+        short panel = i.getPanel();
         if (panel == 0) {
-            int body_position = i.get_body_position();
+            int body_position = i.getBodyPosition();
             iMerc[body_position - 1] = false;
         }
         return true;
@@ -1073,8 +1073,8 @@ public class D2Character extends D2ItemListAdapter {
     
     public boolean checkCharGrid(int panel, int x, int y, D2Item pItem) {
         int i, j;
-        int w = pItem.get_width();
-        int h = pItem.get_height();
+        int w = pItem.getWidth();
+        int h = pItem.getHeight();
         switch (panel) {
             case BODY_INV_CONTENT:
                 for (i = x; i < x + w; i++) {
@@ -1270,16 +1270,16 @@ public class D2Character extends D2ItemListAdapter {
         if (panel == BODY_BELT_CONTENT) {
             for (int i = 0; i < iCharItems.size(); i++) {
                 D2Item temp_item = (D2Item) iCharItems.get(i);
-                if (temp_item.get_location() == panel) {
-                    if (temp_item.get_col() == 4 * y + x) { return i; }
+                if (temp_item.getLocation() == panel) {
+                    if (temp_item.getCol() == 4 * y + x) { return i; }
                 }
             }
         } else if (panel >= 10) {
             for (int i = 0; i < iCharItems.size(); i++) {
                 D2Item temp_item = (D2Item) iCharItems.get(i);
-                if (temp_item.get_location() != 0 && temp_item.get_location() != 2) {
-                    if (temp_item.get_panel() == 0) {
-                        if (temp_item.get_body_position() == panel - 10) {
+                if (temp_item.getLocation() != 0 && temp_item.getLocation() != 2) {
+                    if (temp_item.getPanel() == 0) {
+                        if (temp_item.getBodyPosition() == panel - 10) {
                             return i;
                         }
                     }
@@ -1288,10 +1288,10 @@ public class D2Character extends D2ItemListAdapter {
         } else {
             for (int i = 0; i < iCharItems.size(); i++) {
                 D2Item temp_item = (D2Item) iCharItems.get(i);
-                if (temp_item.get_panel() == panel) {
-                    int row = temp_item.get_col();
-                    int col = temp_item.get_row();
-                    if (x >= row && x <= row + temp_item.get_width() - 1 && y >= col && y <= col + temp_item.get_height() - 1) { return i; }
+                if (temp_item.getPanel() == panel) {
+                    int row = temp_item.getCol();
+                    int col = temp_item.getRow();
+                    if (x >= row && x <= row + temp_item.getWidth() - 1 && y >= col && y <= col + temp_item.getHeight() - 1) { return i; }
                 }
             }
         }
@@ -1302,16 +1302,16 @@ public class D2Character extends D2ItemListAdapter {
         if (panel == BODY_BELT_CONTENT) {
             for (int i = 0; i < iCorpseItems.size(); i++) {
                 D2Item temp_item = (D2Item) iCorpseItems.get(i);
-                if (temp_item.get_location() == panel) {
-                    if (temp_item.get_col() == 4 * y + x) { return i; }
+                if (temp_item.getLocation() == panel) {
+                    if (temp_item.getCol() == 4 * y + x) { return i; }
                 }
             }
         } else if (panel >= 10) {
             for (int i = 0; i < iCorpseItems.size(); i++) {
                 D2Item temp_item = (D2Item) iCorpseItems.get(i);
-                if (temp_item.get_location() != 0 && temp_item.get_location() != 2) {
-                    if (temp_item.get_panel() == 0) {
-                        if (temp_item.get_body_position() == panel - 10) {
+                if (temp_item.getLocation() != 0 && temp_item.getLocation() != 2) {
+                    if (temp_item.getPanel() == 0) {
+                        if (temp_item.getBodyPosition() == panel - 10) {
                             return i;
                         }
                     }
@@ -1320,10 +1320,10 @@ public class D2Character extends D2ItemListAdapter {
         } else {
             for (int i = 0; i < iCorpseItems.size(); i++) {
                 D2Item temp_item = (D2Item) iCorpseItems.get(i);
-                if (temp_item.get_panel() == panel) {
-                    int row = temp_item.get_col();
-                    int col = temp_item.get_row();
-                    if (x >= row && x <= row + temp_item.get_width() - 1 && y >= col && y <= col + temp_item.get_height() - 1) { return i; }
+                if (temp_item.getPanel() == panel) {
+                    int row = temp_item.getCol();
+                    int col = temp_item.getRow();
+                    if (x >= row && x <= row + temp_item.getWidth() - 1 && y >= col && y <= col + temp_item.getHeight() - 1) { return i; }
                 }
             }
         }
@@ -1334,8 +1334,8 @@ public class D2Character extends D2ItemListAdapter {
         if (panel >= 10) {
             for (int i = 0; i < iMercItems.size(); i++) {
                 D2Item temp_item = (D2Item) iMercItems.get(i);
-                if (temp_item.get_panel() == 0) {
-                    if (temp_item.get_body_position() == panel - 10) { return i; }
+                if (temp_item.getPanel() == 0) {
+                    if (temp_item.getBodyPosition() == panel - 10) { return i; }
                 }
             }
         }
@@ -1351,15 +1351,15 @@ public class D2Character extends D2ItemListAdapter {
         // the open file in place of its current item list
         int lCharSize = 0;
         for (int i = 0; i < iCharItems.size(); i++) {
-            lCharSize += ((D2Item) iCharItems.get(i)).get_bytes().length;
+            lCharSize += ((D2Item) iCharItems.get(i)).getBytes().length;
         }
         if (iCharCursorItem != null) {
-            lCharSize += iCharCursorItem.get_bytes().length;
+            lCharSize += iCharCursorItem.getBytes().length;
         }
         int lMercSize = 0;
         if (hasMerc()) {
             for (int i = 0; i < iMercItems.size(); i++) {
-                lMercSize += ((D2Item) iMercItems.get(i)).get_bytes().length;
+                lMercSize += ((D2Item) iMercItems.get(i)).getBytes().length;
             }
         }
         byte lWritenBytes[] = getCurrentStats();
@@ -1374,12 +1374,12 @@ public class D2Character extends D2ItemListAdapter {
         int lCharItemCountPos = lPos - 2;
         int lMercItemCountPos = -1;
         for (int i = 0; i < iCharItems.size(); i++) {
-            byte[] item_bytes = ((D2Item) iCharItems.get(i)).get_bytes();
+            byte[] item_bytes = ((D2Item) iCharItems.get(i)).getBytes();
             System.arraycopy(item_bytes, 0, lNewbytes, lPos, item_bytes.length);
             lPos += item_bytes.length;
         }
         if (iCharCursorItem != null) {
-            byte[] item_bytes = iCharCursorItem.get_bytes();
+            byte[] item_bytes = iCharCursorItem.getBytes();
             System.arraycopy(item_bytes, 0, lNewbytes, lPos, item_bytes.length);
             lPos += item_bytes.length;
         }
@@ -1388,7 +1388,7 @@ public class D2Character extends D2ItemListAdapter {
             lPos += iBetweenItems.length;
             lMercItemCountPos = lPos - 2;
             for (int i = 0; i < iMercItems.size(); i++) {
-                byte[] item_bytes = ((D2Item) iMercItems.get(i)).get_bytes();
+                byte[] item_bytes = ((D2Item) iMercItems.get(i)).getBytes();
                 System.arraycopy(item_bytes, 0, lNewbytes, lPos, item_bytes.length);
                 lPos += item_bytes.length;
             }
@@ -1533,11 +1533,11 @@ public class D2Character extends D2ItemListAdapter {
     }
     
     private void addSetItem(D2Item item) {
-        int setNo = D2TxtFile.FULLSET.searchColumns("index", D2TxtFile.SETITEMS.getRow(item.getSetID()).get("set")).getRowNum();
+        int setNo = D2TxtFile.FULLSET.searchColumns("index", D2TxtFile.SETITEMS.getRow(item.getSetId()).get("set")).getRowNum();
         setTracker[setNo][0]++;
         for (int x = 0; x < iCharItems.size(); x++) {
             if (!((D2Item) iCharItems.get(x)).isEquipped(curWep)) { continue; }
-            if (D2TxtFile.FULLSET.searchColumns("index", D2TxtFile.SETITEMS.getRow(((D2Item) (iCharItems.get(x))).getSetID()).get("set")).getRowNum() == setNo) {
+            if (D2TxtFile.FULLSET.searchColumns("index", D2TxtFile.SETITEMS.getRow(((D2Item) (iCharItems.get(x))).getSetId()).get("set")).getRowNum() == setNo) {
                 modSetProps(((D2Item) iCharItems.get(x)), setTracker[setNo], 1);
             }
         }
@@ -1584,14 +1584,14 @@ public class D2Character extends D2ItemListAdapter {
     }
     
     private void remSetItem(D2Item item) {
-        
-        int setNo = D2TxtFile.FULLSET.searchColumns("index", D2TxtFile.SETITEMS.getRow(item.getSetID()).get("set")).getRowNum();
+    
+        int setNo = D2TxtFile.FULLSET.searchColumns("index", D2TxtFile.SETITEMS.getRow(item.getSetId()).get("set")).getRowNum();
         //Since the item we have just removed is no longer equipped (so not in icharitems) we need
         //to remove it first.
         modSetProps(item, new int[]{0}, -1);
         for (int x = 0; x < iCharItems.size(); x++) {
             if (!((D2Item) iCharItems.get(x)).isEquipped(curWep)) { continue; }
-            if (D2TxtFile.FULLSET.searchColumns("index", D2TxtFile.SETITEMS.getRow(((D2Item) (iCharItems.get(x))).getSetID()).get("set")).getRowNum() == setNo) {
+            if (D2TxtFile.FULLSET.searchColumns("index", D2TxtFile.SETITEMS.getRow(((D2Item) (iCharItems.get(x))).getSetId()).get("set")).getRowNum() == setNo) {
                 modSetProps(((D2Item) iCharItems.get(x)), setTracker[setNo], -1);
             }
         }
@@ -1639,7 +1639,7 @@ public class D2Character extends D2ItemListAdapter {
         for (int x = 0; x < iCharItems.size(); x++) {
             if (((D2Item) iCharItems.get(x)).isTypeArmor()) {
                 if (((D2Item) iCharItems.get(x)).isEquipped()) {
-                    cDef = cDef + ((D2Item) iCharItems.get(x)).getiDef();
+                    cDef = cDef + ((D2Item) iCharItems.get(x)).getDef();
                 }
             }
         }
@@ -1651,7 +1651,7 @@ public class D2Character extends D2ItemListAdapter {
         for (int x = 0; x < iMercItems.size(); x++) {
             if (((D2Item) iMercItems.get(x)).isTypeArmor()) {
                 if (((D2Item) iMercItems.get(x)).isEquipped()) {
-                    cDef = cDef + ((D2Item) iMercItems.get(x)).getiDef();
+                    cDef = cDef + ((D2Item) iMercItems.get(x)).getDef();
                 }
             }
         }

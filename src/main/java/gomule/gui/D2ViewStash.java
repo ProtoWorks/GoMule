@@ -216,7 +216,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         });
         
         //        Font lFont = iTable.getTableHeader().getFont();
-        //            iTable.getTableHeader().setFont( new Font(lFont.getName(), lFont.getStyle(), lFont.getSize()-2) );
+        //            iTable.getTableHeader().setFont( new Font(lFont.getItemName(), lFont.getStyle(), lFont.getSize()-2) );
         iTable.getTableHeader().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -491,7 +491,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                     try {
                         iStash.ignoreItemListEvents();
                         for (int i = 0; i < lItemList.size(); i++) {
-                            int check = JOptionPane.showConfirmDialog(null, "Delete " + ((D2Item) lItemList.get(i)).getName() + "?");
+                            int check = JOptionPane.showConfirmDialog(null, "Delete " + ((D2Item) lItemList.get(i)).getItemName() + "?");
                             
                             if (check == 0) {
                                 iStash.removeItem((D2Item) lItemList.get(i));
@@ -1179,11 +1179,11 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                             } else if (iCatCharm.isSelected() && lItem.isCharm()) {
                                 if (iCatCharmAll.isSelected()) {
                                     lAdd2 = true;
-                                } else if (iCatCharmSmall.isSelected() && lItem.isCharmSmall()) {
+                                } else if (iCatCharmSmall.isSelected() && lItem.isSmallCharm()) {
                                     lAdd2 = true;
-                                } else if (iCatCharmLarge.isSelected() && lItem.isCharmLarge()) {
+                                } else if (iCatCharmLarge.isSelected() && lItem.isLargeCharm()) {
                                     lAdd2 = true;
-                                } else if (iCatCharmGrand.isSelected() && lItem.isCharmGrand()) {
+                                } else if (iCatCharmGrand.isSelected() && lItem.isGrandCharm()) {
                                     lAdd2 = true;
                                 }
                             } else if (iCatMisc.isSelected() && lItem.isTypeMisc()
@@ -1248,7 +1248,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                         Object lSort = iSortList.get(i);
                         
                         if (lSort == HEADER[0]) {
-                            return lItem1.getName().compareTo(lItem2.getName());
+                            return lItem1.getItemName().compareTo(lItem2.getItemName());
                         } else if (lSort == HEADER[1]) {
                             return lItem1.getReqLvl() - lItem2.getReqLvl();
                         } else if (lSort == HEADER[2]) {

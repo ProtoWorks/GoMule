@@ -942,10 +942,10 @@ public class DCNew {
     
     ////	All items have rarity 3 except class-specific items have rarity 1
     ////	, assassin claws have rarity 2, and wands, staves and sceptres (rods) have rarity 1.
-    ////	if(mon.getParent().getName().indexOf("andariel") && mon.getParent().getMonDiff().equals("NM")){
+    ////	if(mon.getParent().getItemName().indexOf("andariel") && mon.getParent().getMonDiff().equals("NM")){
     ////	if(!((Boss)mon.getParent()).getQuest()){
     
-    ////	System.out.println(mon.getParent().getName() + "  -  "+ "  -  "+((Boss)mon.getParent()).getQuest());
+    ////	System.out.println(mon.getParent().getItemName() + "  -  "+ "  -  "+((Boss)mon.getParent()).getQuest());
     ////	}
     ////	}
     
@@ -967,10 +967,10 @@ public class DCNew {
     //	}
     
     //	dChance = dChance - (dChance * mon.getUqual()/1024);
-    ////	if(mon.getParent().getName().indexOf("andariel") && mon.getParent().getMonDiff().equals("NM")){
+    ////	if(mon.getParent().getItemName().indexOf("andariel") && mon.getParent().getMonDiff().equals("NM")){
     ////	if(!((Boss)mon.getParent()).getQuest()){
     
-    ////	System.out.println(mon.getParent().getName() + "  -  "+((double)128)/dChance+ "  -  "+((Boss)mon.getParent()).getQuest());
+    ////	System.out.println(mon.getParent().getItemName() + "  -  "+((double)128)/dChance+ "  -  "+((Boss)mon.getParent()).getQuest());
     ////	}
     ////	}
     //	return ((double)128)/(double)dChance;

@@ -95,7 +95,7 @@ public class D2ImageCache {
     }
     
     public static Image getDC6Image(D2Item pItem) {
-        return getDC6Image(pItem.get_image() + ".dc6");
+        return getDC6Image(pItem.getImageFile() + ".dc6");
     }
     
     public static Image getDC6Image(String pFileName) {

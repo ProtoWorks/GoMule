@@ -224,7 +224,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         });
         
 //        Font lFont = iTable.getTableHeader().getFont();
-//            iTable.getTableHeader().setFont( new Font(lFont.getName(), lFont.getStyle(), lFont.getSize()-2) );
+//            iTable.getTableHeader().setFont( new Font(lFont.getItemName(), lFont.getStyle(), lFont.getSize()-2) );
         iTable.getTableHeader().addMouseListener( new MouseAdapter() 
         {
             public void mouseReleased(MouseEvent e) 
