@@ -130,14 +130,14 @@ public class DCTableModel extends AbstractTableModel {
         sortCol(iSelected);
     }
     
-    public void refresh(List<Object> mTuples, boolean dec) {
+    public void refresh(List<MonsterTuple> mTuples, boolean dec) {
         this.dec = dec;
         type = 0;
         tmRows = new ArrayList<>();
         
         for (int x = 0; x < mTuples.size(); x = x + 1) {
             
-            MonsterTuple tSelected = ((MonsterTuple) mTuples.get(x));
+            MonsterTuple tSelected = mTuples.get(x);
             Iterator TCIt = tSelected.getFinalTCs().keySet().iterator();
             
             while (TCIt.hasNext()) {

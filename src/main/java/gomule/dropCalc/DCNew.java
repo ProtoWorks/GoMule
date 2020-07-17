@@ -305,7 +305,7 @@ public class DCNew {
                 
                 for (int x = 0; x < mainRegMonArray.size(); x = x + 1) {
                     
-                    List<Object> mTuples = ((Monster) mainRegMonArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainRegMonArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -333,7 +333,7 @@ public class DCNew {
             case 1:
                 
                 for (int x = 0; x < mainMinMonArray.size(); x = x + 1) {
-                    List<Object> mTuples = ((Monster) mainMinMonArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainMinMonArray.get(x)).getmTuples();
                     
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
@@ -358,7 +358,7 @@ public class DCNew {
                 break;
             case 2:
                 for (int x = 0; x < mainChampMonArray.size(); x = x + 1) {
-                    List<Object> mTuples = ((Monster) mainChampMonArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainChampMonArray.get(x)).getmTuples();
                     
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
@@ -382,7 +382,7 @@ public class DCNew {
                 break;
             case 3:
                 for (int x = 0; x < mainUniqArray.size(); x = x + 1) {
-                    List<Object> mTuples = ((Monster) mainUniqArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainUniqArray.get(x)).getmTuples();
                     
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
@@ -409,7 +409,7 @@ public class DCNew {
                     if (((Monster) mainSupUniqArray.get(x)).getMonName().equals("Fangskin") || ((SuperUnique) mainSupUniqArray.get(x)).getSUID().startsWith("ancientbarb")) {
                         continue;
                     }
-                    List<Object> mTuples = ((Monster) mainSupUniqArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainSupUniqArray.get(x)).getmTuples();
                     
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
@@ -457,7 +457,7 @@ public class DCNew {
                 break;
             case 5:
                 for (int x = 0; x < mainBossArray.size(); x = x + 1) {
-                    List<Object> mTuples = ((Monster) mainBossArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainBossArray.get(x)).getmTuples();
                     
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
@@ -1161,7 +1161,7 @@ public class DCNew {
             
             case 0:
                 for (int x = 0; x < mainRegMonArray.size(); x = x + 1) {
-                    List<Object> mTuples = ((Monster) mainRegMonArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainRegMonArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1176,7 +1176,7 @@ public class DCNew {
                 break;
             case 1:
                 for (int x = 0; x < mainMinMonArray.size(); x = x + 1) {
-                    List<Object> mTuples = ((Monster) mainMinMonArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainMinMonArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1191,7 +1191,7 @@ public class DCNew {
                 break;
             case 2:
                 for (int x = 0; x < mainChampMonArray.size(); x = x + 1) {
-                    List<Object> mTuples = ((Monster) mainChampMonArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainChampMonArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1206,7 +1206,7 @@ public class DCNew {
                 break;
             case 3:
                 for (int x = 0; x < mainUniqArray.size(); x = x + 1) {
-                    List<Object> mTuples = ((Monster) mainUniqArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainUniqArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1224,7 +1224,7 @@ public class DCNew {
                     if (((Monster) mainSupUniqArray.get(x)).getMonName().equals("Fangskin") || ((SuperUnique) mainSupUniqArray.get(x)).getSUID().startsWith("ancientbarb")) {
                         continue;
                     }
-                    List<Object> mTuples = ((Monster) mainSupUniqArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainSupUniqArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1239,7 +1239,7 @@ public class DCNew {
                 break;
             case 5:
                 for (int x = 0; x < mainBossArray.size(); x = x + 1) {
-                    List<Object> mTuples = ((Monster) mainBossArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainBossArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1265,7 +1265,7 @@ public class DCNew {
             case 0:
                 for (int x = 0; x < mainRegMonArray.size(); x = x + 1) {
                     
-                    List<Object> mTuples = ((Monster) mainRegMonArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainRegMonArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
@@ -1292,7 +1292,7 @@ public class DCNew {
                 break;
             case 1:
                 for (int x = 0; x < mainMinMonArray.size(); x = x + 1) {
-                    List<Object> mTuples = ((Monster) mainMinMonArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainMinMonArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1329,7 +1329,7 @@ public class DCNew {
                 break;
             case 2:
                 for (int x = 0; x < mainChampMonArray.size(); x = x + 1) {
-                    List<Object> mTuples = ((Monster) mainChampMonArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainChampMonArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1355,7 +1355,7 @@ public class DCNew {
                 break;
             case 3:
                 for (int x = 0; x < mainUniqArray.size(); x = x + 1) {
-                    List<Object> mTuples = ((Monster) mainUniqArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainUniqArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1384,7 +1384,7 @@ public class DCNew {
                     if (((Monster) mainSupUniqArray.get(x)).getMonName().equals("Fangskin") || ((SuperUnique) mainSupUniqArray.get(x)).getSUID().startsWith("ancientbarb")) {
                         continue;
                     }
-                    List<Object> mTuples = ((Monster) mainSupUniqArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainSupUniqArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;
@@ -1403,7 +1403,7 @@ public class DCNew {
                 break;
             case 5:
                 for (int x = 0; x < mainBossArray.size(); x = x + 1) {
-                    List<Object> mTuples = ((Monster) mainBossArray.get(x)).getmTuples();
+                    List<MonsterTuple> mTuples = ((Monster) mainBossArray.get(x)).getmTuples();
                     for (int y = 0; y < mTuples.size(); y = y + 1) {
                         if (((MonsterTuple) mTuples.get(y)).getLevel() < item.getqLvl()) {
                             continue;

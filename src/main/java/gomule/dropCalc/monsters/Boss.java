@@ -38,13 +38,13 @@ public class Boss extends Monster {
         }
         this.monName = D2TblFile.getString(monRow.get("NameStr"));
         mTuples = new ArrayList<>();
-        Map<Object, Object> areas = findLocsBossMonster();
+        Map<String, Integer> areas = findLocsBossMonster();
         findLevelsBossMonster(areas);
         String header = "TreasureClass1";
         if (isQuest) {
             header = "TreasureClass4";
         }
-        List<Object> initTCs = getInitTC(areas, header);
+        List<String> initTCs = getInitTC(areas, header);
         mTuples = createTuples(areas, initTCs);
         
     }

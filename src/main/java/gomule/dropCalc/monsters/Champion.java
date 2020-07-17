@@ -35,13 +35,13 @@ public class Champion extends Monster {
         super(monRow, monDiff, monClass, flag);
         this.monName = D2TblFile.getString(D2TxtFile.MONSTATS.searchColumns("Id", monID).get("NameStr"));
         mTuples = new ArrayList<>();
-        Map<Object, Object> areas = findLocsMonster(1);
+        Map<String, Integer> areas = findLocsMonster(1);
         enterMonLevel(areas);
-        List<Object> initTCs = getInitTC(areas, "TreasureClass2");
+        List<String> initTCs = getInitTC(areas, "TreasureClass2");
         mTuples = createTuples(areas, initTCs);
     }
     
-    public void enterMonLevel(Map<Object, Object> monLvlAreas) {
+    public void enterMonLevel(Map<String, Integer> monLvlAreas) {
         
         Iterator it = monLvlAreas.keySet().iterator();
         while (it.hasNext()) {

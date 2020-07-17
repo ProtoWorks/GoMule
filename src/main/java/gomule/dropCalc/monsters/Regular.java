@@ -36,13 +36,13 @@ public class Regular extends Monster {
         this.monName = D2TblFile.getString(monRow.get("NameStr"));
         
         mTuples = new ArrayList<>();
-        Map<Object, Object> areas = findLocsMonster(0);
+        Map<String, Integer> areas = findLocsMonster(0);
         enterMonLevel(areas);
-        List<Object> initTCs = getInitTC(areas, "TreasureClass1");
+        List<String> initTCs = getInitTC(areas, "TreasureClass1");
         mTuples = createTuples(areas, initTCs);
     }
     
-    public void enterMonLevel(Map<Object, Object> monLvlAreas) {
+    public void enterMonLevel(Map<String, Integer> monLvlAreas) {
         
         Iterator it = monLvlAreas.keySet().iterator();
         while (it.hasNext()) {

@@ -22,7 +22,6 @@ package gomule.dropCalc.monsters;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -40,54 +39,45 @@ public class SuperUnique extends Monster {
         this.SUID = monRow.get("Class");
         this.monName = D2TblFile.getString(monID);
         mTuples = new ArrayList<>();
-        Map<Object, Object> areas = new HashMap<>();
+        Map<String, Integer> areas = new HashMap<>();
         findLocsSU(0, areas, monID);
         enterMonLevel(areas);
-        List<Object> initTCs = getInitTC(areas);
+        List<String> initTCs = getInitTC(areas);
         mTuples = createTuples(areas, initTCs);
     }
     
-    protected List<Object> getInitTC(Map<Object, Object> monLvlAreas) {
-        
-        String initTC = "";
+    protected List<String> getInitTC(Map<String, Integer> monLvlAreas) {
         String header = "TC";
-        List<Object> tcArr = new ArrayList<>();
-        Iterator it = monLvlAreas.keySet().iterator();
-        while (it.hasNext()) {
-            String area = (String) it.next();
+        List<String> result = new ArrayList<>();
+        
+        for (Map.Entry<String, Integer> entry : monLvlAreas.entrySet()) {
+            String initTC;
             if (this.getMonDiff().equals("N")) {
                 initTC = monRow.get(header);
-            } else if (this.getMonDiff().equals("NM")) {
-                initTC = bumpTC(D2TxtFile.SUPUNIQ.searchColumns("Name", monID).get(header + "(N)"), ((Integer) monLvlAreas.get(area)).intValue());
             } else {
-                initTC = bumpTC(D2TxtFile.SUPUNIQ.searchColumns("Name", monID).get(header + "(H)"), ((Integer) monLvlAreas.get(area)).intValue());
+                int lvl = entry.getValue();
+                if (this.getMonDiff().equals("NM")) {
+                    initTC = bumpTC(D2TxtFile.SUPUNIQ.searchColumns("Name", monID).get(header + "(N)"), lvl);
+                } else {
+                    initTC = bumpTC(D2TxtFile.SUPUNIQ.searchColumns("Name", monID).get(header + "(H)"), lvl);
+                }
             }
-            tcArr.add(initTC);
+            result.add(initTC);
         }
         
-        return tcArr;
+        return result;
     }
     
-    public void enterMonLevel(Map<Object, Object> monLvlAreas) {
+    public void enterMonLevel(Map<String, Integer> monLvlAreas) {
         
-        Iterator it = monLvlAreas.keySet().iterator();
-        while (it.hasNext()) {
-            
-            String area = (String) it.next();
-            
+        for (String area : monLvlAreas.keySet()) {
             if (monDiff.equals("N")) {
-                
                 monLvlAreas.put(area, Integer.parseInt(D2TxtFile.MONSTATS.searchColumns("Id", SUID).get("Level")) + 3);
-                
             } else if (monDiff.equals("NM")) {
-                
                 monLvlAreas.put(area, Integer.parseInt(D2TxtFile.LEVELS.searchColumns("Name", area).get("MonLvl2Ex")) + 3);
-                
             } else {
-                
                 monLvlAreas.put(area, Integer.parseInt(D2TxtFile.LEVELS.searchColumns("Name", area).get("MonLvl3Ex")) + 3);
             }
-            
         }
     }
     

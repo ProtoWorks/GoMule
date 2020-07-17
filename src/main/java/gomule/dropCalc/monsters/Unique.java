@@ -21,7 +21,6 @@
 package gomule.dropCalc.monsters;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -35,33 +34,22 @@ public class Unique extends Monster {
         super(monRow, monDiff, monClass, flag);
         this.monName = D2TblFile.getString(monRow.get("NameStr"));
         mTuples = new ArrayList<>();
-        Map<Object, Object> areas = findLocsMonster(0);
+        Map<String, Integer> areas = findLocsMonster(0);
         enterMonLevel(areas);
-        List<Object> initTCs = getInitTC(areas, "TreasureClass3");
+        List<String> initTCs = getInitTC(areas, "TreasureClass3");
         mTuples = createTuples(areas, initTCs);
         
     }
     
-    public void enterMonLevel(Map<Object, Object> monLvlAreas) {
-        
-        Iterator it = monLvlAreas.keySet().iterator();
-        while (it.hasNext()) {
-            
-            String area = (String) it.next();
-            
+    public void enterMonLevel(Map<String, Integer> monLvlAreas) {
+        for (String area : monLvlAreas.keySet()) {
             if (monDiff.equals("N")) {
                 monLvlAreas.put(area, Integer.parseInt(monRow.get("Level")) + 3);
-                
             } else if (monDiff.equals("NM")) {
-                
                 monLvlAreas.put(area, Integer.parseInt(D2TxtFile.LEVELS.searchColumns("Name", area).get("MonLvl2Ex")) + 3);
-                
             } else {
-                
                 monLvlAreas.put(area, Integer.parseInt(D2TxtFile.LEVELS.searchColumns("Name", area).get("MonLvl3Ex")) + 3);
             }
-            
         }
     }
-    
 }

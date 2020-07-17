@@ -76,9 +76,9 @@ public class Minion extends Monster {
     
     private void setUpTuples() {
         mTuples = new ArrayList<>();
-        Map<Object, Object> areas = findLocsMonster(0);
+        Map<String, Integer> areas = findLocsMonster(0);
         enterMonLevel(areas);
-        List<Object> initTCs = getInitTC(areas, "TreasureClass1");
+        List<String> initTCs = getInitTC(areas, "TreasureClass1");
         mTuples = createTuples(areas, initTCs);
         
     }
@@ -86,17 +86,17 @@ public class Minion extends Monster {
     private void setUpBossMinionTuples(String newID) {
         mTuples = new ArrayList<>();
         this.monID = this.monID.toLowerCase();
-        Map<Object, Object> areas = findLocsBossMonster();
+        Map<String, Integer> areas = findLocsBossMonster();
         findLevelsBossMonster(areas);
         this.monID = newID;
-        List<Object> initTCs = getInitTC(areas, "TreasureClass1");
+        List<String> initTCs = getInitTC(areas, "TreasureClass1");
         mTuples = createTuples(areas, initTCs);
         
     }
     
     private void setUpMinionTuples(String newID) {
         mTuples = new ArrayList<>();
-        Map<Object, Object> areas = new HashMap<>();
+        Map<String, Integer> areas = new HashMap<>();
         if (D2TxtFile.SUPUNIQ.searchColumns("Name", minionBoss) != null) {
             findLocsSU(1, areas, minionBoss);
         } else {
@@ -104,13 +104,13 @@ public class Minion extends Monster {
         }
         this.monID = newID;
         enterMonLevel(areas);
-        List<Object> initTCs = getInitTC(areas, "TreasureClass1");
+        List<String> initTCs = getInitTC(areas, "TreasureClass1");
         
         mTuples = createTuples(areas, initTCs);
         
     }
     
-    public void enterMonLevel(Map<Object, Object> monLvlAreas) {
+    public void enterMonLevel(Map<String, Integer> monLvlAreas) {
         
         Iterator it = monLvlAreas.keySet().iterator();
         while (it.hasNext()) {
