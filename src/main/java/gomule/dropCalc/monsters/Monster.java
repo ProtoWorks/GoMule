@@ -22,7 +22,8 @@ package gomule.dropCalc.monsters;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import randall.d2files.D2TxtFile;
 import randall.d2files.D2TxtFileItemProperties;
@@ -33,7 +34,7 @@ public class Monster {
     protected String monDiff;
     protected String monID;
     protected String monName;
-    protected ArrayList mTuples;
+    protected List<MonsterTuple> mTuples;
     
     /**
      * CLASS is now:
@@ -44,7 +45,6 @@ public class Monster {
      * 4 - SU
      * 5 - Boss
      */
-    
     protected int monClass;
     
     /**
@@ -54,7 +54,6 @@ public class Monster {
      * @param monDiff
      * @param flag
      */
-    
     public Monster(D2TxtFileItemProperties monRow, String monDiff, int monClass, int flag) {
         
         if (monClass == 1 && flag == 2) {
@@ -66,79 +65,59 @@ public class Monster {
         this.monDiff = monDiff;
         this.monRow = monRow;
         this.monClass = monClass;
-        
     }
     
-    //	protected void setUpTuples() {
-    //	mTuples = new ArrayList();
-    //	HashMap areas = findLocsMonster();
-    //	enterMonLevel(areas);
-    //	ArrayList initTCs = getInitTC(areas);
-    //	mTuples = createTuples(areas, initTCs);
-    
-    //	}
-    
-    protected ArrayList createTuples(HashMap areas, ArrayList initTCs) {
+    protected List<MonsterTuple> createTuples(Map<String, Integer> areas, List<String> initTCs) {
         
-        ArrayList tOut = new ArrayList();
-        Iterator it = areas.keySet().iterator();
+        List<MonsterTuple> result = new ArrayList<>();
         int counter = 0;
-        while (it.hasNext()) {
-            String area = (String) it.next();
-            tOut.add(new MonsterTuple(area, (Integer) areas.get(area), (String) initTCs.get(counter), this));
-            
-            counter = counter + 1;
+        for (Map.Entry<String, Integer> entry : areas.entrySet()) {
+            result.add(new MonsterTuple(entry.getKey(), entry.getValue(), initTCs.get(counter), this));
+            counter++;
         }
         
-        return tOut;
+        return result;
     }
     
-    protected HashMap findLocsMonster(int cFlag) {
-        ArrayList monSearch = new ArrayList();
-        HashMap monLvlAreas = new HashMap();
+    protected Map<String, Integer> findLocsMonster(int cFlag) {
+        Map<String, Integer> monLvlAreas = new HashMap<>();
         
-        String selector = "mon1";
+        String selector;
         
-        if (monDiff.equals("N")) {
-            if (cFlag == 1) {
-                selector = "umon1";
-            }
+        if (monDiff.equals("N") && cFlag == 1) {
+            selector = "umon1";
         } else {
             selector = "nmon1";
         }
         
-        for (int x = 1; x < 11; x = x + 1) {
-            monSearch.clear();
-            monSearch = D2TxtFile.LEVELS.searchColumnsMultipleHits(selector, monID);
-            if (monSearch.size() > 0) {
-                for (int y = 0; y < monSearch.size(); y = y + 1) {
-                    monLvlAreas.put(((D2TxtFileItemProperties) monSearch.get(y)).get("Name"), new Integer(0));
-                }
+        for (int x = 1; x < 11; x++) {
+            List<D2TxtFileItemProperties> monSearch = D2TxtFile.LEVELS.searchColumnsMultipleHits(selector, monID);
+            for (D2TxtFileItemProperties search : monSearch) {
+                monLvlAreas.put(search.get("Name"), 0);
             }
-            selector = selector.substring(0, selector.length() - 1) + (new Integer(x + 1));
+            selector = selector.substring(0, selector.length() - 1) + (x + 1);
         }
         
         return monLvlAreas;
     }
     
-    protected ArrayList getInitTC(HashMap monLvlAreas, String header) {
-        
-        String initTC = "";
-        ArrayList tcArr = new ArrayList();
-        Iterator it = monLvlAreas.keySet().iterator();
-        while (it.hasNext()) {
-            String area = (String) it.next();
+    protected List<String> getInitTC(Map<String, Integer> monLvlAreas, String header) {
+        List<String> result = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : monLvlAreas.entrySet()) {
+            String initTC;
+            String area = entry.getKey();
+            Integer lvl = entry.getValue();
             if (this.getMonDiff().equals("N")) {
                 initTC = D2TxtFile.MONSTATS.searchColumns("Id", monID).get(header);
             } else if (this.getMonDiff().equals("NM")) {
-                initTC = bumpTC(D2TxtFile.MONSTATS.searchColumns("Id", monID).get(header + "(N)"), ((Integer) monLvlAreas.get(area)).intValue());
+                initTC = bumpTC(D2TxtFile.MONSTATS.searchColumns("Id", monID).get(header + "(N)"), lvl);
             } else {
-                initTC = bumpTC(D2TxtFile.MONSTATS.searchColumns("Id", monID).get(header + "(H)"), ((Integer) monLvlAreas.get(area)).intValue());
+                initTC = bumpTC(D2TxtFile.MONSTATS.searchColumns("Id", monID).get(header + "(H)"), lvl);
             }
-            tcArr.add(initTC);
+            result.add(initTC);
         }
         
-        return tcArr;
+        return result;
     }
     
     protected String bumpTC(String initTC, int lvl) {
@@ -170,67 +149,64 @@ public class Monster {
         return initTCRow.get("Treasure Class");
     }
     
-    //	public ArrayList getRealInitTC(){
+    //	public List<Object> getRealInitTC(){
     //	return initTC;
     //	}
     
-    protected HashMap findLocsBossMonster() {
-        HashMap monLvlAreas = new HashMap();
+    protected Map<String, Integer> findLocsBossMonster() {
+        Map<String, Integer> monLvlAreas = new HashMap<>();
         
         if (monID.equals("andariel")) {
-            monLvlAreas.put("Act 1 - Catacombs 4", new Integer(0));
+            monLvlAreas.put("Act 1 - Catacombs 4", 0);
         } else if (monID.equals("duriel")) {
-            monLvlAreas.put("Act 2 - Duriel's Lair", new Integer(0));
+            monLvlAreas.put("Act 2 - Duriel's Lair", 0);
         } else if (monID.equals("radament")) {
-            monLvlAreas.put("Act 2 - Sewer 1 C", new Integer(0));
+            monLvlAreas.put("Act 2 - Sewer 1 C", 0);
         } else if (monID.equals("mephisto")) {
-            monLvlAreas.put("Act 3 - Mephisto 3", new Integer(0));
+            monLvlAreas.put("Act 3 - Mephisto 3", 0);
         } else if (monID.equals("diablo")) {
-            monLvlAreas.put("Act 4 - Diablo 1", new Integer(0));
+            monLvlAreas.put("Act 4 - Diablo 1", 0);
         } else if (monID.equals("summoner")) {
-            monLvlAreas.put("Act 2 - Arcane", new Integer(0));
+            monLvlAreas.put("Act 2 - Arcane", 0);
         } else if (monID.equals("izual")) {
-            monLvlAreas.put("Act 4 - Mesa 2", new Integer(0));
+            monLvlAreas.put("Act 4 - Mesa 2", 0);
         } else if (monID.equals("bloodraven")) {
-            monLvlAreas.put("Act 1 - Graveyard", new Integer(0));
+            monLvlAreas.put("Act 1 - Graveyard", 0);
         } else if (monID.equals("diabloclone")) {
         } else if (monID.equals("griswold")) {
-            monLvlAreas.put("Act 1 - Tristram", new Integer(0));
+            monLvlAreas.put("Act 1 - Tristram", 0);
         } else if (monID.equals("nihlathakboss")) {
-            monLvlAreas.put("Act 5 - Temple Boss", new Integer(0));
+            monLvlAreas.put("Act 5 - Temple Boss", 0);
         } else if (monID.equals("baalcrab")) {
-            monLvlAreas.put("Act 5 - World Stone", new Integer(0));
+            monLvlAreas.put("Act 5 - World Stone", 0);
         } else if (monID.equals("putriddefiler1")) {
-            monLvlAreas.put("Act 5 - Temple 2", new Integer(0));
-            monLvlAreas.put("Act 5 - Temple Boss", new Integer(0));
+            monLvlAreas.put("Act 5 - Temple 2", 0);
+            monLvlAreas.put("Act 5 - Temple Boss", 0);
         } else if (monID.equals("putriddefiler2")) {
-            monLvlAreas.put("Act 5 - Baal Temple 1", new Integer(0));
-            monLvlAreas.put("Act 5 - Temple Boss", new Integer(0));
+            monLvlAreas.put("Act 5 - Baal Temple 1", 0);
+            monLvlAreas.put("Act 5 - Temple Boss", 0);
         } else if (monID.equals("putriddefiler3")) {
-            monLvlAreas.put("Act 5 - Baal Temple 1", new Integer(0));
-            monLvlAreas.put("Act 5 - Baal Temple 3", new Integer(0));
+            monLvlAreas.put("Act 5 - Baal Temple 1", 0);
+            monLvlAreas.put("Act 5 - Baal Temple 3", 0);
         } else if (monID.equals("putriddefiler4")) {
-            monLvlAreas.put("Act 5 - Baal Temple 3", new Integer(0));
+            monLvlAreas.put("Act 5 - Baal Temple 3", 0);
         } else if (monID.equals("putriddefiler5")) {
-            monLvlAreas.put("Act 5 - Baal Temple 3", new Integer(0));
+            monLvlAreas.put("Act 5 - Baal Temple 3", 0);
         }
         return monLvlAreas;
     }
     
-    protected void findLevelsBossMonster(HashMap monLvlAreas) {
-        
-        for (int x = 0; x < monLvlAreas.size(); x++) {
+    protected void findLevelsBossMonster(Map<String, Integer> monLvlAreas) {
+        if (!monID.equals("diabloclone")) {
             String selector = "Level";
             if (monDiff.equals("H")) {
                 selector = selector + "(H)";
             } else if (monDiff.equals("NM")) {
                 selector = selector + "(N)";
             }
-            if (!monID.equals("diabloclone")) {
-                monLvlAreas.put(monLvlAreas.keySet().toArray()[x], new Integer(D2TxtFile.MONSTATS.searchColumns("Id", monID).get(selector)));
-            }
+            int lvl = Integer.parseInt(D2TxtFile.MONSTATS.searchColumns("Id", monID).get(selector));
+            monLvlAreas.replaceAll((k, v) -> lvl);
         }
-        return;
     }
     
     public String getID() {
@@ -266,9 +242,9 @@ public class Monster {
         
     }
     
-    public HashMap getFinal() {
+    public Map<Object, Object> getFinal() {
         
-        HashMap finalList = new HashMap();
+        Map<Object, Object> finalList = new HashMap<>();
         for (int x = 0; x < mTuples.size(); x = x + 1) {
             
             finalList.putAll(((MonsterTuple) mTuples.get(x)).getFinalTCs());
@@ -279,9 +255,9 @@ public class Monster {
         
     }
     
-    protected void findLocsSU(int i, HashMap lvlArr, String ID) {
+    protected void findLocsSU(int i, Map<String, Integer> lvlArr, String ID) {
         
-        HashMap areaSUPair = new HashMap();
+        Map<String, String> areaSUPair = new HashMap<>();
         
         areaSUPair.put("Bishibosh", "Act 1 - Wilderness 2");
         areaSUPair.put("Bonebreak", "Act 1 - Crypt 1 A");
@@ -350,21 +326,16 @@ public class Monster {
         areaSUPair.put("Baal Subject 4", "Act 5 - Throne Room");
         areaSUPair.put("Baal Subject 5", "Act 5 - Throne Room");
         
-        if (i == 1) {
-            lvlArr.put(areaSUPair.get(ID), new Integer(0));
-        } else {
-            lvlArr.put(areaSUPair.get(ID), new Integer(0));
-            
-        }
+        lvlArr.put(areaSUPair.get(ID), 0);
     }
     
     public void clearFinal(MonsterTuple tuple) {
         
-        ((MonsterTuple) mTuples.get(mTuples.indexOf(tuple))).getFinalTCs().clear();
+        mTuples.get(mTuples.indexOf(tuple)).getFinalTCs().clear();
         
     }
     
-    public ArrayList getmTuples() {
+    public List<MonsterTuple> getmTuples() {
         return this.mTuples;
     }
     

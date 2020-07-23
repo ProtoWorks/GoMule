@@ -26,7 +26,7 @@ import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
@@ -40,7 +40,7 @@ public class GoMule {
     /**
      * Main Class, runs GoMule
      *
-     * @param args Can set L+F
+     * @param pArgs Can set L+F
      */
     public static void main(String[] pArgs) {
         try {
@@ -84,6 +84,7 @@ public class GoMule {
         }
         // Randall: generally adviced for swing, doing anything with GUI inside the swing-thread
         EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 D2FileManager.getInstance();
             }
@@ -111,12 +112,12 @@ public class GoMule {
             String lLine = lIn.readLine();
             lIn.close();
             
-            ArrayList lString = RandallUtil.split(lLine, " ", false);
+            List<String> lString = RandallUtil.split(lLine, " ", false);
             
             // Convert here
             String lReturn[] = new String[lString.size()];
             for (int i = 0; i < lString.size(); i++) {
-                lReturn[i] = (String) lString.get(i);
+                lReturn[i] = lString.get(i);
             }
             return lReturn;
         } catch (Exception e) {

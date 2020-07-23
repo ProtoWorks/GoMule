@@ -21,7 +21,7 @@
 
 package gomule.item;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import randall.d2files.D2TblFile;
 import randall.d2files.D2TxtFile;
@@ -71,7 +71,7 @@ public class D2Prop {
     
     public D2Prop(D2Prop newProp) {
         this.pNum = newProp.getPNum();
-        this.pVals = (int[]) newProp.getPVals().clone();
+        this.pVals = newProp.getPVals().clone();
         this.qFlag = 0;
     }
     
@@ -335,10 +335,9 @@ public class D2Prop {
                 return oString.replaceAll("%s", D2TblFile.getString(D2TxtFile.SKILL_DESC.searchColumns("skilldesc", D2TxtFile.SKILLS.getRow(pVals[0]).get("skilldesc")).get("str name")));
             
             case (17):
-                
-                return "By time!? Oh shi....";
             
             case (18):
+                
                 return "By time!? Oh shi....";
             
             case (20):
@@ -463,7 +462,7 @@ public class D2Prop {
     }
     
     public void applyOp(int cLvl) {
-    
+        
         if (D2TxtFile.ITEM_STAT_COST.getRow(pNum).get("op").equals("")) { return; }
         if (opApplied) { return; }
         
@@ -477,7 +476,7 @@ public class D2Prop {
                 
                 if (D2TxtFile.ITEM_STAT_COST.getRow(pNum).get("op base").equals("level")) {
                     
-                    pVals[0] = (int) Math.floor(((double) (pVals[0] * cLvl)) / ((double) (Math.pow(2, Integer.parseInt(D2TxtFile.ITEM_STAT_COST.getRow(pNum).get("op param"))))));
+                    pVals[0] = (int) Math.floor(((double) (pVals[0] * cLvl)) / Math.pow(2, Integer.parseInt(D2TxtFile.ITEM_STAT_COST.getRow(pNum).get("op param"))));
                 }
         }
         opApplied = true;
@@ -601,7 +600,7 @@ public class D2Prop {
         }
     }
     
-    public void addCharMods(int[] outStats, ArrayList plSkill, int cLvl, int op, int qFlagMarker) {
+    public void addCharMods(int[] outStats, List<D2Prop> plSkill, int cLvl, int op, int qFlagMarker) {
         
         //If it's 0 we only want standard properties (non set)
         if (qFlagMarker == 0) {
@@ -609,7 +608,7 @@ public class D2Prop {
         } else {
             if (qFlag != 12 && qFlag != 13 && qFlag != 14 && qFlag != 15 && qFlag != 16) { return; }
         }
-    
+        
         if (!opApplied) { applyOp(cLvl); }
         
         /**

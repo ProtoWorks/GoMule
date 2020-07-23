@@ -11,20 +11,20 @@ import javax.swing.JComponent;
  */
 public interface GoMuleDesktop {
     
-    public JComponent getDisplay();
+    JComponent getDisplay();
     
-    public GoMuleView getSelectedView();
+    GoMuleView getSelectedView();
     
-    public void addView(GoMuleView pView);
+    void addView(GoMuleView pView);
     
-    public void closeView(String pFileName);
+    void closeView(String pFileName);
     
-    public void removeView(GoMuleView pView);
+    void removeView(GoMuleView pView);
     
-    public void closeViewAll();
+    void closeViewAll();
     
-    public void showView(GoMuleView pView);
+    void showView(GoMuleView pView);
     
-    public Iterator getIteratorView();
+    Iterator getIteratorView();
     //	public Iterator		getIteratorContainer();
 }

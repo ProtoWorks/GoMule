@@ -21,7 +21,8 @@
 package gomule.dropCalc.monsters;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import randall.d2files.D2TblFile;
 import randall.d2files.D2TxtFileItemProperties;
@@ -36,18 +37,19 @@ public class Boss extends Monster {
             isQuest = true;
         }
         this.monName = D2TblFile.getString(monRow.get("NameStr"));
-        mTuples = new ArrayList();
-        HashMap areas = findLocsBossMonster();
+        mTuples = new ArrayList<>();
+        Map<String, Integer> areas = findLocsBossMonster();
         findLevelsBossMonster(areas);
         String header = "TreasureClass1";
         if (isQuest) {
             header = "TreasureClass4";
         }
-        ArrayList initTCs = getInitTC(areas, header);
+        List<String> initTCs = getInitTC(areas, header);
         mTuples = createTuples(areas, initTCs);
         
     }
     
+    @Override
     public String getRealName() {
         if (isQuest) {
             return this.monName + " (Q) - " + this.monID;

@@ -2,7 +2,7 @@ package gomule.gui.desktop.generic;
 
 public interface GoMuleDesktopListener {
     
-    public void viewActivated(GoMuleView pView);
+    void viewActivated(GoMuleView pView);
     
-    public void viewClosing(GoMuleView pView);
+    void viewClosing(GoMuleView pView);
 }

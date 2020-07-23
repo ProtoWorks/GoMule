@@ -23,6 +23,8 @@ package gomule.dropCalc.monsters;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import randall.d2files.D2TblFile;
 import randall.d2files.D2TxtFile;
@@ -73,28 +75,28 @@ public class Minion extends Monster {
     }
     
     private void setUpTuples() {
-        mTuples = new ArrayList();
-        HashMap areas = findLocsMonster(0);
+        mTuples = new ArrayList<>();
+        Map<String, Integer> areas = findLocsMonster(0);
         enterMonLevel(areas);
-        ArrayList initTCs = getInitTC(areas, "TreasureClass1");
+        List<String> initTCs = getInitTC(areas, "TreasureClass1");
         mTuples = createTuples(areas, initTCs);
         
     }
     
     private void setUpBossMinionTuples(String newID) {
-        mTuples = new ArrayList();
+        mTuples = new ArrayList<>();
         this.monID = this.monID.toLowerCase();
-        HashMap areas = findLocsBossMonster();
+        Map<String, Integer> areas = findLocsBossMonster();
         findLevelsBossMonster(areas);
         this.monID = newID;
-        ArrayList initTCs = getInitTC(areas, "TreasureClass1");
+        List<String> initTCs = getInitTC(areas, "TreasureClass1");
         mTuples = createTuples(areas, initTCs);
         
     }
     
     private void setUpMinionTuples(String newID) {
-        mTuples = new ArrayList();
-        HashMap areas = new HashMap();
+        mTuples = new ArrayList<>();
+        Map<String, Integer> areas = new HashMap<>();
         if (D2TxtFile.SUPUNIQ.searchColumns("Name", minionBoss) != null) {
             findLocsSU(1, areas, minionBoss);
         } else {
@@ -102,13 +104,13 @@ public class Minion extends Monster {
         }
         this.monID = newID;
         enterMonLevel(areas);
-        ArrayList initTCs = getInitTC(areas, "TreasureClass1");
+        List<String> initTCs = getInitTC(areas, "TreasureClass1");
         
         mTuples = createTuples(areas, initTCs);
         
     }
     
-    public void enterMonLevel(HashMap monLvlAreas) {
+    public void enterMonLevel(Map<String, Integer> monLvlAreas) {
         
         Iterator it = monLvlAreas.keySet().iterator();
         while (it.hasNext()) {
@@ -117,20 +119,21 @@ public class Minion extends Monster {
             
             if (monDiff.equals("N")) {
                 
-                monLvlAreas.put(area, new Integer(Integer.parseInt(D2TxtFile.MONSTATS.searchColumns("Id", monID).get("Level")) + 3));
+                monLvlAreas.put(area, Integer.parseInt(D2TxtFile.MONSTATS.searchColumns("Id", monID).get("Level")) + 3);
                 
             } else if (monDiff.equals("NM")) {
                 
-                monLvlAreas.put(area, new Integer(Integer.parseInt(D2TxtFile.LEVELS.searchColumns("Name", area).get("MonLvl2Ex")) + 3));
+                monLvlAreas.put(area, Integer.parseInt(D2TxtFile.LEVELS.searchColumns("Name", area).get("MonLvl2Ex")) + 3);
                 
             } else {
                 
-                monLvlAreas.put(area, new Integer(Integer.parseInt(D2TxtFile.LEVELS.searchColumns("Name", area).get("MonLvl3Ex")) + 3));
+                monLvlAreas.put(area, Integer.parseInt(D2TxtFile.LEVELS.searchColumns("Name", area).get("MonLvl3Ex")) + 3);
             }
             
         }
     }
     
+    @Override
     public String getRealName() {
         return this.monName + " (" + this.getRealBossName() + ") " + this.monID;
     }

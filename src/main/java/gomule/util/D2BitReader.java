@@ -74,7 +74,7 @@ public class D2BitReader {
                 do {
                     int num = in.read(data);
                     if (num == -1) { break; }
-                    for (int i = 0; i < num; i++) { v.add(new Byte(data[i])); }
+                    for (int i = 0; i < num; i++) { v.add(data[i]); }
                 } while (true);
                 filedata = new byte[v.size()];
                 for (int i = 0; i < v.size(); i++) { filedata[i] = ((Byte) v.elementAt(i)).byteValue(); }
@@ -121,7 +121,7 @@ public class D2BitReader {
                     }
                 }
                 if (found) {
-                    v.add(new Integer(i));
+                    v.add(i);
                 }
             }
         }
@@ -284,7 +284,7 @@ public class D2BitReader {
     public int flip(byte b) {
         int ret = 0;
         for (int i = 0; i < 8; i++) {
-            int bit = (int) ((b >> i) & 0x01);
+            int bit = (b >> i) & 0x01;
             ret = ret << 1;
             ret += bit;
         }

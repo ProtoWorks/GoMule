@@ -15,7 +15,7 @@ public class HexDump {
                 for (j = 16 - i % 16; j > 1; --j) { System.out.print("   "); }
                 System.out.print(" - ");
                 int start = (i / 16) * 16;
-                int end = (b.length < i + 1) ? b.length : (i + 1);
+                int end = Math.min(b.length, i + 1);
                 for (j = start; j < end; ++j) { if (b[j] >= 32 && b[j] <= 126) { System.out.print((char) b[j]); } else { System.out.print("."); } }
                 System.out.println();
             }

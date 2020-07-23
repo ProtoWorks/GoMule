@@ -28,7 +28,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -76,12 +77,12 @@ public class RealGUI extends JFrame {
     JButton bSearch = new JButton("Find");
     JButton bClear = new JButton("Clear");
     final DCNew DC = new DCNew();
-    ArrayList nMonsterKey = new ArrayList();
+    List<Object> nMonsterKey = new ArrayList<>();
     private JPanel pMonsters;
     private Box hM2;
     Box hMI1;
     Box hMI2;
-    ArrayList nMItemKey = new ArrayList();
+    List<Object> nMItemKey = new ArrayList<>();
     private Box vMonsters;
     private JCheckBoxMenuItem cbMenuItem;
     private JCheckBoxMenuItem cbDec;
@@ -284,6 +285,7 @@ public class RealGUI extends JFrame {
     private void setupListeners() {
         
         oResult.getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.getSource() instanceof JTableHeader) {
                     JTableHeader lHeader = (JTableHeader) e.getSource();
@@ -297,6 +299,7 @@ public class RealGUI extends JFrame {
         });
         
         cbDec.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 
                 if (cbRat.isSelected()) {
@@ -320,6 +323,7 @@ public class RealGUI extends JFrame {
         });
         
         cbRat.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 
                 if (cbDec.isSelected()) {
@@ -332,6 +336,7 @@ public class RealGUI extends JFrame {
         });
         
         cbChanceInput.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 
                 activateChanceColumn(getChancePercent());
@@ -340,6 +345,7 @@ public class RealGUI extends JFrame {
         });
         
         cbChanceCol.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 
                 if (cbChanceCol.isSelected()) {
@@ -364,6 +370,7 @@ public class RealGUI extends JFrame {
         
         nType.addActionListener(new ActionListener() {
             
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 
                 refreshMonster(nType.getSelectedIndex());
@@ -401,6 +408,7 @@ public class RealGUI extends JFrame {
         });
         
         nDiff.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 
                 resetMonsterArrays();
@@ -410,6 +418,7 @@ public class RealGUI extends JFrame {
         });
         
         nClass.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 
                 resetMonsterArrays();
@@ -419,6 +428,7 @@ public class RealGUI extends JFrame {
         });
         
         nMItemQual.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 
                 resetMonsterItemArrays();
@@ -428,6 +438,7 @@ public class RealGUI extends JFrame {
         });
         
         nMItemQual2.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 
                 resetMonsterItemArrays();
@@ -437,6 +448,7 @@ public class RealGUI extends JFrame {
         });
         
         bClear.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 
                 //				resetArrays();
@@ -448,6 +460,7 @@ public class RealGUI extends JFrame {
         
         bSearch.addActionListener(new ActionListener() {
             
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 
                 refreshCalculator();
@@ -474,13 +487,13 @@ public class RealGUI extends JFrame {
             
         } else {
             Item mISelected = (Item) nMItemKey.get(nMItem.getSelectedIndex());
-            HashMap mTuple = mISelected.getFinalProbSum(DC,
-                                                        nClass.getSelectedIndex(),
-                                                        mf,
-                                                        nPlayers.getSelectedIndex() + 1,
-                                                        nGroup.getSelectedIndex() + 1,
-                                                        nMItemQual.getSelectedIndex() - 1,
-                                                        cbMenuItem.isSelected());
+            Map<Object, Object> mTuple = mISelected.getFinalProbSum(DC,
+                                                                    nClass.getSelectedIndex(),
+                                                                    mf,
+                                                                    nPlayers.getSelectedIndex() + 1,
+                                                                    nGroup.getSelectedIndex() + 1,
+                                                                    nMItemQual.getSelectedIndex() - 1,
+                                                                    cbMenuItem.isSelected());
             ((DCTableModel) oResult.getModel()).refresh(mTuple, nDiff.getSelectedIndex(), nClass.getSelectedIndex(), cbDec.isSelected());
             
         }
@@ -728,30 +741,30 @@ public class RealGUI extends JFrame {
                     case 0:
                         for (int x = 0; x < DC.getMainRegMonArray().size(); x = x + 1) {
                             nMonsterKey.add(DC.getMainRegMonArray().get(x));
-                            nMonster.addItem((String) ((Monster) DC.getMainRegMonArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainRegMonArray().get(x)).getMonDiff() + ")");
+                            nMonster.addItem(((Monster) DC.getMainRegMonArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainRegMonArray().get(x)).getMonDiff() + ")");
                         }
                         break;
                     case 1:
                         for (int x = 0; x < DC.getMainRegMonArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainRegMonArray().get(x)).getMonDiff()).equals("N")) {
+                            if (((Monster) DC.getMainRegMonArray().get(x)).getMonDiff().equals("N")) {
                                 nMonsterKey.add(DC.getMainRegMonArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainRegMonArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainRegMonArray().get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainRegMonArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainRegMonArray().get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
                     case 2:
                         for (int x = 0; x < DC.getMainRegMonArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainRegMonArray().get(x)).getMonDiff()).equals("NM")) {
+                            if (((Monster) DC.getMainRegMonArray().get(x)).getMonDiff().equals("NM")) {
                                 nMonsterKey.add(DC.getMainRegMonArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainRegMonArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainRegMonArray().get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainRegMonArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainRegMonArray().get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
                     case 3:
                         for (int x = 0; x < DC.getMainRegMonArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainRegMonArray().get(x)).getMonDiff()).equals("H")) {
+                            if (((Monster) DC.getMainRegMonArray().get(x)).getMonDiff().equals("H")) {
                                 nMonsterKey.add(DC.getMainRegMonArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainRegMonArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainRegMonArray().get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainRegMonArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainRegMonArray().get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
@@ -762,33 +775,33 @@ public class RealGUI extends JFrame {
                     case 0:
                         for (int x = 0; x < DC.getMainMinMonArray().size(); x = x + 1) {
                             nMonsterKey.add(DC.getMainMinMonArray().get(x));
-                            nMonster.addItem((String) ((Monster) DC.getMainMinMonArray().get(x)).getRealName() + " - " + " (" + (String) ((Monster) DC.getMainMinMonArray().get(x)).getMonDiff() + ")");
+                            nMonster.addItem(((Monster) DC.getMainMinMonArray().get(x)).getRealName() + " - " + " (" + ((Monster) DC.getMainMinMonArray().get(x)).getMonDiff() + ")");
                         }
                         break;
                     case 1:
                         for (int x = 0; x < DC.getMainMinMonArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainMinMonArray().get(x)).getMonDiff()).equals("N")) {
+                            if (((Monster) DC.getMainMinMonArray().get(x)).getMonDiff().equals("N")) {
                                 nMonsterKey.add(DC.getMainMinMonArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainMinMonArray().get(x)).getRealName() + " - " + " (" + (String) ((Monster) DC.getMainMinMonArray()
-                                                                                                                                                          .get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainMinMonArray().get(x)).getRealName() + " - " + " (" + ((Monster) DC.getMainMinMonArray()
+                                                                                                                                        .get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
                     case 2:
                         for (int x = 0; x < DC.getMainMinMonArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainMinMonArray().get(x)).getMonDiff()).equals("NM")) {
+                            if (((Monster) DC.getMainMinMonArray().get(x)).getMonDiff().equals("NM")) {
                                 nMonsterKey.add(DC.getMainMinMonArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainMinMonArray().get(x)).getRealName() + " - " + " (" + (String) ((Monster) DC.getMainMinMonArray()
-                                                                                                                                                          .get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainMinMonArray().get(x)).getRealName() + " - " + " (" + ((Monster) DC.getMainMinMonArray()
+                                                                                                                                        .get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
                     case 3:
                         for (int x = 0; x < DC.getMainMinMonArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainMinMonArray().get(x)).getMonDiff()).equals("H")) {
+                            if (((Monster) DC.getMainMinMonArray().get(x)).getMonDiff().equals("H")) {
                                 nMonsterKey.add(DC.getMainMinMonArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainMinMonArray().get(x)).getRealName() + " - " + " (" + (String) ((Monster) DC.getMainMinMonArray()
-                                                                                                                                                          .get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainMinMonArray().get(x)).getRealName() + " - " + " (" + ((Monster) DC.getMainMinMonArray()
+                                                                                                                                        .get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
@@ -799,30 +812,30 @@ public class RealGUI extends JFrame {
                     case 0:
                         for (int x = 0; x < DC.getMainChampMonArray().size(); x = x + 1) {
                             nMonsterKey.add(DC.getMainChampMonArray().get(x));
-                            nMonster.addItem((String) ((Monster) DC.getMainChampMonArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainChampMonArray().get(x)).getMonDiff() + ")");
+                            nMonster.addItem(((Monster) DC.getMainChampMonArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainChampMonArray().get(x)).getMonDiff() + ")");
                         }
                         break;
                     case 1:
                         for (int x = 0; x < DC.getMainChampMonArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainChampMonArray().get(x)).getMonDiff()).equals("N")) {
+                            if (((Monster) DC.getMainChampMonArray().get(x)).getMonDiff().equals("N")) {
                                 nMonsterKey.add(DC.getMainChampMonArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainChampMonArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainChampMonArray().get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainChampMonArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainChampMonArray().get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
                     case 2:
                         for (int x = 0; x < DC.getMainChampMonArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainChampMonArray().get(x)).getMonDiff()).equals("NM")) {
+                            if (((Monster) DC.getMainChampMonArray().get(x)).getMonDiff().equals("NM")) {
                                 nMonsterKey.add(DC.getMainChampMonArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainChampMonArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainChampMonArray().get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainChampMonArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainChampMonArray().get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
                     case 3:
                         for (int x = 0; x < DC.getMainChampMonArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainChampMonArray().get(x)).getMonDiff()).equals("H")) {
+                            if (((Monster) DC.getMainChampMonArray().get(x)).getMonDiff().equals("H")) {
                                 nMonsterKey.add(DC.getMainChampMonArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainChampMonArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainChampMonArray().get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainChampMonArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainChampMonArray().get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
@@ -833,30 +846,30 @@ public class RealGUI extends JFrame {
                     case 0:
                         for (int x = 0; x < DC.getMainUniqArray().size(); x = x + 1) {
                             nMonsterKey.add(DC.getMainUniqArray().get(x));
-                            nMonster.addItem((String) ((Monster) DC.getMainUniqArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainUniqArray().get(x)).getMonDiff() + ")");
+                            nMonster.addItem(((Monster) DC.getMainUniqArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainUniqArray().get(x)).getMonDiff() + ")");
                         }
                         break;
                     case 1:
                         for (int x = 0; x < DC.getMainUniqArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainUniqArray().get(x)).getMonDiff()).equals("N")) {
+                            if (((Monster) DC.getMainUniqArray().get(x)).getMonDiff().equals("N")) {
                                 nMonsterKey.add(DC.getMainUniqArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainUniqArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainUniqArray().get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainUniqArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainUniqArray().get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
                     case 2:
                         for (int x = 0; x < DC.getMainUniqArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainUniqArray().get(x)).getMonDiff()).equals("NM")) {
+                            if (((Monster) DC.getMainUniqArray().get(x)).getMonDiff().equals("NM")) {
                                 nMonsterKey.add(DC.getMainUniqArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainUniqArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainUniqArray().get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainUniqArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainUniqArray().get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
                     case 3:
                         for (int x = 0; x < DC.getMainUniqArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainUniqArray().get(x)).getMonDiff()).equals("H")) {
+                            if (((Monster) DC.getMainUniqArray().get(x)).getMonDiff().equals("H")) {
                                 nMonsterKey.add(DC.getMainUniqArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainUniqArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainUniqArray().get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainUniqArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainUniqArray().get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
@@ -867,30 +880,30 @@ public class RealGUI extends JFrame {
                     case 0:
                         for (int x = 0; x < DC.getMainSupUniqArray().size(); x = x + 1) {
                             nMonsterKey.add(DC.getMainSupUniqArray().get(x));
-                            nMonster.addItem((String) ((Monster) DC.getMainSupUniqArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainSupUniqArray().get(x)).getMonDiff() + ")");
+                            nMonster.addItem(((Monster) DC.getMainSupUniqArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainSupUniqArray().get(x)).getMonDiff() + ")");
                         }
                         break;
                     case 1:
                         for (int x = 0; x < DC.getMainSupUniqArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainSupUniqArray().get(x)).getMonDiff()).equals("N")) {
+                            if (((Monster) DC.getMainSupUniqArray().get(x)).getMonDiff().equals("N")) {
                                 nMonsterKey.add(DC.getMainSupUniqArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainSupUniqArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainSupUniqArray().get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainSupUniqArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainSupUniqArray().get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
                     case 2:
                         for (int x = 0; x < DC.getMainSupUniqArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainSupUniqArray().get(x)).getMonDiff()).equals("NM")) {
+                            if (((Monster) DC.getMainSupUniqArray().get(x)).getMonDiff().equals("NM")) {
                                 nMonsterKey.add(DC.getMainSupUniqArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainSupUniqArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainSupUniqArray().get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainSupUniqArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainSupUniqArray().get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
                     case 3:
                         for (int x = 0; x < DC.getMainSupUniqArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainSupUniqArray().get(x)).getMonDiff()).equals("H")) {
+                            if (((Monster) DC.getMainSupUniqArray().get(x)).getMonDiff().equals("H")) {
                                 nMonsterKey.add(DC.getMainSupUniqArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainSupUniqArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainSupUniqArray().get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainSupUniqArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainSupUniqArray().get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
@@ -901,30 +914,30 @@ public class RealGUI extends JFrame {
                     case 0:
                         for (int x = 0; x < DC.getMainBossArray().size(); x = x + 1) {
                             nMonsterKey.add(DC.getMainBossArray().get(x));
-                            nMonster.addItem((String) ((Monster) DC.getMainBossArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainBossArray().get(x)).getMonDiff() + ")");
+                            nMonster.addItem(((Monster) DC.getMainBossArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainBossArray().get(x)).getMonDiff() + ")");
                         }
                         break;
                     case 1:
                         for (int x = 0; x < DC.getMainBossArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainBossArray().get(x)).getMonDiff()).equals("N")) {
+                            if (((Monster) DC.getMainBossArray().get(x)).getMonDiff().equals("N")) {
                                 nMonsterKey.add(DC.getMainBossArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainBossArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainBossArray().get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainBossArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainBossArray().get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
                     case 2:
                         for (int x = 0; x < DC.getMainBossArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainBossArray().get(x)).getMonDiff()).equals("NM")) {
+                            if (((Monster) DC.getMainBossArray().get(x)).getMonDiff().equals("NM")) {
                                 nMonsterKey.add(DC.getMainBossArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainBossArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainBossArray().get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainBossArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainBossArray().get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
                     case 3:
                         for (int x = 0; x < DC.getMainBossArray().size(); x = x + 1) {
-                            if (((String) ((Monster) DC.getMainBossArray().get(x)).getMonDiff()).equals("H")) {
+                            if (((Monster) DC.getMainBossArray().get(x)).getMonDiff().equals("H")) {
                                 nMonsterKey.add(DC.getMainBossArray().get(x));
-                                nMonster.addItem((String) ((Monster) DC.getMainBossArray().get(x)).getRealName() + " (" + (String) ((Monster) DC.getMainBossArray().get(x)).getMonDiff() + ")");
+                                nMonster.addItem(((Monster) DC.getMainBossArray().get(x)).getRealName() + " (" + ((Monster) DC.getMainBossArray().get(x)).getMonDiff() + ")");
                             }
                         }
                         break;
@@ -971,6 +984,7 @@ public class RealGUI extends JFrame {
         
         public TextFieldLimiter(int len) {maxChar = len;}
         
+        @Override
         public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
             if (str != null && maxChar > 0 && this.getLength() + str.length() > maxChar) {
                 java.awt.Toolkit.getDefaultToolkit().beep();

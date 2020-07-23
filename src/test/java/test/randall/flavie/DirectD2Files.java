@@ -254,7 +254,7 @@ public class DirectD2Files
 				}
 				else
 				{
-					//		    System.err.println("Name not found: " + pItem.getName() );
+					//		    System.err.println("Name not found: " + pItem.getItemName() );
 				}
 			}
 		}

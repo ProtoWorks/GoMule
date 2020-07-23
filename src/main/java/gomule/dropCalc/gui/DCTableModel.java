@@ -23,8 +23,9 @@ package gomule.dropCalc.gui;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -40,16 +41,16 @@ public class DCTableModel extends AbstractTableModel {
     private static final long serialVersionUID = -6556329099541788418L;
     
     /**
-     * Getting an ArrayList of MonsterTuples
-     * Or A HashMap of (Tuple,Prob) pairs for items
+     * Getting an List<Object> of MonsterTuples
+     * Or A Map<Object, Object> of (Tuple,Prob) pairs for items
      */
-    //	public ArrayList mNames;
-    //	public ArrayList mAreas;
-    //	public ArrayList mProbs;
+    //	public List<Object> mNames;
+    //	public List<Object> mAreas;
+    //	public List<Object> mProbs;
     
-    public ArrayList tmRows;
+    public List<Object> tmRows;
     
-    public ArrayList iTableModelListeners = new ArrayList();
+    public List<Object> iTableModelListeners = new ArrayList<>();
     public int type = 0;
     public int iSelected = 2;
     public boolean dec = true;
@@ -61,11 +62,13 @@ public class DCTableModel extends AbstractTableModel {
         //		this.setValueAt(iItems.get(0), 0, 0);
     }
     
+    @Override
     public Class getColumnClass(int c) {
         
         return String.class;
     }
     
+    @Override
     public int getColumnCount() {
         return colCount;
     }
@@ -80,10 +83,10 @@ public class DCTableModel extends AbstractTableModel {
         fireTableStructureChanged();
     }
     
-    public void refresh(HashMap iItems, int nDiff, int classKey, boolean dec) {
+    public void refresh(Map<Object, Object> iItems, int nDiff, int classKey, boolean dec) {
         this.dec = dec;
         type = 1;
-        tmRows = new ArrayList();
+        tmRows = new ArrayList<>();
         
         Iterator it = iItems.keySet().iterator();
         while (it.hasNext()) {
@@ -127,14 +130,14 @@ public class DCTableModel extends AbstractTableModel {
         sortCol(iSelected);
     }
     
-    public void refresh(ArrayList mTuples, boolean dec) {
+    public void refresh(List<MonsterTuple> mTuples, boolean dec) {
         this.dec = dec;
         type = 0;
-        tmRows = new ArrayList();
+        tmRows = new ArrayList<>();
         
         for (int x = 0; x < mTuples.size(); x = x + 1) {
             
-            MonsterTuple tSelected = ((MonsterTuple) mTuples.get(x));
+            MonsterTuple tSelected = mTuples.get(x);
             Iterator TCIt = tSelected.getFinalTCs().keySet().iterator();
             
             while (TCIt.hasNext()) {
@@ -151,6 +154,7 @@ public class DCTableModel extends AbstractTableModel {
         sortCol(iSelected);
     }
     
+    @Override
     public String getColumnName(int arg0) {
         switch (type) {
             case 0:
@@ -184,6 +188,7 @@ public class DCTableModel extends AbstractTableModel {
         //		return columnNames[arg0];
     }
     
+    @Override
     public int getRowCount() {
         
         if (tmRows == null) {
@@ -193,6 +198,7 @@ public class DCTableModel extends AbstractTableModel {
         return tmRows.size();
     }
     
+    @Override
     public Object getValueAt(int row, int col) {
         switch (col) {
             case 0:
@@ -204,21 +210,24 @@ public class DCTableModel extends AbstractTableModel {
             case 3:
                 return ((OutputRow) tmRows.get(row)).getStrC3(dec);
             default:
-                return new String("");
+                return "";
         }
         
         //		return new Integer(type);
         
     }
     
+    @Override
     public boolean isCellEditable(int arg0, int arg1) {
         return false;
     }
     
+    @Override
     public void addTableModelListener(TableModelListener pListener) {
         iTableModelListeners.add(pListener);
     }
     
+    @Override
     public void removeTableModelListener(TableModelListener pListener) {
         iTableModelListeners.remove(pListener);
     }
@@ -227,6 +236,7 @@ public class DCTableModel extends AbstractTableModel {
         fireTableChanged(new TableModelEvent(this));
     }
     
+    @Override
     public void fireTableChanged(TableModelEvent pEvent) {
         for (int i = 0; i < iTableModelListeners.size(); i++) {
             ((TableModelListener) iTableModelListeners.get(i))
@@ -234,13 +244,14 @@ public class DCTableModel extends AbstractTableModel {
         }
     }
     
+    @Override
     public void setValueAt(Object value, int row, int col) {
     
     }
     
     public void reset() {
         //		type = (type * -1) + 1;
-        tmRows = new ArrayList();
+        tmRows = new ArrayList<>();
         fireTableChanged();
         this.fireTableStructureChanged();
         
@@ -250,6 +261,7 @@ public class DCTableModel extends AbstractTableModel {
         
         iSelected = headerCol;
         Collections.sort(tmRows, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 OutputRow lItem1 = (OutputRow) pObj1;
                 OutputRow lItem2 = (OutputRow) pObj2;
@@ -286,7 +298,7 @@ public class DCTableModel extends AbstractTableModel {
                 
                 //				if ( lSort ==  HEADER[0] )
                 //				{
-                //				return lItem1.getName().compareTo(lItem2.getName());
+                //				return lItem1.getItemName().compareTo(lItem2.getItemName());
                 //				}
                 //				else if ( lSort ==  HEADER[1] )
                 //				{
@@ -316,7 +328,7 @@ public class DCTableModel extends AbstractTableModel {
         //		switch(headerCol){
         
         //		case 0:
-        ////		ArrayList mNamesOld = mNames;
+        ////		List<Object> mNamesOld = mNames;
         ////		Collections.sort(mNames);
         ////		OrderColumns()
         //		break;

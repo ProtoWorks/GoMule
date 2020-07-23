@@ -21,14 +21,15 @@
 package gomule.dropCalc;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProbTCRow {
     
-    ArrayList TC;
-    ArrayList Prob;
+    List<Object> TC;
+    List<Object> Prob;
     int totProb;
     
-    public ProbTCRow(ArrayList TC, ArrayList Prob) {
+    public ProbTCRow(List<Object> TC, List<Object> Prob) {
         this.Prob = Prob;
         this.TC = TC;
         this.totProb = sum(Prob);
@@ -36,22 +37,22 @@ public class ProbTCRow {
     }
     
     public ProbTCRow(ProbTCRow ptcR) {
-        this.Prob = new ArrayList();
-        this.TC = new ArrayList();
+        this.Prob = new ArrayList<>();
+        this.TC = new ArrayList<>();
         
         for (int x = 0; x < ptcR.getProb().size(); x++) {
-            Prob.add(new Double(((Double) ptcR.getProb().get(x)).doubleValue()));
-            TC.add(new String(((String) ptcR.getTC().get(x))));
+            Prob.add(((Double) ptcR.getProb().get(x)).doubleValue());
+            TC.add(((String) ptcR.getTC().get(x)));
         }
         this.totProb = ptcR.totProb;
         
     }
     
-    public ArrayList getTC() {
+    public List<Object> getTC() {
         return this.TC;
     }
     
-    public ArrayList getProb() {
+    public List<Object> getProb() {
         return this.Prob;
     }
     
@@ -63,7 +64,7 @@ public class ProbTCRow {
         this.totProb = totProb;
     }
     
-    private int sum(ArrayList prob) {
+    private int sum(List<Object> prob) {
         
         int out = 0;
         for (int x = 0; x < prob.size(); x = x + 1) {
@@ -75,7 +76,7 @@ public class ProbTCRow {
     }
     
     public void setProb(double d, int x) {
-        this.Prob.set(x, new Double(d));
+        this.Prob.set(x, d);
         
     }
     

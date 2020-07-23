@@ -24,6 +24,7 @@ package gomule.item;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import gomule.util.D2BitReader;
 import randall.d2files.D2TxtFile;
@@ -104,7 +105,7 @@ public class D2PropCollection extends ArrayList {
         for (int x = 0; x < size(); x++) {
             
             for (int y = 0; y < size(); y++) {
-    
+                
                 if (get(x) == get(y)) { continue; }
                 
                 if ((((D2Prop) get(x)).getPNum() == ((D2Prop) get(y)).getPNum()) && (((D2Prop) get(x)).getQFlag() == ((D2Prop) get(y)).getQFlag()) && (((D2Prop) get(x)).getQFlag() == 0)) {
@@ -154,16 +155,16 @@ public class D2PropCollection extends ArrayList {
         //Light 41
         //Cold 43
         //Poison 45
-        ArrayList resMap = new ArrayList();
+        List<Object> resMap = new ArrayList<>();
         
         //Str 0
         //Ener 1
         //Dex 2
         //Vit 3
-        ArrayList statMap = new ArrayList();
+        List<Object> statMap = new ArrayList<>();
         
         for (int x = 0; x < size(); x++) {
-    
+            
             if (D2TxtFile.ITEM_STAT_COST.searchColumns("ID", Integer.toString(((D2Prop) get(x)).getPNum())).get("dgrp").equals("") || ((D2Prop) get(x)).getQFlag() != 0) { continue; }
             if (((D2Prop) get(x)).getPNum() == 0 || ((D2Prop) get(x)).getPNum() == 1 || ((D2Prop) get(x)).getPNum() == 2 || ((D2Prop) get(x)).getPNum() == 3) { statMap.add(get(x)); }
             if (((D2Prop) get(x)).getPNum() == 39 || ((D2Prop) get(x)).getPNum() == 41 || ((D2Prop) get(x)).getPNum() == 43 || ((D2Prop) get(x)).getPNum() == 45) { resMap.add(get(x)); }
@@ -200,7 +201,7 @@ public class D2PropCollection extends ArrayList {
         
     }
     
-    private void threshDelete(ArrayList valMap, int vMin) {
+    private void threshDelete(List<Object> valMap, int vMin) {
         
         for (int x = 0; x < valMap.size(); x++) {
             if (((D2Prop) valMap.get(x)).getPVals()[0] == vMin) {
@@ -298,9 +299,9 @@ public class D2PropCollection extends ArrayList {
         }
     }
     
-    private ArrayList getPartialList(int qFlag) {
+    private List<Object> getPartialList(int qFlag) {
         
-        ArrayList partialList = new ArrayList();
+        List<Object> partialList = new ArrayList<>();
         //		NEED TO ADD AS A NEW WITH STANDARD Q FLAG
         for (int x = 0; x < size(); x++) {
             if (((D2Prop) get(x)).getQFlag() == qFlag) {
@@ -313,7 +314,7 @@ public class D2PropCollection extends ArrayList {
         
     }
     
-    private ArrayList getFullList() {
+    private List<Object> getFullList() {
         return this;
     }
     
@@ -380,7 +381,7 @@ public class D2PropCollection extends ArrayList {
         
     }
     
-    public void calcStats(int[] outStats, ArrayList plSkill, int cLvl, int op, int qFlagM) {
+    public void calcStats(int[] outStats, List<D2Prop> plSkill, int cLvl, int op, int qFlagM) {
         
         for (int x = 0; x < size(); x++) {
             
@@ -391,6 +392,7 @@ public class D2PropCollection extends ArrayList {
     public void sort() {
         
         Collections.sort(this, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 D2Prop p1 = (D2Prop) pObj1;
                 D2Prop p2 = (D2Prop) pObj2;

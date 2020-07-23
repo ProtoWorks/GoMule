@@ -28,20 +28,20 @@ package gomule.gui;
  */
 public interface D2ItemContainer {
     
-    public String getFileName();
+    String getFileName();
     
-    public boolean isHC();
+    boolean isHC();
     
-    public boolean isSC();
+    boolean isSC();
     
-    public void closeView();
+    void closeView();
     
-    public boolean isModified();
+    boolean isModified();
     
-    public D2ItemList getItemLists();
+    D2ItemList getItemLists();
     
-    public void connect();
+    void connect();
     
-    public void disconnect(Exception pEx);
+    void disconnect(Exception pEx);
     
 }

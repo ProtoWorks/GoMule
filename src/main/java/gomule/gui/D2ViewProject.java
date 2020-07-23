@@ -32,7 +32,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -308,7 +308,7 @@ public class D2ViewProject extends JPanel {
         iChars = new DefaultMutableTreeNode("characters");
         root.add(iChars);
         if (iProject != null) {
-            ArrayList lCharList = iProject.getCharList();
+            List<Object> lCharList = iProject.getCharList();
             for (int i = 0; i < lCharList.size(); i++) {
                 iChars.add(new CharTreeNode((String) lCharList.get(i)));
             }
@@ -317,7 +317,7 @@ public class D2ViewProject extends JPanel {
         iStashes = new DefaultMutableTreeNode("stashes");
         root.add(iStashes);
         if (iProject != null) {
-            ArrayList lStashList = iProject.getStashList();
+            List<Object> lStashList = iProject.getStashList();
             for (int i = 0; i < lStashList.size(); i++) {
                 iStashes.add(new CharTreeNode((String) lStashList.get(i)));
             }

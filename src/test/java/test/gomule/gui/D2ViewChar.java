@@ -3088,12 +3088,12 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
 //						// (!iChar.checkCharPanel(lItemPanel.getPanel(),
 //						// 0, 0, lDropItem))
 //						//	                            {
-//						//	                            	lDropItem.set_location((short) 1);
+//						//	                            	lDropItem.setLocation((short) 1);
 //						//	                            	lDropItem.set_body_position((short)
 //						// (lItemPanel.getPanel() - 10));
-//						//	                            	lDropItem.set_col((short) 0);
-//						//	                            	lDropItem.set_row((short) 0);
-//						//	                            	lDropItem.set_panel((short) 0);
+//						//	                            	lDropItem.setCol((short) 0);
+//						//	                            	lDropItem.setRow((short) 0);
+//						//	                            	lDropItem.setPanel((short) 0);
 //						//	                                drop = true;
 //						//// r = lDropWidth;
 //						//// c = lDropHeight;

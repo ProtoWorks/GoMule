@@ -63,17 +63,16 @@ public class OutputRow {
     
     public Double getObjC2() {
         
-        return new Double(c2);
+        return c2;
     }
     
     public Double getObjC3() {
         
-        return new Double(c3);
+        return c3;
     }
     
     public double roundDouble(double d, int places) {
-        return Math.round(d * Math.pow(10, (double) places)) / Math.pow(10,
-                                                                        (double) places);
+        return Math.round(d * Math.pow(10, places)) / Math.pow(10, places);
     }
     
     public String getStrC2(boolean dec) {

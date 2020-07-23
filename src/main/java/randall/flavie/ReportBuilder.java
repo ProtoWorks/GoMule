@@ -24,8 +24,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Marco
@@ -46,7 +47,7 @@ public class ReportBuilder {
                             String pReportName,
                             String pDataName,
                             String pStyleName,
-                            ArrayList pDatFile,
+                            List<Object> pDatFile,
                             boolean pCountAll,
                             boolean pCountEthereal,
                             boolean pCountStash,
@@ -77,7 +78,7 @@ public class ReportBuilder {
         lOutReport.println("<body class=body>");
         lOutReport.println("<table>");
         
-        ArrayList lPercentages = new ArrayList();
+        List<Object> lPercentages = new ArrayList<>();
         
         CatObject lCatObject = null;
         SubCatObject lSubCatObject = null;
@@ -101,23 +102,23 @@ public class ReportBuilder {
                 
                 lCatObject = (CatObject) lObject;
                 
-                ArrayList lSubCatList = lCatObject.getSubCats();
+                List<SubCatObject> lSubCatList = lCatObject.getSubCats();
                 for (int j = 0; j < lSubCatList.size(); j++) {
-                    SubCatObject lSubCatCompare = (SubCatObject) lSubCatList.get(j);
+                    SubCatObject lSubCatCompare = lSubCatList.get(j);
                     
-                    ArrayList lItemObjectList = lSubCatCompare.getItemObjects();
+                    List<ItemObject> lItemObjectList = lSubCatCompare.getItemObjects();
                     for (int k = 0; k < lItemObjectList.size(); k++) {
                         lNrItems++;
-                        ItemObject lItemObjectCompare = (ItemObject) lItemObjectList.get(k);
+                        ItemObject lItemObjectCompare = lItemObjectList.get(k);
                         int lNrItemsFoundTotal = 0;
                         int lNrItemsFoundStash = 0;
                         int lNrItemsFoundCharacter = 0;
                         int lNrItemsFoundEthereal = 0;
                         
-                        ArrayList lItemInstanceList = lItemObjectCompare.getInstances();
+                        List<D2ItemInterface> lItemInstanceList = lItemObjectCompare.getItemInstances();
                         for (int l = 0; l < lItemInstanceList.size(); l++) {
                             lNrItemsFoundTotal++;
-                            D2ItemInterface lInstance = (D2ItemInterface) lItemInstanceList.get(l);
+                            D2ItemInterface lInstance = lItemInstanceList.get(l);
                             if (lInstance.isCharacter()) {
                                 lNrItemsFoundCharacter++;
                             } else {
@@ -164,7 +165,7 @@ public class ReportBuilder {
                 lOutReport.println("<td valign=top>");
                 PercentageCounter lPerc = new PercentageCounter(lCatObject, lNrItems, lNrItemsFound);
                 lPercentages.add(lPerc);
-                lOutReport.println("<div class=cat>" + lCatObject.toString() + "(" + lNrItemsFound + " of " + lNrItems + ") (" + lPerc.getPercentage(lNrItemsFound, lNrItems) + "%)</div>");
+                lOutReport.println("<div class=cat>" + lCatObject.getCat() + "(" + lNrItemsFound + " of " + lNrItems + ") (" + lPerc.getPercentage(lNrItemsFound, lNrItems) + "%)</div>");
                 lOutReport.println("<p>");
             } else if (lObject instanceof SubCatObject) {
                 lSubCatObject = (SubCatObject) lObject;
@@ -179,21 +180,21 @@ public class ReportBuilder {
                 int lNrItems = 0;
                 int lNrItemsFound = 0;
                 
-                //				ArrayList lSubCatList = lCatObject.getSubCats();
+                //				List<Object> lSubCatList = lCatObject.getSubCats();
                 
-                ArrayList lItemObjectList = lSubCatObject.getItemObjects();
+                List<ItemObject> lItemObjectList = lSubCatObject.getItemObjects();
                 for (int k = 0; k < lItemObjectList.size(); k++) {
                     lNrItems++;
-                    ItemObject lItemObjectCompare = (ItemObject) lItemObjectList.get(k);
+                    ItemObject lItemObjectCompare = lItemObjectList.get(k);
                     int lNrItemsFoundTotal = 0;
                     int lNrItemsFoundStash = 0;
                     int lNrItemsFoundCharacter = 0;
                     int lNrItemsFoundEthereal = 0;
                     
-                    ArrayList lItemInstanceList = lItemObjectCompare.getInstances();
+                    List<D2ItemInterface> lItemInstanceList = lItemObjectCompare.getItemInstances();
                     for (int l = 0; l < lItemInstanceList.size(); l++) {
                         lNrItemsFoundTotal++;
-                        D2ItemInterface lInstance = (D2ItemInterface) lItemInstanceList.get(l);
+                        D2ItemInterface lInstance = lItemInstanceList.get(l);
                         if (lInstance.isCharacter()) {
                             lNrItemsFoundCharacter++;
                         } else {
@@ -215,23 +216,23 @@ public class ReportBuilder {
                 }
                 
                 PercentageCounter lPerc = new PercentageCounter(lNrItems, lNrItemsFound);
-                lOutReport.println("<div class=subcat>" + lSubCatObject.toString() + " (" + lNrItemsFound + " of " + lNrItems + ") (" + lPerc.getPercentage(lNrItemsFound, lNrItems) + "%)</div>");
+                lOutReport.println("<div class=subcat>" + lSubCatObject.getSubCat() + " (" + lNrItemsFound + " of " + lNrItems + ") (" + lPerc.getPercentage(lNrItemsFound, lNrItems) + "%)</div>");
                 lOutReport.println("<p>");
                 lOutReport.println("<table>");
             } else if (lObject instanceof ItemObject) {
                 ItemObject lItemObject = (ItemObject) lObject;
                 
-                //				ArrayList lItem = RandallUtil.split(lLine, ",", false);
+                //				List<Object> lItem = RandallUtil.split(lLine, ",", false);
                 
                 int lNrItemsFoundTotal = 0;
                 int lNrItemsFoundStash = 0;
                 int lNrItemsFoundCharacter = 0;
                 int lNrItemsFoundEthereal = 0;
                 
-                ArrayList lItemInstanceList = lItemObject.getInstances();
+                List<D2ItemInterface> lItemInstanceList = lItemObject.getItemInstances();
                 for (int l = 0; l < lItemInstanceList.size(); l++) {
                     lNrItemsFoundTotal++;
-                    D2ItemInterface lInstance = (D2ItemInterface) lItemInstanceList.get(l);
+                    D2ItemInterface lInstance = lItemInstanceList.get(l);
                     if (lInstance.isCharacter()) {
                         lNrItemsFoundCharacter++;
                     } else {
@@ -354,7 +355,7 @@ public class ReportBuilder {
         return "";
     }
     
-    public void buildItemlist(String pItemlistName, HashMap lAllItems) throws Exception {
+    public void buildItemlist(String pItemlistName, Map<Object, Object> lAllItems) throws Exception {
         if (!pItemlistName.endsWith(".txt")) {
             pItemlistName += ".txt";
         }
@@ -370,7 +371,7 @@ public class ReportBuilder {
             String lKey = (String) lIterator.next();
             D2ItemInterface lItem = (D2ItemInterface) lAllItems.get(lKey);
             
-            lOutItemlist.println(lItem.getFingerprint() + " " + lItem.getName());
+            lOutItemlist.println(lItem.getFingerprint() + " " + lItem.getItemName());
         }
         
         lOutItemlist.close();

@@ -7,7 +7,7 @@
 package gomule.gui;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.List;
 
 import gomule.item.D2Item;
 import gomule.util.D2Project;
@@ -20,41 +20,41 @@ import gomule.util.D2Project;
  */
 public interface D2ItemList {
     
-    public void ignoreItemListEvents();
+    void ignoreItemListEvents();
     
-    public void listenItemListEvents();
+    void listenItemListEvents();
     
-    public boolean containsItem(D2Item pItem);
+    boolean containsItem(D2Item pItem);
     
-    public void removeItem(D2Item pItem);
+    void removeItem(D2Item pItem);
     
-    public void addItem(D2Item pItem);
+    void addItem(D2Item pItem);
     
-    public ArrayList getItemList();
+    List<D2Item> getItemList();
     
-    public int getNrItems();
+    int getNrItems();
     
-    public String getFilename();
+    String getFilename();
     
-    public boolean isModified();
+    boolean isModified();
     
-    public void addD2ItemListListener(D2ItemListListener pListener);
+    void addD2ItemListListener(D2ItemListListener pListener);
     
-    public void removeD2ItemListListener(D2ItemListListener pListener);
+    void removeD2ItemListListener(D2ItemListListener pListener);
     
-    public boolean hasD2ItemListListener();
+    boolean hasD2ItemListListener();
     
-    public void save(D2Project pProject);
+    void save(D2Project pProject);
     
-    public boolean isSC();
+    boolean isSC();
     
-    public boolean isHC();
+    boolean isHC();
     
-    public void fullDump(PrintWriter pWriter);
+    void fullDump(PrintWriter pWriter);
     
-    public void initTimestamp();
+    void initTimestamp();
     
-    public boolean checkTimestamp();
+    boolean checkTimestamp();
     
-    public void fireD2ItemListEvent();
+    void fireD2ItemListEvent();
 }

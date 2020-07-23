@@ -23,7 +23,7 @@ package randall.flavie;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -49,9 +49,9 @@ public class DirectD2Files {
         iFlavie = pFlavie;
     }
     
-    public void readDirectD2Files(ArrayList pDataObjects, ArrayList pFileNames) throws Exception {
+    public void readDirectD2Files(List<Object> pDataObjects, List<Object> pFileNames) throws Exception {
         String errStr = "";
-        File lMatchedDir = new File(Flavie.sMatchedDir);
+        File lMatchedDir = new File(Flavie.MATCHED_DIR);
         if (lMatchedDir.exists() && !lMatchedDir.isDirectory()) {
             throw new Exception("If there is a file called matched in the Flavie directory, please delete it");
         }
@@ -59,7 +59,7 @@ public class DirectD2Files {
             throw new Exception("The directory called matched is missing, please create it");
         }
         
-        File lDualFP = new File(Flavie.sMatchedDir + "matched.dualFP.txt");
+        File lDualFP = new File(Flavie.MATCHED_DIR + "matched.dualFP.txt");
         if (!lDualFP.exists()) {
             lDualFP.createNewFile();
         }
@@ -92,7 +92,7 @@ public class DirectD2Files {
                 //					throw new Exception("File " + lD2FileName + " can not be read");
                 //				}
                 
-                ArrayList lItems = null;
+                List<D2Item> lItems = null;
                 
                 if (lD2FileName.endsWith(".d2s")) {
                     try {
@@ -112,7 +112,7 @@ public class DirectD2Files {
                 
                 if (lItems != null) {
                     for (int lItemNr = 0; lItemNr < lItems.size(); lItemNr++) {
-                        D2Item lItem = (D2Item) lItems.get(lItemNr);
+                        D2Item lItem = lItems.get(lItemNr);
                         matchItem(pDataObjects, lItem, lOutDualFP);
                     }
                 }
@@ -135,8 +135,8 @@ public class DirectD2Files {
         }
     }
     
-    public void matchItem(ArrayList pDataObjects, D2Item pItem, PrintStream pOutDualFP) {
-        if (pItem.getName() == null) {
+    public void matchItem(List<Object> pDataObjects, D2Item pItem, PrintStream pOutDualFP) {
+        if (pItem.getItemName() == null) {
             System.err.println("Item: null");
         }
         ItemObject lFound = null;
@@ -146,13 +146,13 @@ public class DirectD2Files {
         {
             if (iFlavie.checkFilters(pItem)) {
                 if (pItem.getFingerprint() != null) {
-                    if (iFlavie.iAllItemsFP.containsKey(pItem.getFingerprint())) {
-                        D2Item lOriginal = (D2Item) iFlavie.iAllItemsFP.get(pItem.getFingerprint());
+                    if (iFlavie.getAllItemsFP().containsKey(pItem.getFingerprint())) {
+                        D2Item lOriginal = iFlavie.getAllItemsFP().get(pItem.getFingerprint());
                         pOutDualFP.println("*** Item matched : " + pItem + " with FP " + pItem.getFingerprint() + "(" + pItem.getFileName() + ") Fingerprint was allready used by another item: " + lOriginal + " from file " + lOriginal
                                 .getFileName() + ". Item is different type and both are listed anyways.");
-                        iFlavie.iDualFPMatched++;
+                        iFlavie.setDualFPMatched(iFlavie.getDualFPMatched() + 1);
                     } else {
-                        iFlavie.iAllItemsFP.put(pItem.getFingerprint(), pItem);
+                        iFlavie.getAllItemsFP().put(pItem.getFingerprint(), pItem);
                     }
                     
                     //Rainbow facet fix.
@@ -175,13 +175,13 @@ public class DirectD2Files {
                     
                 } else {
                     if (pItem.isRune()) {
-                        Long lRuneCount = (Long) iFlavie.iRuneCount.get(pItem.getName());
+                        Long lRuneCount = iFlavie.getRuneCount().get(pItem.getItemName());
                         if (lRuneCount == null) {
-                            lRuneCount = new Long(1);
+                            lRuneCount = 1L;
                         } else {
-                            lRuneCount = new Long(lRuneCount.longValue() + 1);
+                            lRuneCount = lRuneCount + 1;
                         }
-                        iFlavie.iRuneCount.put(pItem.getName(), lRuneCount);
+                        iFlavie.getRuneCount().put(pItem.getItemName(), lRuneCount);
                     }
                 }
                 for (int lDataObjectNr = 0; lDataObjectNr < pDataObjects.size(); lDataObjectNr++) {
@@ -196,7 +196,7 @@ public class DirectD2Files {
                         if (fitsSkiller(lCatObj, lItemObject, pItem)) {
                             lFound = lItemObject;
                         }
-                    } else if (lItemObject.getName().equals(pItem.getName())) {
+                    } else if (lItemObject.getName().equals(pItem.getItemName())) {
                         if (pItem.isUnique() && pItem.isJewel() && matchStr[0].equals(lItemObject.getExtraDetect().get(0)) && matchStr[1].equals(lItemObject.getExtraDetect().get(1))) {
                             lFound = lItemObject;
                         }
@@ -218,7 +218,7 @@ public class DirectD2Files {
                 if (lFound != null) {
                     lFound.addItemInstance(pItem);
                 } else {
-                    //		    System.err.println("Name not found: " + pItem.getName() );
+                    //		    System.err.println("Name not found: " + pItem.getItemName() );
                 }
             }
         }
@@ -231,7 +231,7 @@ public class DirectD2Files {
     }
     
     private boolean fitsSkiller(CatObject pCatObj, ItemObject pItemObject, D2Item pItem) {
-        return (pItem.getName().startsWith(pItemObject.getInfo()));
+        return (pItem.getItemName().startsWith(pItemObject.getInfo()));
         
         //		return false;
     }

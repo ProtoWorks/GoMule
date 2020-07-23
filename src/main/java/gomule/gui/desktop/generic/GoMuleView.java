@@ -12,13 +12,13 @@ import gomule.gui.D2ItemList;
  */
 public interface GoMuleView {
     
-    public JComponent getDisplay();
+    JComponent getDisplay();
     
-    public D2ItemList getItemLists();
+    D2ItemList getItemLists();
     
-    public D2ItemContainer getItemContainer();
+    D2ItemContainer getItemContainer();
     
-    public void setDisplayHandler(GoMuleViewDisplayHandler pDisplayHandler);
+    void setDisplayHandler(GoMuleViewDisplayHandler pDisplayHandler);
     
-    public GoMuleViewDisplayHandler getDisplayHandler();
+    GoMuleViewDisplayHandler getDisplayHandler();
 }

@@ -106,6 +106,7 @@ public class D2ProjectSettingsDialog extends JDialog {
         
         iNewName = new JTextField();
         iNewName.getDocument().addDocumentListener(new RandallDocumentListener() {
+            @Override
             public void check() {
                 String lNewName = iNewName.getText();
                 if (lNewName == null || lNewName.trim().equals("")) {
@@ -132,6 +133,7 @@ public class D2ProjectSettingsDialog extends JDialog {
         iSaveNew.setEnabled(false);
         iSaveNew.setToolTipText("Type a new project name");
         iSaveNew.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 //                setProject(iNewName.getText());
             }
@@ -151,18 +153,21 @@ public class D2ProjectSettingsDialog extends JDialog {
         
         iTypeSC = new JRadioButton("Softcore (SC) Only");
         iTypeSC.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 iProject.setType(D2Project.TYPE_SC);
             }
         });
         iTypeHC = new JRadioButton("Hardcore (HC) Only");
         iTypeHC.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 iProject.setType(D2Project.TYPE_HC);
             }
         });
         iTypeBoth = new JRadioButton("All (SC+HC+Unknown)");
         iTypeBoth.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 iProject.setType(D2Project.TYPE_BOTH);
             }
@@ -174,24 +179,28 @@ public class D2ProjectSettingsDialog extends JDialog {
         
         iBackupDay = new JRadioButton("Day");
         iBackupDay.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 iProject.setBackup(D2Project.BACKUP_DAY);
             }
         });
         iBackupWeek = new JRadioButton("Week");
         iBackupWeek.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 iProject.setBackup(D2Project.BACKUP_WEEK);
             }
         });
         iBackupMonth = new JRadioButton("Month");
         iBackupMonth.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 iProject.setBackup(D2Project.BACKUP_MONTH);
             }
         });
         iBackupNone = new JRadioButton("No Backup");
         iBackupNone.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 iProject.setBackup(D2Project.BACKUP_NONE);
             }
@@ -213,24 +222,28 @@ public class D2ProjectSettingsDialog extends JDialog {
         
         iFlavieOutputReportFileName = new JTextField();
         iFlavieOutputReportFileName.getDocument().addDocumentListener(new RandallDocumentListener() {
+            @Override
             public void check() {
                 iProject.setReportName(iFlavieOutputReportFileName.getText());
             }
         });
         iFlavieOutputTitle = new JTextField();
         iFlavieOutputTitle.getDocument().addDocumentListener(new RandallDocumentListener() {
+            @Override
             public void check() {
                 iProject.setReportTitle(iFlavieOutputTitle.getText());
             }
         });
         iFlavieOutputData = new JTextField();
         iFlavieOutputData.getDocument().addDocumentListener(new RandallDocumentListener() {
+            @Override
             public void check() {
                 iProject.setDataName(iFlavieOutputData.getText());
             }
         });
         JButton lFlavieDataButton = new JButton("Search");
         lFlavieDataButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 JFileChooser lChooser = new JFileChooser();
                 lChooser.setCurrentDirectory(new File("."));
@@ -247,12 +260,14 @@ public class D2ProjectSettingsDialog extends JDialog {
         });
         iFlavieOutputStyle = new JTextField();
         iFlavieOutputStyle.getDocument().addDocumentListener(new RandallDocumentListener() {
+            @Override
             public void check() {
                 iProject.setStyleName(iFlavieOutputStyle.getText());
             }
         });
         JButton lFlaveStyleButton = new JButton("Search");
         lFlaveStyleButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 JFileChooser lChooser = new JFileChooser();
                 lChooser.setCurrentDirectory(new File("."));
@@ -270,6 +285,7 @@ public class D2ProjectSettingsDialog extends JDialog {
         
         iIgnoreItems = new JCheckBox("Ignore Common Items on Pickup");
         iIgnoreItems.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 iProject.setIgnoreItem(iIgnoreItems.isSelected());
             }
@@ -277,30 +293,35 @@ public class D2ProjectSettingsDialog extends JDialog {
         
         iFlavieCountAll = new JCheckBox("All");
         iFlavieCountAll.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 iProject.setCountAll(iFlavieCountAll.isSelected());
             }
         });
         iFlavieCountStash = new JCheckBox("Stash Items");
         iFlavieCountStash.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 iProject.setCountStash(iFlavieCountStash.isSelected());
             }
         });
         iFlavieCountChar = new JCheckBox("Character Items");
         iFlavieCountChar.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 iProject.setCountChar(iFlavieCountChar.isSelected());
             }
         });
         iFlavieCountEthereal = new JCheckBox("Ethereal Items");
         iFlavieCountEthereal.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 iProject.setCountEthereal(iFlavieCountEthereal.isSelected());
             }
         });
         JButton iOk = new JButton("Ok");
         iOk.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 ((JDialog) iContent.getRootPane().getParent()).dispose();
             }
@@ -395,22 +416,24 @@ public class D2ProjectSettingsDialog extends JDialog {
         iFlavieCountEthereal.setSelected(iProject.isCountEthereal());
     }
     
-}
-
-abstract class RandallDocumentListener implements DocumentListener {
-    
-    abstract void check();
-    
-    public void insertUpdate(DocumentEvent e) {
-        check();
+    static abstract class RandallDocumentListener implements DocumentListener {
+        
+        abstract void check();
+        
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            check();
+        }
+        
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            check();
+        }
+        
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            check();
+        }
+        
     }
-    
-    public void removeUpdate(DocumentEvent e) {
-        check();
-    }
-    
-    public void changedUpdate(DocumentEvent e) {
-        check();
-    }
-    
 }

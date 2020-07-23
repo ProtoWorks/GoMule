@@ -1121,7 +1121,7 @@ public class MonsterTuple {
 			Iterator pickIt = this.getFinalMiscTCs().keySet().iterator();
 			while(pickIt.hasNext()){
 				String pickItStr = (String) pickIt.next();
-//				if(mParent.getName().indexOf("The Cow King")){
+//				if(mParent.getItemName().indexOf("The Cow King")){
 //				this.getFinalMiscTCs().put(pickItStr,new Double((1-(Math.pow((1- (((Double)this.getFinalMiscTCs().get(pickItStr)).doubleValue())), picks))) *input));
 
 //				}else{

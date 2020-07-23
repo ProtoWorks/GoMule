@@ -21,11 +21,19 @@
 
 package gomule.item;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
+
 import java.awt.Color;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.google.common.collect.ComparisonChain;
 
 import gomule.util.D2BitReader;
 import gomule.util.D2ItemException;
@@ -34,22 +42,24 @@ import randall.d2files.D2TxtFile;
 import randall.d2files.D2TxtFileItemProperties;
 import randall.flavie.D2ItemInterface;
 
-//an item class
-//manages one item
-//keeps the a copy of the bytes representing
-//an item and a bitreader to manipulate them
-//also stores most data from the item in
-
-//this class is NOT designed to edit items
-//any methods that allow the item's bytes
-//to be written only exist to facillitate
-//moving items. writing other item fields
-//is not supported by this class
-public class D2Item implements Comparable, D2ItemInterface {
+/*
+an item class
+manages one item
+keeps the a copy of the bytes representng
+an item and a bitreader to manipulate them
+also stores most data from the item in
+this class is NOT designed to edit items
+any methods that allow the item's bytes
+to be written only exist to facillitate
+moving items. writing other item fields
+inis not supported by this class
+ */
+@Getter
+public class D2Item implements Comparable<D2Item>, D2ItemInterface {
     
-    private D2PropCollection iProps = new D2PropCollection();
+    private D2PropCollection propCollection = new D2PropCollection();
     
-    private ArrayList iSocketedItems;
+    private List<Object> socketedItems;
     
     private int flags;
     
@@ -57,7 +67,7 @@ public class D2Item implements Comparable, D2ItemInterface {
     
     private short location;
     
-    private short body_position;
+    private short bodyPosition;
     
     private short row;
     
@@ -67,9 +77,9 @@ public class D2Item implements Comparable, D2ItemInterface {
     
     private String item_type;
     
-    private short iSocketNrFilled = 0;
+    private short socketNrFilled = 0;
     
-    private short iSocketNrTotal = 0;
+    private short socketNrTotal = 0;
     
     private long fingerprint;
     
@@ -91,152 +101,153 @@ public class D2Item implements Comparable, D2ItemInterface {
     
     private short height;
     
-    private String image_file;
+    private String imageFile;
     
-    private D2TxtFileItemProperties iItemType;
+    private D2TxtFileItemProperties itemType;
     
-    private String iType;
+    private String type;
     
-    private String iType2;
+    private String type2;
     
-    private boolean iEthereal;
+    private boolean ethereal;
     
-    private boolean iSocketed;
+    private boolean socketed;
     
-    private boolean iThrow;
+    private boolean isThrow;
     
-    private boolean iMagical;
+    private boolean magical;
     
-    private boolean iRare;
+    private boolean rare;
     
-    private boolean iCrafted;
+    private boolean crafted;
     
-    private boolean iSet;
+    private boolean set;
     
-    private boolean iUnique;
+    private boolean unique;
     
-    private boolean iRuneWord;
+    private boolean runeWord;
     
-    private boolean iSmallCharm;
+    private boolean smallCharm;
     
-    private boolean iLargeCharm;
+    private boolean largeCharm;
     
-    private boolean iGrandCharm;
+    private boolean grandCharm;
     
-    private boolean iJewel;
+    private boolean jewel;
     
-    //	private boolean iEquipped = false;
+    //	private boolean equipped = false;
     
-    private boolean iGem;
+    private boolean gem;
     
-    private boolean iStackable = false;
+    private boolean stackable = false;
     
-    private boolean iRune;
+    private boolean rune;
     
-    private boolean iTypeMisc;
+    private boolean typeMisc;
     
-    private boolean iIdentified;
+    private boolean identified;
     
-    private boolean iTypeWeapon;
+    private boolean typeWeapon;
     
-    private boolean iTypeArmor;
+    private boolean typeArmor;
     
-    protected String iItemName;
+    protected String itemName;
     
-    protected String iBaseItemName;
+    protected String baseItemName;
     
-    private short iCurDur;
+    private short curDur;
     
-    private short iMaxDur;
+    private short maxDur;
     
-    private short iDef;
+    private short def;
     
     private short cBlock;
     
-    private short iBlock;
+    private short block;
     
-    private short iInitDef;
+    private short initDef;
     
     private short[] i1Dmg;
     private short[] i2Dmg;
     
     // 0 FOR BOTH 1 FOR 1H 2 FOR 2H
-    private int iWhichHand;
+    private int whichHand;
     
-    // private int iLvl;
-    private String iFP;
+    // private int lvl;
+    private String fP;
     
-    private String iGUID;
+    private String gUID;
     
-    private boolean iBody = false;
+    private boolean body = false;
     
-    private String iBodyLoc1;
+    private String bodyLoc1;
     
-    private String iBodyLoc2;
+    private String bodyLoc2;
     
-    private boolean iBelt = false;
+    private boolean belt = false;
     
-    private D2BitReader iItem;
+    private D2BitReader item;
     
-    private String iFileName;
+    private String fileName;
     
-    private boolean iIsChar;
+    private boolean isCharacter;
     
-    private int iCharLvl;
+    @Setter
+    private int charLvl;
     
-    private int iReqLvl = -1;
+    private int reqLvl = -1;
     
-    private int iReqStr = -1;
+    private int reqStr = -1;
     
-    private int iReqDex = -1;
+    private int reqDex = -1;
     
-    private String iSetName;
+    private String setName;
     
     private int setSize;
     
-    private String iItemQuality = "none";
+    private String itemQuality = "none";
     
-    private short set_id;
+    private short setId;
     
-    public D2Item(String pFileName, D2BitReader pFile, int pPos, long pCharLvl)
-            throws Exception {
-        iFileName = pFileName;
-        iIsChar = iFileName.endsWith(".d2s");
-        iCharLvl = (int) pCharLvl;
+    @SneakyThrows
+    public D2Item(String fileName, D2BitReader file, int pos, long charLvl) {
+        this.fileName = fileName;
+        isCharacter = this.fileName.endsWith(".d2s");
+        this.charLvl = (int) charLvl;
         
         try {
-            pFile.set_byte_pos(pPos);
-            read_item(pFile, pPos);
-            int lCurrentReadLength = pFile.get_pos() - pPos * 8;
-            int lNextJMPos = pFile.findNextFlag("JM", pFile.get_byte_pos());
-            int lLengthToNextJM = lNextJMPos - pPos;
+            file.set_byte_pos(pos);
+            readItem(file, pos);
+            int lCurrentReadLength = file.get_pos() - pos * 8;
+            int lNextJMPos = file.findNextFlag("JM", file.get_byte_pos());
+            int lLengthToNextJM = lNextJMPos - pos;
             
             if (lLengthToNextJM < 0) {
-                int lNextKFPos = pFile.findNextFlag("kf", pFile.get_byte_pos());
-                int lNextJFPos = pFile.findNextFlag("jf", pFile.get_byte_pos());
+                int lNextKFPos = file.findNextFlag("kf", file.get_byte_pos());
+                int lNextJFPos = file.findNextFlag("jf", file.get_byte_pos());
                 if (lNextJFPos >= 0) {
                     
-                    lLengthToNextJM = lNextJFPos - pPos;
+                    lLengthToNextJM = lNextJFPos - pos;
                     
                 } else if (lNextKFPos >= 0) {
-                    lLengthToNextJM = lNextKFPos - pPos;
+                    lLengthToNextJM = lNextKFPos - pos;
                 } else {
                     // last item (for stash only)
-                    lLengthToNextJM = pFile.get_length() - pPos;
+                    lLengthToNextJM = file.get_length() - pos;
                 }
-            } else if ((lNextJMPos > pFile.findNextFlag("kf", pFile
+            } else if ((lNextJMPos > file.findNextFlag("kf", file
                     .get_byte_pos()))
-                    && (pPos < pFile.findNextFlag("kf", pFile.get_byte_pos()))) {
-                lLengthToNextJM = pFile
-                        .findNextFlag("kf", pFile.get_byte_pos())
-                        - pPos;
-            } else if ((lNextJMPos > pFile.findNextFlag("jf", pFile
+                    && (pos < file.findNextFlag("kf", file.get_byte_pos()))) {
+                lLengthToNextJM = file
+                        .findNextFlag("kf", file.get_byte_pos())
+                        - pos;
+            } else if ((lNextJMPos > file.findNextFlag("jf", file
                     .get_byte_pos()))
-                    && (pPos < pFile.findNextFlag("jf", pFile.get_byte_pos()))) {
+                    && (pos < file.findNextFlag("jf", file.get_byte_pos()))) {
                 
-                lLengthToNextJM = pFile
-                        .findNextFlag("jf", pFile.get_byte_pos())
-                        - pPos;
+                lLengthToNextJM = file
+                        .findNextFlag("jf", file.get_byte_pos())
+                        - pos;
                 
             }
             
@@ -247,365 +258,365 @@ public class D2Item implements Comparable, D2ItemInterface {
                                 + getExStr());
             }
             
-            pFile.set_byte_pos(pPos);
-            iItem = new D2BitReader(pFile.get_bytes(lLengthToNextJM));
-            pFile.set_byte_pos(pPos + lLengthToNextJM);
-        } catch (D2ItemException pEx) {
-            throw pEx;
-        } catch (Exception pEx) {
-            pEx.printStackTrace();
-            throw new D2ItemException("Error: " + pEx.getMessage() + getExStr());
+            file.set_byte_pos(pos);
+            item = new D2BitReader(file.get_bytes(lLengthToNextJM));
+            file.set_byte_pos(pos + lLengthToNextJM);
+        } catch (D2ItemException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new D2ItemException("Error: " + ex.getMessage() + getExStr());
         }
     }
     
     // read basic information from the bytes
     // common to all items, then split based on
     // whether the item is an ear
-    private void read_item(D2BitReader pFile, int pos) throws Exception {
-        pFile.skipBytes(2);
-        flags = (int) pFile.unflip(pFile.read(32), 32); // 4 bytes
+    private void readItem(D2BitReader file, int pos) throws Exception {
+        file.skipBytes(2);
+        flags = (int) file.unflip(file.read(32), 32); // 4 bytes
         
-        iSocketed = check_flag(12);
-        iEthereal = check_flag(23);
-        iRuneWord = check_flag(27);
-        iIdentified = check_flag(5);
-        version = (short) pFile.read(8);
+        socketed = checkFlag(12);
+        ethereal = checkFlag(23);
+        runeWord = checkFlag(27);
+        identified = checkFlag(5);
+        version = (short) file.read(8);
         
-        pFile.skipBits(2);
-        location = (short) pFile.read(3);
+        file.skipBits(2);
+        location = (short) file.read(3);
         
-        body_position = (short) pFile.read(4);
-        col = (short) pFile.read(4);
-        row = (short) pFile.read(4);
-        panel = (short) pFile.read(3);
+        bodyPosition = (short) file.read(4);
+        col = (short) file.read(4);
+        row = (short) file.read(4);
+        panel = (short) file.read(3);
         
         // flag 17 is an ear
-        if (!check_flag(17)) {
+        if (!checkFlag(17)) {
             
-            readExtend(pFile);
+            readExtend(file);
         } else {
-            read_ear(pFile);
+            readEar(file);
         }
         
         //Need to tidy up the properties before the item mods are calculated.
-        iProps.deleteUselessProperties();
+        propCollection.deleteUselessProperties();
         
         if (isTypeArmor() || isTypeWeapon()) {
             //			Blunt does 150 damage to undead
-            if (iType.equals("club") || iType.equals("scep")
-                    || iType.equals("mace") || iType.equals("hamm")) {
-                iProps.add(new D2Prop(122, new int[]{150}, 0));
+            if (type.equals("club") || type.equals("scep")
+                    || type.equals("mace") || type.equals("hamm")) {
+                propCollection.add(new D2Prop(122, new int[]{150}, 0));
             }
             applyItemMods();
         }
     }
     
     // read ear related data from the bytes
-    private void read_ear(D2BitReader pFile) {
+    private void readEar(D2BitReader file) {
         
-        int eClass = (int) pFile.read(3);
-        int eLevel = (int) (pFile.read(7));
+        int eClass = (int) file.read(3);
+        int eLevel = (int) (file.read(7));
         
         StringBuffer lCharName = new StringBuffer();
         for (int i = 0; i < 18; i++)
         // while(1==1)
         {
-            long lChar = pFile.read(7);
+            long lChar = file.read(7);
             if (lChar != 0) {
                 lCharName.append((char) lChar);
             } else {
-                pFile.read(7);
+                file.read(7);
                 break;
             }
         }
-        iItemType = D2TxtFile.search("ear");
-        height = Short.parseShort(iItemType.get("invheight"));
-        width = Short.parseShort(iItemType.get("invwidth"));
-        image_file = iItemType.get("invfile");
-        iBaseItemName = iItemName = lCharName.toString() + "'s Ear";
+        itemType = D2TxtFile.search("ear");
+        height = Short.parseShort(itemType.get("invheight"));
+        width = Short.parseShort(itemType.get("invwidth"));
+        imageFile = itemType.get("invfile");
+        baseItemName = itemName = lCharName.toString() + "'s Ear";
         
-        iProps.add(new D2Prop(185, new int[]{eClass, eLevel}, 0, true, 39));
+        propCollection.add(new D2Prop(185, new int[]{eClass, eLevel}, 0, true, 39));
         
         // for (int i = 0; i < 18; i++) {
-        // pFile.read(7); // name
+        // file.read(7); // name
         // }
     }
     
     // read non ear data from the bytes,
     // setting class variables for easier access
-    private void readExtend(D2BitReader pFile) throws Exception {
+    private void readExtend(D2BitReader file) throws Exception {
         // 9,5 bytes already read (common data)
         item_type = "";
         // skip spaces or hashing won't work
         for (int i = 0; i < 4; i++) {
-            char c = (char) pFile.read(8); // 4 bytes
+            char c = (char) file.read(8); // 4 bytes
             if (c != 32) {
                 item_type += c;
             }
         }
         
-        iItemType = D2TxtFile.search(item_type);
-        height = Short.parseShort(iItemType.get("invheight"));
-        width = Short.parseShort(iItemType.get("invwidth"));
-        image_file = iItemType.get("invfile");
+        itemType = D2TxtFile.search(item_type);
+        height = Short.parseShort(itemType.get("invheight"));
+        width = Short.parseShort(itemType.get("invwidth"));
+        imageFile = itemType.get("invfile");
         
-        String lD2TxtFileName = iItemType.getFileName();
+        String lD2TxtFileName = itemType.getFileName();
         if (lD2TxtFileName != null) {
-            iTypeMisc = ("Misc".equals(lD2TxtFileName));
-            iTypeWeapon = ("weapons".equals(lD2TxtFileName));
-            iTypeArmor = ("armor".equals(lD2TxtFileName));
+            typeMisc = ("Misc".equals(lD2TxtFileName));
+            typeWeapon = ("weapons".equals(lD2TxtFileName));
+            typeArmor = ("armor".equals(lD2TxtFileName));
         }
         
-        iType = iItemType.get("type");
-        iType2 = iItemType.get("type2");
+        type = itemType.get("type");
+        type2 = itemType.get("type2");
         
         // Shields - block chance.
         if (isShield()) {
-            cBlock = Short.parseShort(iItemType.get("block"));
+            cBlock = Short.parseShort(itemType.get("block"));
         }
         
         // Requerements
-        if (iTypeMisc) {
-            iReqLvl = getReq(iItemType.get("levelreq"));
-        } else if (iTypeArmor) {
-            iReqLvl = getReq(iItemType.get("levelreq"));
-            iReqStr = getReq(iItemType.get("reqstr"));
+        if (typeMisc) {
+            reqLvl = getReq(itemType.get("levelreq"));
+        } else if (typeArmor) {
+            reqLvl = getReq(itemType.get("levelreq"));
+            reqStr = getReq(itemType.get("reqstr"));
             
             D2TxtFileItemProperties qualSearch = D2TxtFile.ARMOR.searchColumns(
                     "normcode", item_type);
-            iItemQuality = "normal";
+            itemQuality = "normal";
             if (qualSearch == null) {
                 qualSearch = D2TxtFile.ARMOR.searchColumns("ubercode",
                                                            item_type);
-                iItemQuality = "exceptional";
+                itemQuality = "exceptional";
                 if (qualSearch == null) {
                     qualSearch = D2TxtFile.ARMOR.searchColumns("ultracode",
                                                                item_type);
-                    iItemQuality = "elite";
+                    itemQuality = "elite";
                 }
             }
             
-        } else if (iTypeWeapon) {
-            iReqLvl = getReq(iItemType.get("levelreq"));
-            iReqStr = getReq(iItemType.get("reqstr"));
-            iReqDex = getReq(iItemType.get("reqdex"));
+        } else if (typeWeapon) {
+            reqLvl = getReq(itemType.get("levelreq"));
+            reqStr = getReq(itemType.get("reqstr"));
+            reqDex = getReq(itemType.get("reqdex"));
             
             D2TxtFileItemProperties qualSearch = D2TxtFile.WEAPONS
                     .searchColumns("normcode", item_type);
-            iItemQuality = "normal";
+            itemQuality = "normal";
             if (qualSearch == null) {
                 qualSearch = D2TxtFile.WEAPONS.searchColumns("ubercode",
                                                              item_type);
-                iItemQuality = "exceptional";
+                itemQuality = "exceptional";
                 if (qualSearch == null) {
                     qualSearch = D2TxtFile.WEAPONS.searchColumns("ultracode",
                                                                  item_type);
-                    iItemQuality = "elite";
+                    itemQuality = "elite";
                 }
             }
         }
         
         String lItemName = D2TblFile.getString(item_type);
         if (lItemName != null) {
-            iItemName = lItemName;
-            iBaseItemName = iItemName;
+            itemName = lItemName;
+            baseItemName = itemName;
         }
         
         // flag 22 is a simple item (extend1)
-        if (!check_flag(22)) {
-            readExtend1(pFile);
+        if (!checkFlag(22)) {
+            readExtend1(file);
         }
         
         // gold (?)
         if ("gold".equals(item_type)) {
-            if (pFile.read(1) == 0) {
-                pFile.read(12);
+            if (file.read(1) == 0) {
+                file.read(12);
             } else {
-                pFile.read(32);
+                file.read(32);
             }
         }
         
-        long lHasGUID = pFile.read(1);
+        long lHasGUID = file.read(1);
         
         if (lHasGUID == 1) { // GUID ???
-            if (iType.startsWith("rune") || iType.startsWith("gem")
-                    || iType.startsWith("amu") || iType.startsWith("rin")
+            if (type.startsWith("rune") || type.startsWith("gem")
+                    || type.startsWith("amu") || type.startsWith("rin")
                     || isCharm() || !isTypeMisc()) {
                 
-                iGUID = "0x" + Integer.toHexString((int) pFile.read(32))
-                        + " 0x" + Integer.toHexString((int) pFile.read(32))
-                        + " 0x" + Integer.toHexString((int) pFile.read(32));
+                gUID = "0x" + Integer.toHexString((int) file.read(32))
+                        + " 0x" + Integer.toHexString((int) file.read(32))
+                        + " 0x" + Integer.toHexString((int) file.read(32));
             } else {
-                pFile.read(3);
+                file.read(3);
             }
         }
         
         // flag 22 is a simple item (extend2)
-        if (!check_flag(22)) {
-            readExtend2(pFile);
+        if (!checkFlag(22)) {
+            readExtend2(file);
         }
         
-        if (iType != null && iType2 != null && iType.startsWith("gem")) {
-            if (iType2.equals("gem0") || iType2.equals("gem1")
-                    || iType2.equals("gem2") || iType2.equals("gem3")
-                    || iType2.equals("gem4")) {
-                readPropertiesGems(pFile);
-                iGem = true;
+        if (type != null && type2 != null && type.startsWith("gem")) {
+            if (type2.equals("gem0") || type2.equals("gem1")
+                    || type2.equals("gem2") || type2.equals("gem3")
+                    || type2.equals("gem4")) {
+                readPropertiesGems(file);
+                gem = true;
             }
         }
         
-        if (iType != null && iType2 != null && iType.startsWith("rune")) {
-            readPropertiesGems(pFile);
-            iRune = true;
+        if (type != null && type2 != null && type.startsWith("rune")) {
+            readPropertiesGems(file);
+            rune = true;
         }
         
         D2TxtFileItemProperties lItemType = D2TxtFile.ITEM_TYPES.searchColumns(
-                "Code", iType);
+                "Code", type);
         
         if (lItemType == null) {
-            lItemType = D2TxtFile.ITEM_TYPES.searchColumns("Equiv1", iType);
+            lItemType = D2TxtFile.ITEM_TYPES.searchColumns("Equiv1", type);
             if (lItemType == null) {
-                lItemType = D2TxtFile.ITEM_TYPES.searchColumns("Equiv2", iType);
+                lItemType = D2TxtFile.ITEM_TYPES.searchColumns("Equiv2", type);
             }
         }
         
         if ("1".equals(lItemType.get("Body"))) {
-            iBody = true;
-            iBodyLoc1 = lItemType.get("BodyLoc1");
-            iBodyLoc2 = lItemType.get("BodyLoc2");
+            body = true;
+            bodyLoc1 = lItemType.get("BodyLoc1");
+            bodyLoc2 = lItemType.get("BodyLoc2");
         }
         if ("1".equals(lItemType.get("Beltable"))) {
-            iBelt = true;
-            readPropertiesPots(pFile);
+            belt = true;
+            readPropertiesPots(file);
         }
         
-        int lLastItem = pFile.get_byte_pos();
+        int lLastItem = file.get_byte_pos();
         
-        if (iSocketNrFilled > 0) {
-            iSocketedItems = new ArrayList();
+        if (socketNrFilled > 0) {
+            socketedItems = new ArrayList<>();
             
-            for (int i = 0; i < iSocketNrFilled; i++) {
-                int lStartNewItem = pFile.findNextFlag("JM", lLastItem);
-                D2Item lSocket = new D2Item(iFileName, pFile, lStartNewItem,
-                                            iCharLvl);
+            for (int i = 0; i < socketNrFilled; i++) {
+                int lStartNewItem = file.findNextFlag("JM", lLastItem);
+                D2Item lSocket = new D2Item(fileName, file, lStartNewItem,
+                                            charLvl);
                 lLastItem = lStartNewItem + lSocket.getItemLength();
-                iSocketedItems.add(lSocket);
+                socketedItems.add(lSocket);
                 
                 if (lSocket.isJewel()) {
-                    iProps.addAll(lSocket.getPropCollection(), 1);
+                    propCollection.addAll(lSocket.getPropCollection(), 1);
                 } else if (isTypeWeapon()) {
-                    iProps.addAll(lSocket.getPropCollection(), 7);
+                    propCollection.addAll(lSocket.getPropCollection(), 7);
                 } else if (isTypeArmor()) {
-                    if (iType.equals("tors") || iType.equals("helm")
-                            || iType.equals("phlm") || iType.equals("pelt")
-                            || iType.equals("cloa") || iType.equals("circ")) {
-                        iProps.addAll(lSocket.getPropCollection(), 8);
+                    if (type.equals("tors") || type.equals("helm")
+                            || type.equals("phlm") || type.equals("pelt")
+                            || type.equals("cloa") || type.equals("circ")) {
+                        propCollection.addAll(lSocket.getPropCollection(), 8);
                     } else {
-                        iProps.addAll(lSocket.getPropCollection(), 9);
+                        propCollection.addAll(lSocket.getPropCollection(), 9);
                     }
                 }
-                if (lSocket.iReqLvl > iReqLvl) {
-                    iReqLvl = lSocket.iReqLvl;
+                if (lSocket.reqLvl > reqLvl) {
+                    reqLvl = lSocket.reqLvl;
                 }
                 
             }
         }
         
-        if (iRuneWord) {
-            ArrayList lList = new ArrayList();
-            for (int i = 0; i < iSocketedItems.size(); i++) {
-                lList.add(((D2Item) iSocketedItems.get(i)).getRuneCode());
+        if (runeWord) {
+            List<Object> lList = new ArrayList<>();
+            for (int i = 0; i < socketedItems.size(); i++) {
+                lList.add(((D2Item) socketedItems.get(i)).getRuneCode());
             }
             
             D2TxtFileItemProperties lRuneWord = D2TxtFile.RUNES
                     .searchRuneWord(lList);
             if (lRuneWord != null) {
-                iItemName = D2TblFile.getString(lRuneWord.get("Name"));
+                itemName = D2TblFile.getString(lRuneWord.get("Name"));
             }
         }
         
-        if (iSocketNrFilled > 0 && isNormal()) {
-            iItemName = "Gemmed " + iItemName;
+        if (socketNrFilled > 0 && isNormal()) {
+            itemName = "Gemmed " + itemName;
         }
         
-        if (iItemName != null) {
-            iItemName = iItemName.trim();
+        if (itemName != null) {
+            itemName = itemName.trim();
             
         }
         
-        if (iBaseItemName != null) {
-            iBaseItemName = iBaseItemName.trim();
+        if (baseItemName != null) {
+            baseItemName = baseItemName.trim();
             
         }
         
-        if (iEthereal) {
-            if (iReqStr != -1) {
-                iReqStr -= 10;
+        if (ethereal) {
+            if (reqStr != -1) {
+                reqStr -= 10;
             }
-            if (iReqDex != -1) {
-                iReqDex -= 10;
+            if (reqDex != -1) {
+                reqDex -= 10;
             }
         }
     }
     
-    private void readExtend1(D2BitReader pFile) throws Exception {
+    private void readExtend1(D2BitReader file) throws Exception {
         // extended item
-        iSocketNrFilled = (short) pFile.read(3);
-        fingerprint = pFile.read(32);
-        iFP = "0x" + Integer.toHexString((int) fingerprint);
-        ilvl = (short) pFile.read(7);
-        quality = (short) pFile.read(4);
-        iProps = new D2PropCollection();
+        socketNrFilled = (short) file.read(3);
+        fingerprint = file.read(32);
+        fP = "0x" + Integer.toHexString((int) fingerprint);
+        ilvl = (short) file.read(7);
+        quality = (short) file.read(4);
+        propCollection = new D2PropCollection();
         // check variable graphic flag
         gfx_num = -1;
-        if (pFile.read(1) == 1) {
-            gfx_num = (short) pFile.read(3);
-            if (iItemType.get("namestr").compareTo("cm1") == 0) {
-                iSmallCharm = true;
-                image_file = "invch" + ((gfx_num) * 3 + 1);
-            } else if (iItemType.get("namestr").compareTo("cm2") == 0) {
-                iLargeCharm = true;
-                image_file = "invch" + ((gfx_num) * 3 + 2);
-            } else if (iItemType.get("namestr").compareTo("cm3") == 0) {
-                iGrandCharm = true;
-                image_file = "invch" + ((gfx_num) * 3 + 3);
-            } else if (iItemType.get("namestr").compareTo("jew") == 0) {
-                iJewel = true;
-                image_file = "invjw" + (gfx_num + 1);
+        if (file.read(1) == 1) {
+            gfx_num = (short) file.read(3);
+            if (itemType.get("namestr").compareTo("cm1") == 0) {
+                smallCharm = true;
+                imageFile = "invch" + ((gfx_num) * 3 + 1);
+            } else if (itemType.get("namestr").compareTo("cm2") == 0) {
+                largeCharm = true;
+                imageFile = "invch" + ((gfx_num) * 3 + 2);
+            } else if (itemType.get("namestr").compareTo("cm3") == 0) {
+                grandCharm = true;
+                imageFile = "invch" + ((gfx_num) * 3 + 3);
+            } else if (itemType.get("namestr").compareTo("jew") == 0) {
+                jewel = true;
+                imageFile = "invjw" + (gfx_num + 1);
             } else {
-                image_file += (gfx_num + 1);
+                imageFile += (gfx_num + 1);
             }
         }
         // check class info flag
-        if (pFile.read(1) == 1) {
-            automod_info = D2TxtFile.AUTOMAGIC.getRow((int) pFile.read(11) - 1);
+        if (file.read(1) == 1) {
+            automod_info = D2TxtFile.AUTOMAGIC.getRow((int) file.read(11) - 1);
         }
         
         // path determined by item quality
         switch (quality) {
             case 1: // low quality item
             {
-                short low_quality = (short) pFile.read(3);
+                short low_quality = (short) file.read(3);
                 
                 switch (low_quality) {
                     
                     case 0: {
-                        iItemName = "Crude " + iItemName;
+                        itemName = "Crude " + itemName;
                         break;
                     }
                     
                     case 1: {
-                        iItemName = "Cracked " + iItemName;
+                        itemName = "Cracked " + itemName;
                         break;
                     }
                     
                     case 2: {
-                        iItemName = "Damaged " + iItemName;
+                        itemName = "Damaged " + itemName;
                         break;
                     }
                     
                     case 3: {
-                        iItemName = "Low Quality " + iItemName;
+                        itemName = "Low Quality " + itemName;
                         break;
                     }
                     
@@ -615,17 +626,17 @@ public class D2Item implements Comparable, D2ItemInterface {
             }
             case 3: // high quality item
             {
-                iItemName = "Superior " + iItemName;
-                iBaseItemName = iItemName;
+                itemName = "Superior " + itemName;
+                baseItemName = itemName;
                 // 3bytes, don't know what they are.
-                pFile.read(3);
+                file.read(3);
                 break;
             }
             case 4: // magic item
             {
-                iMagical = true;
-                short magic_prefix = (short) pFile.read(11);
-                short magic_suffix = (short) pFile.read(11);
+                magical = true;
+                short magic_prefix = (short) file.read(11);
+                short magic_suffix = (short) file.read(11);
                 
                 if (magic_suffix == 0) {
                     magic_suffix = 10000;
@@ -635,10 +646,10 @@ public class D2Item implements Comparable, D2ItemInterface {
                         .getRow(magic_prefix);
                 String lPreName = lPrefix.get("Name");
                 if (lPreName != null && !lPreName.equals("")) {
-                    iItemName = D2TblFile.getString(lPreName) + " " + iItemName;
+                    itemName = D2TblFile.getString(lPreName) + " " + itemName;
                     int lPreReq = getReq(lPrefix.get("levelreq"));
-                    if (lPreReq > iReqLvl) {
-                        iReqLvl = lPreReq;
+                    if (lPreReq > reqLvl) {
+                        reqLvl = lPreReq;
                     }
                 }
                 
@@ -646,10 +657,10 @@ public class D2Item implements Comparable, D2ItemInterface {
                         .getRow(magic_suffix);
                 String lSufName = lSuffix.get("Name");
                 if (lSufName != null && !lSufName.equals("")) {
-                    iItemName = iItemName + " " + D2TblFile.getString(lSufName);
+                    itemName = itemName + " " + D2TblFile.getString(lSufName);
                     int lSufReq = getReq(lSuffix.get("levelreq"));
-                    if (lSufReq > iReqLvl) {
-                        iReqLvl = lSufReq;
+                    if (lSufReq > reqLvl) {
+                        reqLvl = lSufReq;
                     }
                 }
                 applyAutomodLvl();
@@ -657,48 +668,48 @@ public class D2Item implements Comparable, D2ItemInterface {
             }
             case 5: // set item
             {
-                iSet = true;
-                set_id = (short) pFile.read(12);
+                set = true;
+                setId = (short) file.read(12);
                 if (gfx_num == -1) {
-                    String s = (String) iItemType.get("setinvfile");
-                    if (s.compareTo("") != 0) { image_file = s; }
+                    String s = itemType.get("setinvfile");
+                    if (s.compareTo("") != 0) { imageFile = s; }
                 }
                 
-                D2TxtFileItemProperties lSet = D2TxtFile.SETITEMS.getRow(set_id);
-                iItemName = D2TblFile.getString(lSet.get("index"));
-                iSetName = lSet.get("set");
+                D2TxtFileItemProperties lSet = D2TxtFile.SETITEMS.getRow(setId);
+                itemName = D2TblFile.getString(lSet.get("index"));
+                setName = lSet.get("set");
                 
                 setSize = (D2TxtFile.SETITEMS.searchColumnsMultipleHits("set",
-                                                                        iSetName)).size();
+                                                                        setName)).size();
                 
                 int lSetReq = getReq(lSet.get("lvl req"));
-                if (lSetReq != -1 && lSetReq > iReqLvl) {
-                    iReqLvl = lSetReq;
+                if (lSetReq != -1 && lSetReq > reqLvl) {
+                    reqLvl = lSetReq;
                 }
                 
                 applyAutomodLvl();
-                addSetProperties(D2TxtFile.FULLSET.searchColumns("index", D2TxtFile.SETITEMS.getRow(set_id).get("set")));
+                addSetProperties(D2TxtFile.FULLSET.searchColumns("index", D2TxtFile.SETITEMS.getRow(setId).get("set")));
                 break;
             }
             case 7: {
-                iUnique = true;
-                short unique_id = (short) pFile.read(12);
-                String s = iItemType.get("uniqueinvfile");
+                unique = true;
+                short unique_id = (short) file.read(12);
+                String s = itemType.get("uniqueinvfile");
                 if (s.compareTo("") != 0) {
-                    image_file = s;
+                    imageFile = s;
                 }
                 
                 D2TxtFileItemProperties lUnique = D2TxtFile.UNIQUES
                         .getRow(unique_id);
                 String lNewName = D2TblFile.getString(lUnique.get("index"));
                 if (lNewName != null) {
-                    iItemName = lNewName;
+                    itemName = lNewName;
                 }
                 
                 if (lUnique.get("code").equals(item_type)) {
                     int lUniqueReq = getReq(lUnique.get("lvl req"));
                     if (lUniqueReq != -1) {
-                        iReqLvl = lUniqueReq;
+                        reqLvl = lUniqueReq;
                     }
                 }
                 applyAutomodLvl();
@@ -706,25 +717,25 @@ public class D2Item implements Comparable, D2ItemInterface {
             }
             case 6: // rare item
             {
-                iRare = true;
-                iItemName = "Rare " + iItemName;
+                rare = true;
+                itemName = "Rare " + itemName;
             }
             case 8: // also a rare item, do the same (one's probably crafted)
             {
-                if (!iRare) {
-                    iCrafted = true;
-                    iItemName = "Crafted " + iItemName;
+                if (!rare) {
+                    crafted = true;
+                    itemName = "Crafted " + itemName;
                 }
             }
             
             applyAutomodLvl();
-            short rare_name_1 = (short) pFile.read(8);
-            short rare_name_2 = (short) pFile.read(8);
+            short rare_name_1 = (short) file.read(8);
+            short rare_name_2 = (short) file.read(8);
             D2TxtFileItemProperties lRareName1 = D2TxtFile.RAREPREFIX
                     .getRow(rare_name_1 - 156);
             D2TxtFileItemProperties lRareName2 = D2TxtFile.RARESUFFIX
                     .getRow(rare_name_2 - 1);
-            iItemName = D2TblFile.getString(lRareName1.get("name")) + " "
+            itemName = D2TblFile.getString(lRareName1.get("name")) + " "
                     + D2TblFile.getString(lRareName2.get("name"));
             
             rare_prefixes = new short[3];
@@ -732,57 +743,57 @@ public class D2Item implements Comparable, D2ItemInterface {
             short pre_count = 0;
             short suf_count = 0;
             for (int i = 0; i < 3; i++) {
-                if (pFile.read(1) == 1) {
-                    rare_prefixes[pre_count] = (short) pFile.read(11);
+                if (file.read(1) == 1) {
+                    rare_prefixes[pre_count] = (short) file.read(11);
                     D2TxtFileItemProperties lPrefix = D2TxtFile.PREFIX
                             .getRow(rare_prefixes[pre_count]);
                     pre_count++;
                     String lPreName = lPrefix.get("Name");
                     if (lPreName != null && !lPreName.equals("")) {
                         int lPreReq = getReq(lPrefix.get("levelreq"));
-                        if (lPreReq > iReqLvl) {
-                            iReqLvl = lPreReq;
+                        if (lPreReq > reqLvl) {
+                            reqLvl = lPreReq;
                         }
                     }
                     
                 }
-                if (pFile.read(1) == 1) {
-                    rare_suffixes[suf_count] = (short) pFile.read(11);
+                if (file.read(1) == 1) {
+                    rare_suffixes[suf_count] = (short) file.read(11);
                     D2TxtFileItemProperties lSuffix = D2TxtFile.SUFFIX
                             .getRow(rare_suffixes[suf_count]);
                     suf_count++;
                     String lSufName = lSuffix.get("Name");
                     if (lSufName != null && !lSufName.equals("")) {
                         int lSufReq = getReq(lSuffix.get("levelreq"));
-                        if (lSufReq > iReqLvl) {
-                            iReqLvl = lSufReq;
+                        if (lSufReq > reqLvl) {
+                            reqLvl = lSufReq;
                         }
                     }
                 }
             }
             
             if (isCrafted()) {
-                iReqLvl = iReqLvl + 10 + (3 * (suf_count + pre_count));
+                reqLvl = reqLvl + 10 + (3 * (suf_count + pre_count));
             }
             break;
             
             case 2: {
-                readTypes(pFile);
+                readTypes(file);
                 break;
             }
         }
         
         // rune word
-        if (check_flag(27)) {
-            pFile.skipBits(12);
-            pFile.skipBits(4);
+        if (checkFlag(27)) {
+            file.skipBits(12);
+            file.skipBits(4);
         }
         // personalized
-        if (check_flag(25)) {
+        if (checkFlag(25)) {
             personalization = "";
             boolean lNotEnded = true;
             for (int i = 0; i < 15 && lNotEnded; i++) {
-                char c = (char) pFile.read(7);
+                char c = (char) file.read(7);
                 if (c == 0) {
                     lNotEnded = false;
                 } else {
@@ -790,7 +801,7 @@ public class D2Item implements Comparable, D2ItemInterface {
                 }
             }
             if (lNotEnded == true) {
-                pFile.read(7);
+                file.read(7);
             }
         }
     }
@@ -799,42 +810,46 @@ public class D2Item implements Comparable, D2ItemInterface {
         
         for (int x = 2; x < 6; x++) {
             if (fullsetRow.get("PCode" + x + "a").equals("")) { continue; }
-            iProps.addAll(D2TxtFile.propToStat(fullsetRow.get("PCode" + x + "a"), fullsetRow.get("PMin" + x + "a"), fullsetRow.get("PMax" + x + "a"), fullsetRow.get("PParam" + x + "a"), (20 + x)));
+            propCollection.addAll(D2TxtFile.propToStat(fullsetRow.get("PCode" + x + "a"),
+                                                       fullsetRow.get("PMin" + x + "a"),
+                                                       fullsetRow.get("PMax" + x + "a"),
+                                                       fullsetRow.get("PParam" + x + "a"),
+                                                       (20 + x)));
         }
         for (int x = 1; x < 9; x++) {
             if (fullsetRow.get("FCode" + x).equals("")) { continue; }
-            iProps.addAll(D2TxtFile.propToStat(fullsetRow.get("FCode" + x), fullsetRow.get("FMin" + x), fullsetRow.get("FMax" + x), fullsetRow.get("FParam" + x), 26));
+            propCollection.addAll(D2TxtFile.propToStat(fullsetRow.get("FCode" + x), fullsetRow.get("FMin" + x), fullsetRow.get("FMax" + x), fullsetRow.get("FParam" + x), 26));
         }
     }
     
-    private void readExtend2(D2BitReader pFile) throws Exception {
+    private void readExtend2(D2BitReader file) throws Exception {
         if (isTypeArmor()) {
-            iDef = (short) (pFile.read(11) - 10); // -10 ???
-            iInitDef = iDef;
-            iMaxDur = (short) pFile.read(8);
+            def = (short) (file.read(11) - 10); // -10 ???
+            initDef = def;
+            maxDur = (short) file.read(8);
             
-            if (iMaxDur != 0) {
-                iCurDur = (short) pFile.read(9);
+            if (maxDur != 0) {
+                curDur = (short) file.read(9);
             }
             
         } else if (isTypeWeapon()) {
-            if (iType.equals("tkni") || iType.equals("taxe")
-                    || iType.equals("jave") || iType.equals("ajav")) {
-                iThrow = true;
+            if (type.equals("tkni") || type.equals("taxe")
+                    || type.equals("jave") || type.equals("ajav")) {
+                isThrow = true;
             }
-            iMaxDur = (short) pFile.read(8);
+            maxDur = (short) file.read(8);
             
-            if (iMaxDur != 0) {
-                iCurDur = (short) pFile.read(9);
+            if (maxDur != 0) {
+                curDur = (short) file.read(9);
             }
             
             if ((D2TxtFile.WEAPONS.searchColumns("code", item_type)).get(
                     "1or2handed").equals("")
-                    && !iThrow) {
+                    && !isThrow) {
                 
                 if ((D2TxtFile.WEAPONS.searchColumns("code", item_type)).get(
                         "2handed").equals("1")) {
-                    iWhichHand = 2;
+                    whichHand = 2;
                     i1Dmg = new short[4];
                     i1Dmg[0] = i1Dmg[1] = Short.parseShort((D2TxtFile.WEAPONS
                             .searchColumns("code", item_type))
@@ -843,7 +858,7 @@ public class D2Item implements Comparable, D2ItemInterface {
                             .searchColumns("code", item_type))
                                                                    .get("2handmaxdam"));
                 } else {
-                    iWhichHand = 1;
+                    whichHand = 1;
                     i1Dmg = new short[4];
                     i1Dmg[0] = i1Dmg[1] = Short.parseShort((D2TxtFile.WEAPONS
                             .searchColumns("code", item_type)).get("mindam"));
@@ -852,8 +867,8 @@ public class D2Item implements Comparable, D2ItemInterface {
                 }
                 
             } else {
-                iWhichHand = 0;
-                if (iThrow) {
+                whichHand = 0;
+                if (isThrow) {
                     i2Dmg = new short[4];
                     i2Dmg[0] = i2Dmg[1] = Short
                             .parseShort((D2TxtFile.WEAPONS.searchColumns(
@@ -877,44 +892,44 @@ public class D2Item implements Comparable, D2ItemInterface {
                         .searchColumns("code", item_type)).get("maxdam"));
             }
             
-            if ("1".equals(iItemType.get("stackable"))) {
-                iStackable = true;
-                iCurDur = (short) pFile.read(9);
+            if ("1".equals(itemType.get("stackable"))) {
+                stackable = true;
+                curDur = (short) file.read(9);
             }
         } else if (isTypeMisc()) {
-            if ("1".equals(iItemType.get("stackable"))) {
-                iStackable = true;
-                iCurDur = (short) pFile.read(9);
+            if ("1".equals(itemType.get("stackable"))) {
+                stackable = true;
+                curDur = (short) file.read(9);
             }
             
         }
         
-        if (iSocketed) {
-            iSocketNrTotal = (short) pFile.read(4);
+        if (socketed) {
+            socketNrTotal = (short) file.read(4);
         }
         
         int[] lSet = new int[5];
         
         if (quality == 5) {
             for (int x = 0; x < 5; x++) {
-                lSet[x] = (int) pFile.read(1);
+                lSet[x] = (int) file.read(1);
             }
         }
         
-        if (iJewel) {
-            readProperties(pFile, 1);
+        if (jewel) {
+            readProperties(file, 1);
         } else {
-            readProperties(pFile, 0);
+            readProperties(file, 0);
         }
         if (quality == 5) {
             for (int x = 0; x < 5; x++) {
                 if (lSet[x] == 1) {
-                    readProperties(pFile, x + 2);
+                    readProperties(file, x + 2);
                 }
             }
         }
-        if (iRuneWord) {
-            readProperties(pFile, 0);
+        if (runeWord) {
+            readProperties(file, 0);
         }
     }
     
@@ -923,41 +938,41 @@ public class D2Item implements Comparable, D2ItemInterface {
         if (automod_info == null) {
             return;
         }
-        if (Integer.parseInt(automod_info.get("levelreq")) > iReqLvl) {
-            iReqLvl = Integer.parseInt(automod_info.get("levelreq"));
+        if (Integer.parseInt(automod_info.get("levelreq")) > reqLvl) {
+            reqLvl = Integer.parseInt(automod_info.get("levelreq"));
         }
         
     }
     
     // MBR: unknown, but should be according to file format
-    private void readTypes(D2BitReader pFile) {
+    private void readTypes(D2BitReader file) {
         // charms ??
         if (isCharm()) {
-            //			long lCharm1 = pFile.read(1);
-            pFile.read(1);
-            //			long lCharm2 = pFile.read(11);
-            pFile.read(11);
+            //			long lCharm1 = file.read(1);
+            file.read(1);
+            //			long lCharm2 = file.read(11);
+            file.read(11);
             // System.err.println("Charm (?): " + lCharm1 );
             // System.err.println("Charm (?): " + lCharm2 );
         }
         
         // books / scrolls ??
         if ("tbk".equals(item_type) || "ibk".equals(item_type)) {
-            //			long lTomb = pFile.read(5);
-            pFile.read(5);
+            //			long lTomb = file.read(5);
+            file.read(5);
             // System.err.println("Tome ID: " + lTomb );
         }
         
         if ("tsc".equals(item_type) || "isc".equals(item_type)) {
-            //			long lTomb = pFile.read(5);
-            pFile.read(5);
+            //			long lTomb = file.read(5);
+            file.read(5);
             // System.err.println("Tome ID: " + lTomb );
         }
         
         // body ??
         if ("body".equals(item_type)) {
-            //			long lMonster = pFile.read(10);
-            pFile.read(10);
+            //			long lMonster = file.read(10);
+            file.read(10);
             // System.err.println("Monster ID: " + lMonster );
         }
     }
@@ -967,20 +982,20 @@ public class D2Item implements Comparable, D2ItemInterface {
         String[] statsToRead = {"stat1", "stat2"};
         
         for (int x = 0; x < statsToRead.length; x = x + 1) {
-    
+            
             if ((D2TxtFile.MISC.searchColumns("code", item_type)).get(
                     statsToRead[x]).equals("")) { continue; }
-            iProps.add(new D2Prop(Integer.parseInt((D2TxtFile.ITEM_STAT_COST.searchColumns("Stat", (D2TxtFile.MISC
+            propCollection.add(new D2Prop(Integer.parseInt((D2TxtFile.ITEM_STAT_COST.searchColumns("Stat", (D2TxtFile.MISC
                     .searchColumns("code", item_type))
                     .get(statsToRead[x]))).get("ID")),
-                                  new int[]{Integer.parseInt(((D2TxtFile.MISC
-                                          .searchColumns("code", item_type))
-                                          .get(statsToRead[x].replaceFirst("stat",
-                                                                           "calc"))))}, 0));
+                                          new int[]{Integer.parseInt(((D2TxtFile.MISC
+                                                  .searchColumns("code", item_type))
+                                                  .get(statsToRead[x].replaceFirst("stat",
+                                                                                   "calc"))))}, 0));
         }
     }
     
-    private void readPropertiesGems(D2BitReader pFile) {
+    private void readPropertiesGems(D2BitReader file) {
         //		RUNES ARE GEMS TOO!!!!
         String[][] gemHeaders = {{"weaponMod1", "weaponMod2", "weaponMod3"},
                                  {"helmMod1", "helmMod2", "helmMod3"},
@@ -989,46 +1004,46 @@ public class D2Item implements Comparable, D2ItemInterface {
         for (int x = 0; x < gemHeaders.length; x++) {
             
             for (int y = 0; y < gemHeaders[x].length; y++) {
-    
+                
                 if (D2TxtFile.GEMS.searchColumns("code", item_type).get(
                         gemHeaders[x][y] + "Code").equals("")) { continue; }
-                iProps.addAll(D2TxtFile.propToStat(D2TxtFile.GEMS
-                                                           .searchColumns("code", item_type).get(
+                propCollection.addAll(D2TxtFile.propToStat(D2TxtFile.GEMS
+                                                                   .searchColumns("code", item_type).get(
                                 gemHeaders[x][y] + "Code"), D2TxtFile.GEMS
-                                                           .searchColumns("code", item_type).get(
+                                                                   .searchColumns("code", item_type).get(
                                 gemHeaders[x][y] + "Min"), D2TxtFile.GEMS
-                                                           .searchColumns("code", item_type).get(
+                                                                   .searchColumns("code", item_type).get(
                                 gemHeaders[x][y] + "Max"), D2TxtFile.GEMS
-                                                           .searchColumns("code", item_type).get(
+                                                                   .searchColumns("code", item_type).get(
                                 gemHeaders[x][y] + "Param"), (x + 7)));
             }
         }
     }
     
-    private void readProperties(D2BitReader pFile, int qFlag) {
+    private void readProperties(D2BitReader file, int qFlag) {
         
-        int rootProp = (int) pFile.read(9);
+        int rootProp = (int) file.read(9);
         
         while (rootProp != 511) {
             
-            iProps.readProp(pFile, rootProp, qFlag);
+            propCollection.readProp(file, rootProp, qFlag);
             
             if (rootProp == 17) {
-                iProps.readProp(pFile, 18, qFlag);
+                propCollection.readProp(file, 18, qFlag);
             } else if (rootProp == 48) {
-                iProps.readProp(pFile, 49, qFlag);
+                propCollection.readProp(file, 49, qFlag);
             } else if (rootProp == 50) {
-                iProps.readProp(pFile, 51, qFlag);
+                propCollection.readProp(file, 51, qFlag);
             } else if (rootProp == 52) {
-                iProps.readProp(pFile, 53, qFlag);
+                propCollection.readProp(file, 53, qFlag);
             } else if (rootProp == 54) {
-                iProps.readProp(pFile, 55, qFlag);
-                iProps.readProp(pFile, 56, qFlag);
+                propCollection.readProp(file, 55, qFlag);
+                propCollection.readProp(file, 56, qFlag);
             } else if (rootProp == 57) {
-                iProps.readProp(pFile, 58, qFlag);
-                iProps.readProp(pFile, 59, qFlag);
+                propCollection.readProp(file, 58, qFlag);
+                propCollection.readProp(file, 59, qFlag);
             }
-            rootProp = (int) pFile.read(9);
+            rootProp = (int) file.read(9);
         }
         
     }
@@ -1040,47 +1055,48 @@ public class D2Item implements Comparable, D2ItemInterface {
         int[] durTriple = new int[]{0, 0};
         RequirementModifierAccumulator requirementModifierAccumulator = new RequirementModifierAccumulator();
         
-        iProps.applyOp(iCharLvl);
+        propCollection.applyOp(charLvl);
         
-        for (int x = 0; x < iProps.size(); x++) {
-            if (((D2Prop) iProps.get(x)).getQFlag() != 0 && ((D2Prop) iProps.get(x)).getQFlag() != 12 && ((D2Prop) iProps.get(x)).getQFlag() != 13 && ((D2Prop) iProps.get(x)).getQFlag() != 14 && ((D2Prop) iProps
-                    .get(x)).getQFlag() != 15 && ((D2Prop) iProps.get(x)).getQFlag() != 16) { continue; }
+        for (int x = 0; x < propCollection.size(); x++) {
+            if (((D2Prop) propCollection.get(x)).getQFlag() != 0 && ((D2Prop) propCollection.get(x)).getQFlag() != 12 && ((D2Prop) propCollection.get(x)).getQFlag() != 13 && ((D2Prop) propCollection
+                    .get(x)).getQFlag() != 14 && ((D2Prop) propCollection
+                    .get(x)).getQFlag() != 15 && ((D2Prop) propCollection.get(x)).getQFlag() != 16) { continue; }
             
             // +Dur
-            if (((D2Prop) iProps.get(x)).getPNum() == 73) {
+            if (((D2Prop) propCollection.get(x)).getPNum() == 73) {
                 durTriple[0] = durTriple[0]
-                        + ((D2Prop) iProps.get(x)).getPVals()[0];
+                        + ((D2Prop) propCollection.get(x)).getPVals()[0];
             }
             
             // Dur%
-            if (((D2Prop) iProps.get(x)).getPNum() == 75) {
+            if (((D2Prop) propCollection.get(x)).getPNum() == 75) {
                 durTriple[1] = durTriple[1]
-                        + ((D2Prop) iProps.get(x)).getPVals()[0];
+                        + ((D2Prop) propCollection.get(x)).getPVals()[0];
             }
             
             // +LvlReq
-            if (((D2Prop) iProps.get(x)).getPNum() == 92) {
-                requirementModifierAccumulator.accumulateLevelRequirement(((D2Prop) iProps.get(x)).getPVals()[0]);
+            if (((D2Prop) propCollection.get(x)).getPNum() == 92) {
+                requirementModifierAccumulator.accumulateLevelRequirement(((D2Prop) propCollection.get(x)).getPVals()[0]);
             }
             
             // -Req
-            if (((D2Prop) iProps.get(x)).getPNum() == 91) {
-                requirementModifierAccumulator.accumulatePercentRequirements(((D2Prop) iProps.get(x)).getPVals()[0]);
+            if (((D2Prop) propCollection.get(x)).getPNum() == 91) {
+                requirementModifierAccumulator.accumulatePercentRequirements(((D2Prop) propCollection.get(x)).getPVals()[0]);
             }
             
             // +Skills modify level
-            if (((D2Prop) iProps.get(x)).getPNum() == 97
-                    || ((D2Prop) iProps.get(x)).getPNum() == 107) {
+            if (((D2Prop) propCollection.get(x)).getPNum() == 97
+                    || ((D2Prop) propCollection.get(x)).getPNum() == 107) {
                 
-                if (iReqLvl < Integer.parseInt(D2TxtFile.SKILLS.searchColumns(
+                if (reqLvl < Integer.parseInt(D2TxtFile.SKILLS.searchColumns(
                         "skilldesc",
                         D2TxtFile.SKILL_DESC.getRow(
-                                ((D2Prop) iProps.get(x)).getPVals()[0]).get(
+                                ((D2Prop) propCollection.get(x)).getPVals()[0]).get(
                                 "skilldesc")).get("reqlevel"))) {
-                    iReqLvl = (Integer.parseInt(D2TxtFile.SKILLS.searchColumns(
+                    reqLvl = (Integer.parseInt(D2TxtFile.SKILLS.searchColumns(
                             "skilldesc",
                             D2TxtFile.SKILL_DESC.getRow(
-                                    ((D2Prop) iProps.get(x)).getPVals()[0])
+                                    ((D2Prop) propCollection.get(x)).getPVals()[0])
                                                 .get("skilldesc")).get("reqlevel")));
                 }
             }
@@ -1088,26 +1104,26 @@ public class D2Item implements Comparable, D2ItemInterface {
             if (isTypeArmor()) {
                 
                 // EDef
-                if (((D2Prop) iProps.get(x)).getPNum() == 16) {
+                if (((D2Prop) propCollection.get(x)).getPNum() == 16) {
                     armourTriple[0] = armourTriple[0]
-                            + ((D2Prop) iProps.get(x)).getPVals()[0];
+                            + ((D2Prop) propCollection.get(x)).getPVals()[0];
                 }
                 
                 // +Def
-                if (((D2Prop) iProps.get(x)).getPNum() == 31) {
+                if (((D2Prop) propCollection.get(x)).getPNum() == 31) {
                     armourTriple[1] = armourTriple[1]
-                            + ((D2Prop) iProps.get(x)).getPVals()[0];
+                            + ((D2Prop) propCollection.get(x)).getPVals()[0];
                 }
                 
                 // +Def/lvl
-                if (((D2Prop) iProps.get(x)).getPNum() == 214) {
+                if (((D2Prop) propCollection.get(x)).getPNum() == 214) {
                     armourTriple[2] = armourTriple[2]
-                            + ((D2Prop) iProps.get(x)).getPVals()[0];
+                            + ((D2Prop) propCollection.get(x)).getPVals()[0];
                 }
                 
                 if (isShield()) {
-                    if (((D2Prop) iProps.get(x)).getPNum() == 20) {
-                        iBlock = (short) (cBlock + ((D2Prop) iProps.get(x))
+                    if (((D2Prop) propCollection.get(x)).getPNum() == 20) {
+                        block = (short) (cBlock + ((D2Prop) propCollection.get(x))
                                 .getPVals()[0]);
                     }
                 }
@@ -1115,49 +1131,49 @@ public class D2Item implements Comparable, D2ItemInterface {
             } else if (isTypeWeapon()) {
                 
                 // EDmg
-                if (((D2Prop) iProps.get(x)).getPNum() == 17) {
+                if (((D2Prop) propCollection.get(x)).getPNum() == 17) {
                     dmgTriple[0] = dmgTriple[0]
-                            + ((D2Prop) iProps.get(x)).getPVals()[0];
+                            + ((D2Prop) propCollection.get(x)).getPVals()[0];
                 }
                 
                 // MinDMg
-                if (((D2Prop) iProps.get(x)).getPNum() == 21) {
+                if (((D2Prop) propCollection.get(x)).getPNum() == 21) {
                     dmgTriple[1] = dmgTriple[1]
-                            + ((D2Prop) iProps.get(x)).getPVals()[0];
-                    if (((D2Prop) iProps.get(x)).getFuncN() == 31) {
+                            + ((D2Prop) propCollection.get(x)).getPVals()[0];
+                    if (((D2Prop) propCollection.get(x)).getFuncN() == 31) {
                         dmgTriple[2] = dmgTriple[2]
-                                + ((D2Prop) iProps.get(x)).getPVals()[1];
+                                + ((D2Prop) propCollection.get(x)).getPVals()[1];
                     }
                 }
                 
                 // MaxDmg
-                if (((D2Prop) iProps.get(x)).getPNum() == 22) {
+                if (((D2Prop) propCollection.get(x)).getPNum() == 22) {
                     dmgTriple[2] = dmgTriple[2]
-                            + ((D2Prop) iProps.get(x)).getPVals()[0];
+                            + ((D2Prop) propCollection.get(x)).getPVals()[0];
                 }
                 
                 // MaxDmg/Lvl
-                if (((D2Prop) iProps.get(x)).getPNum() == 218) {
+                if (((D2Prop) propCollection.get(x)).getPNum() == 218) {
                     dmgTriple[3] = dmgTriple[3]
-                            + ((D2Prop) iProps.get(x)).getPVals()[0];
+                            + ((D2Prop) propCollection.get(x)).getPVals()[0];
                 }
                 
                 // MaxDmg%/lvl
-                if (((D2Prop) iProps.get(x)).getPNum() == 219) {
+                if (((D2Prop) propCollection.get(x)).getPNum() == 219) {
                     dmgTriple[4] = dmgTriple[4]
-                            + ((D2Prop) iProps.get(x)).getPVals()[0];
+                            + ((D2Prop) propCollection.get(x)).getPVals()[0];
                 }
             }
         }
         
-        iReqLvl = iReqLvl + requirementModifierAccumulator.getLevelRequirement();
+        reqLvl = reqLvl + requirementModifierAccumulator.getLevelRequirement();
         double percentReqirementsModifier = requirementModifierAccumulator.getPercentRequirements() / (double) 100;
-        iReqDex = iReqDex + ((int) (iReqDex * percentReqirementsModifier));
-        iReqStr = iReqStr + ((int) (iReqStr * percentReqirementsModifier));
+        reqDex = reqDex + ((int) (reqDex * percentReqirementsModifier));
+        reqStr = reqStr + ((int) (reqStr * percentReqirementsModifier));
         
         if (isTypeWeapon()) {
             
-            if (iEthereal) {
+            if (ethereal) {
                 i1Dmg[0] = i1Dmg[1] = (short) Math
                         .floor((((double) i1Dmg[1] / (double) 100) * (double) 50)
                                        + i1Dmg[1]);
@@ -1165,7 +1181,7 @@ public class D2Item implements Comparable, D2ItemInterface {
                         .floor((((double) i1Dmg[3] / (double) 100) * (double) 50)
                                        + i1Dmg[3]);
                 
-                if (iWhichHand == 0) {
+                if (whichHand == 0) {
                     i2Dmg[0] = i2Dmg[1] = (short) Math
                             .floor((((double) i2Dmg[1] / (double) 100) * (double) 50)
                                            + i2Dmg[1]);
@@ -1182,7 +1198,7 @@ public class D2Item implements Comparable, D2ItemInterface {
                     .floor((((double) i1Dmg[3] / (double) 100) * (dmgTriple[0] + dmgTriple[4]))
                                    + (i1Dmg[3] + (dmgTriple[2] + dmgTriple[3])));
             
-            if (iWhichHand == 0) {
+            if (whichHand == 0) {
                 i2Dmg[1] = (short) Math.floor((((double) i2Dmg[1] / (double) 100) * dmgTriple[0])
                                                       + (i2Dmg[1] + dmgTriple[1]));
                 i2Dmg[3] = (short) Math.floor((((double) i2Dmg[3] / (double) 100) * (dmgTriple[0] + dmgTriple[4]))
@@ -1193,28 +1209,28 @@ public class D2Item implements Comparable, D2ItemInterface {
             }
             
         } else if (isTypeArmor()) {
-            iDef = (short) Math
-                    .floor((((double) iInitDef / (double) 100) * armourTriple[0])
-                                   + (iInitDef + (armourTriple[1] + armourTriple[2])));
+            def = (short) Math
+                    .floor((((double) initDef / (double) 100) * armourTriple[0])
+                                   + (initDef + (armourTriple[1] + armourTriple[2])));
         }
         
-        iMaxDur = (short) Math
-                .floor((((double) iMaxDur / (double) 100) * durTriple[1])
-                               + (iMaxDur + durTriple[0]));
+        maxDur = (short) Math
+                .floor((((double) maxDur / (double) 100) * durTriple[1])
+                               + (maxDur + durTriple[0]));
         
     }
     
-    private boolean check_flag(int bit) {
+    private boolean checkFlag(int bit) {
         if (((flags >>> (32 - bit)) & 1) == 1) { return true; } else { return false; }
     }
     
-    private int getReq(String pReq) {
-        if (pReq != null) {
-            String lReq = pReq.trim();
+    private int getReq(String req) {
+        if (req != null) {
+            String lReq = req.trim();
             if (!lReq.equals("") && !lReq.equals("0")) {
                 try {
                     return Integer.parseInt(lReq);
-                } catch (Exception pEx) {
+                } catch (Exception ex) {
                     // do nothing, no req
                 }
             }
@@ -1223,15 +1239,15 @@ public class D2Item implements Comparable, D2ItemInterface {
     }
     
     private String getExStr() {
-        return " (" + iItemName + ", " + iFP + ")";
+        return " (" + itemName + ", " + fP + ")";
     }
     
-    private boolean isBodyLocation(String pLocation) {
-        if (iBody) {
-            if (pLocation.equals(iBodyLoc1)) {
+    private boolean isBodyLocation(String location) {
+        if (body) {
+            if (location.equals(bodyLoc1)) {
                 return true;
             }
-            if (pLocation.equals(iBodyLoc2)) {
+            if (location.equals(bodyLoc2)) {
                 return true;
             }
         }
@@ -1259,74 +1275,74 @@ public class D2Item implements Comparable, D2ItemInterface {
     }
     
     private StringBuffer generatePropStringNoHtmlTags(boolean extended) {
-        iProps.tidy();
+        propCollection.tidy();
         StringBuffer dispStr = new StringBuffer("<center>");
-        String base = (Integer.toHexString(Color.white.getRGB())).substring(2, Integer.toHexString(Color.white.getRGB()).length());
-        String rgb = (Integer.toHexString(getItemColor().getRGB())).substring(2, Integer.toHexString(getItemColor().getRGB()).length());
+        String base = (Integer.toHexString(Color.white.getRGB())).substring(2);
+        String rgb = (Integer.toHexString(getItemColor().getRGB())).substring(2);
         if (personalization == null) {
-            dispStr.append("<font color=\"#" + base + "\">" + "<font color=\"#" + rgb + "\">" + iItemName + "</font>" + "<br>&#10;");
+            dispStr.append("<font color=\"#" + base + "\">" + "<font color=\"#" + rgb + "\">" + itemName + "</font>" + "<br>&#10;");
         } else {
-            dispStr.append("<font color=\"#" + base + "\">" + "<font color=\"#" + rgb + "\">" + personalization + "'s " + iItemName + "</font>" + "<br>&#10;");
+            dispStr.append("<font color=\"#" + base + "\">" + "<font color=\"#" + rgb + "\">" + personalization + "'s " + itemName + "</font>" + "<br>&#10;");
         }
-        if (!iBaseItemName.equals(iItemName)) { dispStr.append("<font color=\"#" + rgb + "\">" + iBaseItemName + "</font>" + "<br>&#10;"); }
+        if (!baseItemName.equals(itemName)) { dispStr.append("<font color=\"#" + rgb + "\">" + baseItemName + "</font>" + "<br>&#10;"); }
         if (isRuneWord()) {
             dispStr.append("<font color=\"#" + rgb + "\">");
-            for (int x = 0; x < iSocketedItems.size(); x++) {
-                dispStr.append((((D2Item) iSocketedItems.get(x)).getName().substring(0, ((D2Item) iSocketedItems.get(x)).getName().length() - 5)));
+            for (int x = 0; x < socketedItems.size(); x++) {
+                dispStr.append((((D2Item) socketedItems.get(x)).getItemName()), 0, ((D2Item) socketedItems.get(x)).getItemName().length() - 5);
             }
             dispStr.append("</font><br>&#10;");
         }
         if (isTypeWeapon() || isTypeArmor()) {
             if (isTypeWeapon()) {
-                if (iWhichHand == 0) {
-                    if (iThrow) {
+                if (whichHand == 0) {
+                    if (isThrow) {
                         dispStr.append("Throw Damage: " + i2Dmg[1] + " - " + i2Dmg[3] + "<br>&#10;");
                         dispStr.append("One Hand Damage: " + i1Dmg[1] + " - " + i1Dmg[3] + "<br>&#10;");
                     } else {
                         dispStr.append("One Hand Damage: " + i1Dmg[1] + " - " + i1Dmg[3] + "<br>&#10;");
                         dispStr.append("Two Hand Damage: " + i2Dmg[1] + " - " + i2Dmg[3] + "<br>&#10;");
                     }
-                } else if (iWhichHand == 1) {
+                } else if (whichHand == 1) {
                     dispStr.append("One Hand Damage: " + i1Dmg[1] + " - " + i1Dmg[3] + "<br>&#10;");
                 } else {
                     dispStr.append("Two Hand Damage: " + i1Dmg[1] + " - " + i1Dmg[3] + "<br>&#10;");
                 }
             } else if (isTypeArmor()) {
-                dispStr.append("Defense: " + iDef + "<br>&#10;");
+                dispStr.append("Defense: " + def + "<br>&#10;");
                 if (isShield()) {
-                    dispStr.append("Chance to Block: " + iBlock + "<br>&#10;");
+                    dispStr.append("Chance to Block: " + block + "<br>&#10;");
                 }
             }
             if (isStackable()) {
-                dispStr.append("Quantity: " + iCurDur + "<br>&#10;");
+                dispStr.append("Quantity: " + curDur + "<br>&#10;");
             } else {
-                if (iMaxDur == 0) {
+                if (maxDur == 0) {
                     dispStr.append("Indestructible" + "<br>&#10;");
                 } else {
-                    dispStr.append("Durability: " + iCurDur + " of " + iMaxDur + "<br>&#10;");
+                    dispStr.append("Durability: " + curDur + " of " + maxDur + "<br>&#10;");
                 }
             }
         }
-        if (iReqLvl > 0) { dispStr.append("Required Level: " + iReqLvl + "<br>&#10;"); }
-        if (iReqStr > 0) { dispStr.append("Required Strength: " + iReqStr + "<br>&#10;"); }
-        if (iReqDex > 0) { dispStr.append("Required Dexterity: " + iReqDex + "<br>&#10;"); }
-        if (iFP != null) { dispStr.append("Fingerprint: " + iFP + "<br>&#10;"); }
-        if (iGUID != null) { dispStr.append("GUID: " + iGUID + "<br>&#10;"); }
+        if (reqLvl > 0) { dispStr.append("Required Level: " + reqLvl + "<br>&#10;"); }
+        if (reqStr > 0) { dispStr.append("Required Strength: " + reqStr + "<br>&#10;"); }
+        if (reqDex > 0) { dispStr.append("Required Dexterity: " + reqDex + "<br>&#10;"); }
+        if (fP != null) { dispStr.append("Fingerprint: " + fP + "<br>&#10;"); }
+        if (gUID != null) { dispStr.append("GUID: " + gUID + "<br>&#10;"); }
         if (ilvl != 0) { dispStr.append("Item Level: " + ilvl + "<br>&#10;"); }
         dispStr.append("Version: " + get_version() + "<br>&#10;");
-        if (!iIdentified) { dispStr.append("Unidentified" + "<br>&#10;"); }
+        if (!identified) { dispStr.append("Unidentified" + "<br>&#10;"); }
         
         dispStr.append(getItemPropertyString());
         
         if (extended) {
             if (isSocketed()) {
                 
-                if (iSocketedItems != null) {
+                if (socketedItems != null) {
                     dispStr.append("<br>&#10;");
-                    for (int x = 0; x < iSocketedItems.size(); x = x + 1) {
-                        if (((D2Item) iSocketedItems.get(x)) != null) {
-                            dispStr.append(((D2Item) iSocketedItems.get(x)).generatePropStringNoHtmlTags(false));
-                            if (x != iSocketedItems.size() - 1) {
+                    for (int x = 0; x < socketedItems.size(); x = x + 1) {
+                        if (socketedItems.get(x) != null) {
+                            dispStr.append(((D2Item) socketedItems.get(x)).generatePropStringNoHtmlTags(false));
+                            if (x != socketedItems.size() - 1) {
                                 dispStr.append("<br>&#10;");
                             }
                         }
@@ -1340,25 +1356,25 @@ public class D2Item implements Comparable, D2ItemInterface {
     
     private StringBuffer getItemPropertyString() {
         
-        StringBuffer dispStr = new StringBuffer("");
+        StringBuffer dispStr = new StringBuffer();
         
         if (isJewel()) {
-            dispStr.append(iProps.generateDisplay(1, iCharLvl));
+            dispStr.append(propCollection.generateDisplay(1, charLvl));
         } else {
-            dispStr.append(iProps.generateDisplay(0, iCharLvl));
+            dispStr.append(propCollection.generateDisplay(0, charLvl));
         }
         if (isGem() || isRune()) {
             dispStr.append("Weapons: ");
-            dispStr.append(iProps.generateDisplay(7, iCharLvl));
+            dispStr.append(propCollection.generateDisplay(7, charLvl));
             dispStr.append("Armor: ");
-            dispStr.append(iProps.generateDisplay(8, iCharLvl));
+            dispStr.append(propCollection.generateDisplay(8, charLvl));
             dispStr.append("Shields: ");
-            dispStr.append(iProps.generateDisplay(9, iCharLvl));
+            dispStr.append(propCollection.generateDisplay(9, charLvl));
         }
         if (quality == 5) {
             
             for (int x = 12; x < 17; x++) {
-                StringBuffer setBuf = iProps.generateDisplay(x, iCharLvl);
+                StringBuffer setBuf = propCollection.generateDisplay(x, charLvl);
                 if (setBuf.length() > 29) {
                     dispStr.append("<font color=\"red\">Set (" + (x - 10) + " items): ");
                     dispStr.append(setBuf);
@@ -1367,21 +1383,21 @@ public class D2Item implements Comparable, D2ItemInterface {
             }
             
             for (int x = 2; x < 7; x++) {
-                StringBuffer setBuf = iProps.generateDisplay(x, iCharLvl);
+                StringBuffer setBuf = propCollection.generateDisplay(x, charLvl);
                 if (setBuf.length() > 29) {
                     dispStr.append("Set (" + x + " items): ");
                     dispStr.append(setBuf);
                 }
             }
         }
-        if (iEthereal) {
+        if (ethereal) {
             dispStr.append("<font color=\"#4850b8\">Ethereal</font><br>&#10;");
         }
-        if (iSocketNrTotal > 0) {
-            dispStr.append(iSocketNrTotal + " Sockets (" + iSocketNrFilled + " used)<br>&#10;");
-            if (iSocketedItems != null) {
-                for (int i = 0; i < iSocketedItems.size(); i++) {
-                    dispStr.append("Socketed: " + ((D2Item) iSocketedItems.get(i)).getItemName() + "<br>&#10;");
+        if (socketNrTotal > 0) {
+            dispStr.append(socketNrTotal + " Sockets (" + socketNrFilled + " used)<br>&#10;");
+            if (socketedItems != null) {
+                for (int i = 0; i < socketedItems.size(); i++) {
+                    dispStr.append("Socketed: " + ((D2Item) socketedItems.get(i)).getItemName() + "<br>&#10;");
                 }
             }
         }
@@ -1389,7 +1405,7 @@ public class D2Item implements Comparable, D2ItemInterface {
         if (quality == 5) {
             dispStr.append("<br>&#10;");
             for (int x = 32; x < 36; x++) {
-                StringBuffer setBuf = iProps.generateDisplay(x, iCharLvl);
+                StringBuffer setBuf = propCollection.generateDisplay(x, charLvl);
                 if (setBuf.length() > 29) {
                     dispStr.append("<font color=\"red\">(" + (x - 30) + " items): ");
                     dispStr.append(setBuf);
@@ -1397,7 +1413,7 @@ public class D2Item implements Comparable, D2ItemInterface {
                 }
             }
             
-            StringBuffer setBuf = iProps.generateDisplay(36, iCharLvl);
+            StringBuffer setBuf = propCollection.generateDisplay(36, charLvl);
             if (setBuf.length() > 33) {
                 dispStr.append(setBuf);
             }
@@ -1424,126 +1440,68 @@ public class D2Item implements Comparable, D2ItemInterface {
         return isBodyLocation("lrin");
     }
     
-    public boolean isWeaponType(D2WeaponTypes pType) {
-        if (iTypeWeapon) {
-            if (pType.isType(iType)) {
+    public boolean isWeaponType(D2WeaponTypes type) {
+        if (typeWeapon) {
+            if (type.isType(this.type)) {
                 return true;
             }
         }
         return false;
     }
     
-    public boolean isBodyLocation(D2BodyLocations pLocation) {
-        if (iBody) {
-            if (pLocation.getLocation().equals(iBodyLoc1)) {
+    public boolean isBodyLocation(D2BodyLocations location) {
+        if (body) {
+            if (location.getLocation().equals(bodyLoc1)) {
                 return true;
             }
-            if (pLocation.getLocation().equals(iBodyLoc2)) {
+            if (location.getLocation().equals(bodyLoc2)) {
                 return true;
             }
         }
         return false;
-    }
-    
-    public boolean isBelt() {
-        return iBelt;
     }
     
     public boolean isCharm() {
-        return (iSmallCharm || iLargeCharm || iGrandCharm);
-    }
-    
-    public boolean isCharmSmall() {
-        return iSmallCharm;
-    }
-    
-    public boolean isCharmLarge() {
-        return iLargeCharm;
-    }
-    
-    public boolean isCharmGrand() {
-        return iGrandCharm;
-    }
-    
-    public boolean isJewel() {
-        return iJewel;
-    }
-    
-    // accessor for the row
-    public short get_row() {
-        return row;
-    }
-    
-    // accessor for the column
-    public short get_col() {
-        return col;
+        return (smallCharm || largeCharm || grandCharm);
     }
     
     // setter for the row
     // necessary for moving items
-    public void set_row(short r) {
-        iItem.set_byte_pos(7);
-        iItem.skipBits(13);
-        iItem.write((long) r, 4);
+    public void setRow(short r) {
+        item.set_byte_pos(7);
+        item.skipBits(13);
+        item.write(r, 4);
         row = r;
     }
     
     // setter for the column
     // necessary for moving items
-    public void set_col(short c) {
-        iItem.set_byte_pos(7);
-        iItem.skipBits(9);
-        iItem.write((long) c, 4);
+    public void setCol(short c) {
+        item.set_byte_pos(7);
+        item.skipBits(9);
+        item.write(c, 4);
         col = c;
     }
     
-    public void set_location(short l) {
-        iItem.set_byte_pos(7);
-        iItem.skipBits(2);
-        iItem.write((long) l, 3);
+    public void setLocation(short l) {
+        item.set_byte_pos(7);
+        item.skipBits(2);
+        item.write(l, 3);
         location = l;
     }
     
     public void set_body_position(short bp) {
-        iItem.set_byte_pos(7);
-        iItem.skipBits(5);
-        iItem.write((long) bp, 4);
-        body_position = bp;
+        item.set_byte_pos(7);
+        item.skipBits(5);
+        item.write(bp, 4);
+        bodyPosition = bp;
     }
     
-    public void set_panel(short p) {
-        iItem.set_byte_pos(7);
-        iItem.skipBits(17);
-        iItem.write((long) p, 3);
+    public void setPanel(short p) {
+        item.set_byte_pos(7);
+        item.skipBits(17);
+        item.write(p, 3);
         panel = p;
-    }
-    
-    public short get_location() {
-        return location;
-    }
-    
-    public short get_body_position() {
-        return body_position;
-    }
-    
-    public short get_panel() {
-        return panel;
-    }
-    
-    public short get_width() {
-        return width;
-    }
-    
-    public short get_height() {
-        return height;
-    }
-    
-    public String get_image() {
-        return image_file;
-    }
-    
-    public short getSetID() {
-        return set_id;
     }
     
     public String get_version() {
@@ -1563,53 +1521,25 @@ public class D2Item implements Comparable, D2ItemInterface {
         if (version == 101) {
             return "Expansion 1.10+";
         }
-        //		System.out.println(version);
         
         return "UNKNOWN";
     }
     
-    public long getSocketNrFilled() {
-        return iSocketNrFilled;
-    }
-    
-    public long getSocketNrTotal() {
-        return iSocketNrTotal;
-    }
-    
-    public byte[] get_bytes() {
-        return iItem.getFileContent();
+    public byte[] getBytes() {
+        return item.getFileContent();
     }
     
     public int getItemLength() {
-        return iItem.get_length();
+        return item.get_length();
     }
     
-    public String getItemName() {
-        return iItemName;
-    }
-    
-    public String getName() {
-        return iItemName;
-    }
-    
+    @Override
     public String getFingerprint() {
-        return iFP;
+        return fP;
     }
     
     public String getILvl() {
         return Short.toString(ilvl);
-    }
-    
-    public int getReqLvl() {
-        return iReqLvl;
-    }
-    
-    public int getReqStr() {
-        return iReqStr;
-    }
-    
-    public int getReqDex() {
-        return iReqDex;
     }
     
     public Color getItemColor() {
@@ -1641,50 +1571,16 @@ public class D2Item implements Comparable, D2ItemInterface {
         return Color.white;
     }
     
-    public boolean isUnique() {
-        return iUnique;
-    }
-    
-    public boolean isSet() {
-        return iSet;
-    }
-    
-    public boolean isRuneWord() {
-        return iRuneWord;
-    }
-    
-    public boolean isCrafted() {
-        return iCrafted;
-    }
-    
-    public boolean isRare() {
-        return iRare;
-    }
-    
-    public boolean isMagical() {
-        return iMagical;
-    }
-    
     public boolean isShield() {
-        if (iType != null) {
-            if (iType.equals("ashd") || iType.equals("shie")
-                    || iType.equals("head")) {
-                return true;
-            }
-        }
-        return false;
+        return type != null && (type.equals("ashd") || type.equals("shie") || type.equals("head"));
     }
     
     public boolean isNormal() {
-        return !(iMagical || iRare || iCrafted || iRuneWord || isRune() || iSet || iUnique);
+        return !(isMagical() || isRare() || isCrafted() || isRuneWord() || isRune() || isSet() || isUnique());
     }
     
     public boolean isSocketFiller() {
         return isRune() || isJewel() || isGem();
-    }
-    
-    public boolean isGem() {
-        return iGem;
     }
     
     public boolean isRune() {
@@ -1692,41 +1588,17 @@ public class D2Item implements Comparable, D2ItemInterface {
     }
     
     public String getRuneCode() {
-        if (iItemType != null) {
-            if ("rune".equals(iItemType.get("type"))) {
-                return iItemType.get("code");
+        if (itemType != null) {
+            if ("rune".equals(itemType.get("type"))) {
+                return itemType.get("code");
             }
         }
         return null;
     }
     
-    public boolean isEthereal() {
-        return iEthereal;
-    }
-    
-    public boolean isSocketed() {
-        return iSocketed;
-    }
-    
-    public boolean isStackable() {
-        return iStackable;
-    }
-    
-    public boolean isTypeMisc() {
-        return iTypeMisc;
-    }
-    
-    public boolean isTypeArmor() {
-        return iTypeArmor;
-    }
-    
-    public boolean isTypeWeapon() {
-        return iTypeWeapon;
-    }
-    
     public boolean isCursorItem() {
         if (location != 0 && location != 2) {
-            if (body_position == 0) {
+            if (bodyPosition == 0) {
                 // System.err.println("location: " + location );
                 return true;
             }
@@ -1734,35 +1606,20 @@ public class D2Item implements Comparable, D2ItemInterface {
         return false;
     }
     
-    public int compareTo(Object pObject) {
-        if (pObject instanceof D2Item) {
-            String lItemName = ((D2Item) pObject).iItemName;
-            if (iItemName == lItemName) {
-                // also both "null"
-                return 0;
-            }
-            if (iItemName == null) {
-                return -1;
-            }
-            if (lItemName == null) {
-                return 1;
-            }
-            return iItemName.compareTo(lItemName);
-        }
-        return -1;
-    }
-    
-    public int getiDef() {
-        return (int) iDef;
+    @Override
+    public int compareTo(D2Item other) {
+        return ComparisonChain.start()
+                              .compare(itemName, other.itemName, Comparator.nullsFirst(Comparator.naturalOrder()))
+                              .result();
     }
     
     public boolean isCharacterItem() {
         
         //Belt or equipped
-        if (get_location() == 1 || get_location() == 2) {
+        if (getLocation() == 1 || getLocation() == 2) {
             return true;
-        } else if (get_location() == 0) {
-            switch (get_panel()) {
+        } else if (getLocation() == 0) {
+            switch (getPanel()) {
                 case 1:
                 case 4:
                 case 5:
@@ -1777,703 +1634,35 @@ public class D2Item implements Comparable, D2ItemInterface {
     }
     
     public boolean isEquipped() {
-        
-        if (get_location() == 1) {
-            return true;
-        } else if (get_panel() == 1 && isCharm()) {
-            return true;
-        } else {
-            return false;
-        }
+        return getLocation() == 1 || (getPanel() == 1 && isCharm());
     }
     
     public boolean isEquipped(int wepSlot) {
         
-        if (get_location() == 1) {
-    
+        if (getLocation() == 1) {
+            
             if (!isTypeWeapon() && !isShield()) { return true; }
             if (wepSlot == 0) {
-                if (get_body_position() == 4 || get_body_position() == 5) { return true; }
+                if (getBodyPosition() == 4 || getBodyPosition() == 5) { return true; }
             } else if (wepSlot == 1) {
-                if (get_body_position() == 11 || get_body_position() == 12) { return true; }
+                if (getBodyPosition() == 11 || getBodyPosition() == 12) { return true; }
             }
             return false;
-        } else if (get_panel() == 1 && isCharm()) {
+        } else if (getPanel() == 1 && isCharm()) {
             return true;
         } else {
             return false;
         }
-    }
-    
-    public void setSetProps(int numItems) {
-        // iSetProps.clear();
-        /*
-         * if(numItems == 0){ iSetProps.clear(); }else if(numItems == 1){
-         * iSetProps.clear();
-         *
-         *
-         * }else
-         */
-        
-        // if (numItems == 2) {
-        // iSetProps.addAll(iSet1);
-        // } else if (numItems == 3) {
-        // iSetProps.addAll(iSet1);
-        // iSetProps.addAll(iSet2);
-        // } else if (numItems == 4) {
-        // iSetProps.addAll(iSet1);
-        // iSetProps.addAll(iSet2);
-        // iSetProps.addAll(iSet3);
-        // } else if (numItems == 5) {
-        // iSetProps.addAll(iSet1);
-        // iSetProps.addAll(iSet2);
-        // iSetProps.addAll(iSet3);
-        // iSetProps.addAll(iSet4);
-        // }
-        // for(int x =0;x<iSetProps.size();x=x+1){
-        // System.out.println(numItems + " VAL:
-        // "+((D2ItemProperty)iSetProps.get(x)).getValue());
-        // }
-        if (isTypeArmor()) {
-            // applyEDef();
-            
-        }
-    }
-    
-    public int getSetSize() {
-        return setSize;
-    }
-    
-    public String getSetName() {
-        return iSetName;
     }
     
     public boolean statModding() {
         
-        if (iJewel || iGem || iRune) {
+        if (jewel || gem || rune) {
             return false;
         } else {
             
             return true;
         }
-    }
-    
-    // public ArrayList getPerfectStringUS() {
-    // D2ItemProperty[] outProp;
-    // ArrayList outArrL = new ArrayList();
-    // D2TxtFileItemProperties pRow;
-    // if (this.isUnique()) {
-    // pRow = D2TxtFile.UNIQUES.getRow(unique_id);
-    // } else if (this.isSet()) {
-    // pRow = D2TxtFile.SETITEMS.getRow(set_id);
-    // } else {
-    // pRow = D2TxtFile.RUNES.getRow(runeword_id);
-    // }
-    //
-    // int counter = 1;
-    // int max = 13;
-    // if (this.isSet()) {
-    // max = 10;
-    // } else if (this.isRuneWord()) {
-    // max = 8;
-    // }
-    // String prop = "prop";
-    //
-    // if (isRuneWord()) {
-    // prop = "T1Code";
-    // }
-    //
-    // while (counter < max) {
-    // outProp = new D2ItemProperty[2];
-    // if (!pRow.get(prop + counter).equals("")) {
-    //
-    // if (pRow.get(prop + counter).indexOf("*") != -1) {
-    // break;
-    // }
-    //
-    // // System.out.println(pRow.get("prop" + counter) + " -- " +
-    // // pRow.get("min" + counter) + "-" + pRow.get("max" + counter));
-    //
-    // /*
-    // * int lProp = Integer.parseInt((D2TxtFile.ITEM_STAT_COST
-    // * .searchColumns("Stat", ((D2TxtFile.PROPS
-    // * .searchColumns("code", (D2TxtFile.GEMS .searchColumns("code",
-    // * item_type)) .get(interestingSubProp[x][y])))
-    // * .get("stat1")))).get("ID"));
-    // */
-    //
-    // int lProp = Integer.parseInt(D2TxtFile.ITEM_STAT_COST
-    // .searchColumns(
-    // "Stat",
-    // (D2TxtFile.PROPS.searchColumns("code", pRow
-    // .get(prop + counter)).get("stat1")))
-    // .get("ID"));
-    // if (pRow.get(prop + counter).equals("res-all")) {
-    // lProp = 1337;
-    // }
-    //
-    //
-    //
-    // if (lProp == 54 || lProp == 55 || lProp == 56) {
-    // D2ItemProperty lProperty = new D2ItemProperty(101010,
-    // iCharLvl, iItemName);
-    // lProperty.set(101010, null, 0, 0);
-    // outProp[0] = lProperty;
-    // outProp[1] = lProperty;
-    // outArrL.add(outProp);
-    // if(pRow.get("prop" + counter).equals("dmg-cold")){
-    // counter = counter + 1;
-    // }else{
-    // counter = counter + 3;
-    // }
-    // continue;
-    // }
-    //
-    // if (lProp == 48 || lProp == 49) {
-    // D2ItemProperty lProperty = new D2ItemProperty(101010,
-    // iCharLvl, iItemName);
-    // lProperty.set(101010, null, 0, 1);
-    // outProp[0] = lProperty;
-    // outProp[1] = lProperty;
-    // outArrL.add(outProp);
-    // if(pRow.get("prop" + counter).equals("dmg-fire")){
-    // counter = counter + 1;
-    // }else{
-    // counter = counter + 2;
-    // }
-    // continue;
-    // }
-    //
-    // if (lProp == 50 || lProp == 51) {
-    // D2ItemProperty lProperty = new D2ItemProperty(101010,
-    // iCharLvl, iItemName);
-    // lProperty.set(101010, null, 0, 2);
-    // outProp[0] = lProperty;
-    // outProp[1] = lProperty;
-    // outArrL.add(outProp);
-    // if(pRow.get("prop" + counter).equals("dmg-ltng")){
-    // counter = counter + 1;
-    // }else{
-    // counter = counter + 2;
-    // }
-    // continue;
-    // }
-    //
-    // if (lProp == 52 || lProp == 53) {
-    // D2ItemProperty lProperty = new D2ItemProperty(101010,
-    // iCharLvl, iItemName);
-    // lProperty.set(101010, null, 0, 3);
-    // outProp[0] = lProperty;
-    // outProp[1] = lProperty;
-    // outArrL.add(outProp);
-    // if(pRow.get("prop" + counter).equals("dmg-mag")){
-    // counter = counter + 1;
-    // }else{
-    // counter = counter + 2;
-    // }
-    // continue;
-    // }
-    //
-    // if (lProp == 57 || lProp == 58 || lProp == 59) {
-    // D2ItemProperty lProperty = new D2ItemProperty(101010,
-    // iCharLvl, iItemName);
-    // lProperty.set(101010, null, 0, 4);
-    // outProp[0] = lProperty;
-    // outProp[1] = lProperty;
-    // outArrL.add(outProp);
-    // if(pRow.get("prop" + counter).equals("dmg-pois")){
-    // counter = counter + 1;
-    // }else{
-    // counter = counter + 3;
-    // }
-    // continue;
-    // }
-    //
-    // int lPropTemp = lProp;
-    // D2ItemProperty lProperty = new D2ItemProperty(lPropTemp,
-    // iCharLvl, iItemName);
-    //
-    // D2TxtFileItemProperties lItemStatCost = D2TxtFile.ITEM_STAT_COST
-    // .getRow(lProperty.getPropNrs()[0]);
-    //
-    // String pMin = pRow.get("min" + counter);
-    // String pMax = pRow.get("max" + counter);
-    // String pParam = pRow.get("par" + counter);
-    //
-    // if (isRuneWord()) {
-    // pMin = pRow.get("T1Min" + counter);
-    // pMax = pRow.get("T1Max" + counter);
-    // pParam = pRow.get("T1Param" + counter);
-    // }
-    //
-    //
-    // if (pRow.get(prop + counter).equals("dmg-norm")) {
-    //
-    // lProperty = new D2ItemProperty(21,
-    // iCharLvl, iItemName);
-    //
-    // lItemStatCost = D2TxtFile.ITEM_STAT_COST
-    // .getRow(lProperty.getPropNrs()[0]);
-    //
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pMin));
-    //
-    // outProp[0] = lProperty;
-    // outProp[1] = lProperty;
-    // outArrL.add(outProp);
-    //
-    // outProp = new D2ItemProperty[2];
-    //
-    // lProperty = new D2ItemProperty(22,
-    // iCharLvl, iItemName);
-    //
-    // lItemStatCost = D2TxtFile.ITEM_STAT_COST
-    // .getRow(lProperty.getPropNrs()[0]);
-    //
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pMax));
-    //
-    // outProp[0] = lProperty;
-    // outProp[1] = lProperty;
-    // outArrL.add(outProp);
-    // counter ++;
-    // continue;
-    //
-    //
-    //
-    // }
-    //
-    // if (lPropTemp == 201 || lPropTemp == 197 || lPropTemp == 199
-    // || lPropTemp == 195 || lPropTemp == 198
-    // || lPropTemp == 196) {
-    //
-    // if (!pMax.equals("")) {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pMax));
-    // }
-    //
-    // if (!pParam.equals("")) {
-    // // if(lPropTemp==198){
-    //
-    // try {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(D2TxtFile.SKILLS.searchColumns(
-    // "skill", pParam).get("Id")));
-    // } catch (NullPointerException e) {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pParam));
-    // }
-    // // }else{
-    // // lProperty.set(lPropTemp, lItemStatCost, 0,
-    // // Long.parseLong(pParam));
-    // // }
-    // }
-    //
-    // if (!pMin.equals("")) {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pMin));
-    // }
-    // } else {
-    //
-    // if (!pMin.equals("")) {
-    // if (lPropTemp == 204) {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pMax));
-    // } else if (lPropTemp == 107) {
-    // try {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(D2TxtFile.SKILLS
-    // .searchColumns("skill", pParam)
-    // .get("Id")));
-    // } catch (NullPointerException e) {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pParam));
-    // }
-    //
-    //
-    // } else {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pMin));
-    // }
-    // }
-    //
-    // if (!pMax.equals("")) {
-    // if (lPropTemp == 204) {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pMin));
-    // } else if (lPropTemp == 107) {
-    //
-    // } else {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pMax));
-    // }
-    // }
-    //
-    // if (!pParam.equals("")) {
-    //
-    // if (lPropTemp == 204 ||lPropTemp == 97) {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(D2TxtFile.SKILLS.searchColumns(
-    // "skill", pParam).get("Id")));
-    //
-    // // System.out.println(pParam);
-    // // System.out.println(Long
-    // // .parseLong(D2TxtFile.SKILLS.searchColumns(
-    // // "skill", pParam).get("Id")));
-    //
-    // } else if (lPropTemp == 107) {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pMin));
-    // } else {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pParam));
-    // }
-    // }
-    // }
-    // outProp[0] = lProperty;
-    // lPropTemp = lProp;
-    //
-    // lProperty = new D2ItemProperty(lPropTemp, iCharLvl, iItemName);
-    //
-    // lItemStatCost = D2TxtFile.ITEM_STAT_COST.getRow(lProperty
-    // .getPropNrs()[0]);
-    //
-    // pMin = pRow.get("min" + counter);
-    // pMax = pRow.get("max" + counter);
-    // pParam = pRow.get("par" + counter);
-    //
-    // if (isRuneWord()) {
-    // pMin = pRow.get("T1Min" + counter);
-    // pMax = pRow.get("T1Max" + counter);
-    // pParam = pRow.get("T1Param" + counter);
-    // }
-    //
-    // if (lPropTemp == 201 || lPropTemp == 197 || lPropTemp == 199
-    // || lPropTemp == 195 || lPropTemp == 198
-    // || lPropTemp == 196) {
-    //
-    // if (!pMax.equals("")) {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pMax));
-    // }
-    //
-    // if (!pParam.equals("")) {
-    // // if(lPropTemp==198){
-    // try {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(D2TxtFile.SKILLS.searchColumns(
-    // "skill", pParam).get("Id")));
-    // } catch (NullPointerException e) {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pParam));
-    // }
-    // // }else{
-    // // lProperty.set(lPropTemp, lItemStatCost, 0,
-    // // Long.parseLong(pParam));
-    // // }
-    // }
-    //
-    // if (!pMin.equals("")) {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pMin));
-    // }
-    // } else {
-    // if (!pMax.equals("")) {
-    // if (lPropTemp == 107) {
-    //
-    // } else {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pMax));
-    // }
-    // }
-    //
-    // if (!pMin.equals("")) {
-    // if (lPropTemp == 107) {
-    // try {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(D2TxtFile.SKILLS
-    // .searchColumns("skill", pParam)
-    // .get("Id")));
-    // } catch (NullPointerException e) {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pParam));
-    // }
-    // } else {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pMin));
-    // }
-    // }
-    //
-    // if (!pParam.equals("")) {
-    // if (lPropTemp == 204||lPropTemp == 97) {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(D2TxtFile.SKILLS.searchColumns(
-    // "skill", pParam).get("Id")));
-    // } else if (lPropTemp == 107) {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pMax));
-    // } else {
-    // lProperty.set(lPropTemp, lItemStatCost, 0, Long
-    // .parseLong(pParam));
-    // }
-    // }
-    // }
-    //
-    // // System.out.println(lProperty.getValue());
-    // outProp[1] = lProperty;
-    // outArrL.add(outProp);
-    //
-    // }
-    // counter++;
-    // }
-    //
-    // // System.out.println(applyPerfDef(tempProp));
-    // return outArrL;
-    // }
-    
-    public String[] getPerfectDef(ArrayList outArrL) {
-        return null;
-        //		ArrayList tempProp = new ArrayList();
-        //		String[] out = new String[2];
-        //		for (int x = 0; x < outArrL.size(); x++) {
-        //		tempProp.add(((D2ItemProperty[]) outArrL.get(x))[0]);
-        //		}
-        //		out[1] = Long.toString(applyPerfDef(tempProp));
-        //		tempProp = new ArrayList();
-        //		for (int x = 0; x < outArrL.size(); x++) {
-        //		tempProp.add(((D2ItemProperty[]) outArrL.get(x))[1]);
-        //		}
-        //		out[0] = Long.toString(applyPerfDef(tempProp));
-        
-        //		return out;
-    }
-    
-    public String[] getPerfectDmg(ArrayList outArrL) {
-        return null;
-        //		ArrayList tempProp = new ArrayList();
-        //		String[] out = new String[2];
-        //		for (int x = 0; x < outArrL.size(); x++) {
-        //		tempProp.add(((D2ItemProperty[]) outArrL.get(x))[0]);
-        //		}
-        //		tempProp = applyPerfEDmg(tempProp);
-        //		String outStr = "One Hand Damage: ";
-        //		for (int x = 0; x < tempProp.size(); x = x + 1) {
-        //		if (x == 0) {
-        //		outStr = outStr + tempProp.get(x) + " - ";
-        //		} else if (x == 1) {
-        //		outStr = outStr + tempProp.get(x) + "\n";
-        //		} else if (x == 2) {
-        //		if (iThrow) {
-        //		outStr = outStr + "Throw Damage: " + tempProp.get(x)
-        //		+ " - ";
-        //		} else {
-        //		outStr = outStr + "Two Hand Damage: " + tempProp.get(x)
-        //		+ " - ";
-        //		}
-        //		} else if (x == 3) {
-        //		outStr = outStr + tempProp.get(x) + "\n";
-        //		}
-        //		}
-        //		out[0] = outStr;
-        //		tempProp = new ArrayList();
-        //		for (int x = 0; x < outArrL.size(); x++) {
-        //		tempProp.add(((D2ItemProperty[]) outArrL.get(x))[1]);
-        //		}
-        //		tempProp = applyPerfEDmg(tempProp);
-        
-        //		outStr = "One Hand Damage: ";
-        //		for (int x = 0; x < tempProp.size(); x = x + 1) {
-        //		if (x == 0) {
-        //		outStr = outStr + tempProp.get(x) + " - ";
-        //		} else if (x == 1) {
-        //		outStr = outStr + tempProp.get(x) + "\n";
-        //		} else if (x == 2) {
-        //		if (iThrow) {
-        //		outStr = outStr + "Throw Damage: " + tempProp.get(x)
-        //		+ " - ";
-        //		} else {
-        //		outStr = outStr + "Two Hand Damage: " + tempProp.get(x)
-        //		+ " - ";
-        //		}
-        //		} else if (x == 3) {
-        //		outStr = outStr + tempProp.get(x) + "\n";
-        //		}
-        //		}
-        //		out[1] = outStr;
-        
-        //		return out;
-    }
-    
-    public ArrayList getPerfectString() {
-        
-        // if (isUnique() || isSet()) {
-        // return sortStats(getPerfectStringUS());
-        // }else if(isRuneWord()){
-        //
-        // ArrayList perfArr = getPerfectStringUS();
-        // for(int x = 0;x<iGemProps.size();x=x+1){
-        // //D2ItemProperty[] tempP =
-        // {(D2ItemProperty)iGemProps.get(x),(D2ItemProperty)iGemProps.get(x)};
-        // //perfArr.add(tempP);
-        // }
-        //
-        //
-        // return sortStats(perfArr);
-        // }
-        
-        return null;
-    }
-    
-    // private ArrayList sortStats(ArrayList perfectStringUS) {
-    //
-    // int[] sortArr = new int[perfectStringUS.size()];
-    // ArrayList outSorted = new ArrayList();
-    // for (int x = 0; x < perfectStringUS.size(); x = x + 1) {
-    // sortArr[x] = (((D2ItemProperty[]) perfectStringUS.get(x))[0])
-    // .getiProp();
-    //
-    // }
-    //
-    // Arrays.sort(sortArr);
-    //
-    // for (int x = 0; x < sortArr.length; x = x + 1) {
-    // D2ItemProperty[] obj = findObjProp(sortArr[x], perfectStringUS);
-    // outSorted.add(x, obj);
-    // perfectStringUS.remove(obj);
-    // }
-    //
-    // return outSorted;
-    // }
-    
-    // private D2ItemProperty[] findObjProp(int i, ArrayList perfectStringUS) {
-    //
-    // for (int x = 0; x < perfectStringUS.size(); x = x + 1) {
-    // if ((((D2ItemProperty[]) perfectStringUS.get(x))[0]).getiProp() == i) {
-    // return (D2ItemProperty[]) perfectStringUS.get(x);
-    // }
-    //
-    // }
-    //
-    // return null;
-    // }
-    
-    //	private ArrayList applyPerfEDmg(ArrayList iProperties) {
-    
-    //	int ENDam = 0;
-    //	int ENMaxDam = 0;
-    //	int MinDam = 0;
-    //	int MaxDam = 0;
-    //	ArrayList out = new ArrayList();
-    
-    //	for (int x = 0; x < iProperties.size(); x = x + 1) {
-    //	if (((D2ItemProperty) iProperties.get(x)).getiProp() == 17) {
-    //	ENDam = ENDam
-    //	+ ((D2ItemProperty) iProperties.get(x)).getRealValue();
-    //	}
-    //	if (((D2ItemProperty) iProperties.get(x)).getiProp() == 21) {
-    //	MinDam = MinDam
-    //	+ ((D2ItemProperty) iProperties.get(x)).getRealValue();
-    //	}
-    //	if (((D2ItemProperty) iProperties.get(x)).getiProp() == 22) {
-    //	MaxDam = MaxDam
-    //	+ ((D2ItemProperty) iProperties.get(x)).getRealValue();
-    //	}
-    //	if (((D2ItemProperty) iProperties.get(x)).getiProp() == 219) {
-    //	ENMaxDam = ENMaxDam
-    //	+ (int) Math.floor((((D2ItemProperty) iProperties
-    //	.get(x)).getRealValue() * 0.125)
-    //	* iCharLvl);
-    //	}
-    //	if (((D2ItemProperty) iProperties.get(x)).getiProp() == 218) {
-    //	MaxDam = MaxDam
-    //	+ (int) Math.floor((((D2ItemProperty) iProperties
-    //	.get(x)).getRealValue() * 0.125)
-    //	* iCharLvl);
-    //	}
-    //	}
-    
-    //	out.add(String.valueOf((long) Math
-    //	.floor((((double) i1Dmg[0] / (double) 100) * ENDam)
-    //	+ (i1Dmg[0] + MinDam))));
-    //	out
-    //	.add(String
-    //	.valueOf((long) Math
-    //	.floor((((double) i1Dmg[2] / (double) 100) * (ENDam + ENMaxDam))
-    //	+ (i1Dmg[2] + MaxDam))));
-    
-    //	if (iWhichHand == 0) {
-    //	out.add(String.valueOf((long) Math
-    //	.floor((((double) i2Dmg[0] / (double) 100) * ENDam)
-    //	+ (i2Dmg[0] + MinDam))));
-    //	out
-    //	.add(String
-    //	.valueOf((long) Math
-    //	.floor((((double) i2Dmg[2] / (double) 100) * (ENDam + ENMaxDam))
-    //	+ (i2Dmg[2] + MaxDam))));
-    //	}
-    
-    //	return out;
-    
-    //	}
-    
-    //	private long applyPerfDef(ArrayList iProperties) {
-    
-    //	// int ENDef = 0;
-    //	// int Def = 0;
-    
-    //	// if (isSet()) {
-    
-    //	// for (int x = 0; x < iSetProps.size(); x = x + 1) {
-    //	// if (((D2ItemProperty) iSetProps.get(x)).getiProp() == 16) {
-    //	// ENDef = ENDef
-    //	// + ((D2ItemProperty) iSetProps.get(x))
-    //	// .getRealValue();
-    //	// }
-    //	// if (((D2ItemProperty) iSetProps.get(x)).getiProp() == 31) {
-    //	// Def = Def
-    //	// + ((D2ItemProperty) iSetProps.get(x))
-    //	// .getRealValue();
-    //	// }
-    //	// if (((D2ItemProperty) iSetProps.get(x)).getiProp() == 214) {
-    //	// Def = Def
-    //	// + (int) Math.floor((((D2ItemProperty) iSetProps
-    //	// .get(x)).getRealValue() * 0.125)
-    //	// * iCharLvl);
-    //	// }
-    //	// }
-    
-    //	// }
-    
-    //	// for (int x = 0; x < iProperties.size(); x = x + 1) {
-    //	// if (((D2ItemProperty) iProperties.get(x)).getiProp() == 16) {
-    //	// ENDef = ENDef
-    //	// + ((D2ItemProperty) iProperties.get(x)).getRealValue();
-    //	// }
-    //	// if (((D2ItemProperty) iProperties.get(x)).getiProp() == 31) {
-    //	// Def = Def
-    //	// + ((D2ItemProperty) iProperties.get(x)).getRealValue();
-    //	// }
-    //	// if (((D2ItemProperty) iProperties.get(x)).getiProp() == 214) {
-    //	// Def = Def
-    //	// + (int) Math.floor((((D2ItemProperty) iProperties
-    //	// .get(x)).getRealValue() * 0.125)
-    //	// * iCharLvl);
-    //	// }
-    //	// }
-    //	// return (int) Math.floor((((double) iInitDef / (double) 100) * ENDef)
-    //	// + (iInitDef + Def));
-    
-    //	return 0;
-    //	}
-    
-    public void setCharLvl(int pCharLvl) {
-        iCharLvl = pCharLvl;
-        //		setCharLvl(iProperties, pCharLvl);
-        //		setCharLvl(iSet1, pCharLvl);
-        //		setCharLvl(iSet2, pCharLvl);
-        //		setCharLvl(iSet3, pCharLvl);
-        //		setCharLvl(iSet4, pCharLvl);
-        //		setCharLvl(iSet5, pCharLvl);
     }
     
     public String getPreSuf() {
@@ -2489,7 +1678,7 @@ public class D2Item implements Comparable, D2ItemInterface {
             }
         }
         
-        retStr = retStr + iBaseItemName + " ";
+        retStr = retStr + baseItemName + " ";
         
         for (int x = 0; x < rare_suffixes.length; x++) {
             
@@ -2504,29 +1693,29 @@ public class D2Item implements Comparable, D2ItemInterface {
         return retStr;
     }
     
-    public boolean conforms(String prop, int pVal, boolean min) {
+    public boolean conforms(String prop, int val, boolean min) {
         
         String dumpStr = itemDump(true);
         
         if (dumpStr.toLowerCase().indexOf(prop.toLowerCase()) != -1) {
             
-            if (pVal == -1337) {
+            if (val == -1337) {
                 return true;
             }
             Pattern propertyLinePattern = Pattern.compile("(\\n.*" + prop.toLowerCase() + ".*\\n)", Pattern.UNIX_LINES);
             Matcher propertyPatternMatcher = propertyLinePattern.matcher("\n" + dumpStr.toLowerCase() + "\n");
             while (propertyPatternMatcher.find()) {
-                Pattern pat = Pattern.compile("[^\\(?](\\d+)");
+                Pattern pat = Pattern.compile("[^(?](\\d+)");
                 Matcher mat = pat.matcher(propertyPatternMatcher.group());
                 while (mat.find()) {
                     if (mat.groupCount() > 0) {
                         if (min == true) {
-                            if (Integer.parseInt(mat.group(1)) >= pVal) {
+                            if (Integer.parseInt(mat.group(1)) >= val) {
                                 
                                 return true;
                             }
                         } else {
-                            if (Integer.parseInt(mat.group(1)) <= pVal) {
+                            if (Integer.parseInt(mat.group(1)) <= val) {
                                 
                                 return true;
                             }
@@ -2539,31 +1728,11 @@ public class D2Item implements Comparable, D2ItemInterface {
     }
     
     public int getBlock() {
-        return (int) this.cBlock;
+        return cBlock;
     }
     
     public boolean isABelt() {
-        if (iType.equals("belt")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    public D2PropCollection getPropCollection() {
-        return iProps;
-    }
-    
-    public String getItemQuality() {
-        return iItemQuality;
-    }
-    
-    public String getFileName() {
-        return iFileName;
-    }
-    
-    public boolean isCharacter() {
-        return iIsChar;
+        return type.equals("belt");
     }
     
     public void refreshItemMods() {
@@ -2573,8 +1742,8 @@ public class D2Item implements Comparable, D2ItemInterface {
     }
     
     public String getBaseItemName() {
-        if (!iItemName.equals(iBaseItemName)) {
-            return iBaseItemName;
+        if (!itemName.equals(baseItemName)) {
+            return baseItemName;
         }
         
         return "";
@@ -2582,14 +1751,14 @@ public class D2Item implements Comparable, D2ItemInterface {
     
     public boolean isMoveable() {
         
-        if (get_location() == 0 && get_panel() == 1 && (getName().toLowerCase().equals("horadric cube") || isCharm() || getName().toLowerCase().equals("key") || getName().toLowerCase()
-                                                                                                                                                                          .indexOf("tome of") != -1)) {
+        if (getLocation() == 0 && getPanel() == 1 &&
+                (getItemName().toLowerCase().equals("horadric cube") || isCharm() || getItemName().toLowerCase().equals("key") || getItemName().toLowerCase().contains("tome of"))) {
             //Inv
-        } else if (get_location() == 2) {
+        } else if (getLocation() == 2) {
             //Belt
-        } else if (get_location() == 0 && get_panel() == 5 && getName().toLowerCase().equals("horadric cube")) {
+        } else if (getLocation() == 0 && getPanel() == 5 && getItemName().toLowerCase().equals("horadric cube")) {
             //Stash
-        } else if (get_location() == 1) {
+        } else if (getLocation() == 1) {
             //equipped
         } else {
             return true;

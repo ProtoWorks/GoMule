@@ -3,12 +3,19 @@
  */
 package randall.flavie.filters;
 
+import lombok.Getter;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 
 import randall.flavie.D2ItemInterface;
 import randall.flavie.Flavie;
@@ -17,79 +24,53 @@ import randall.util.RandallUtil;
 /**
  * @author mbr
  */
+@Slf4j
 public class FlavieDupeFilter implements FlavieItemFilter {
     
-    //	private String			iDupeFile;
-    private PrintStream iDupeOut = null;
-    private HashMap iDupeList = new HashMap();
-    private int iDupeCounter = 0;
+    private PrintStream dupeOut = null;
+    @Getter private final Map<String, String> dupeList = new HashMap<>();
+    @Getter private int dupeCount = -1;
     
-    public FlavieDupeFilter(String pDupeName, Reader pDupeFile) throws Exception {
-        //		iDupeFile = pDupeFile;
-        BufferedReader lIn = new BufferedReader(pDupeFile);
-        String lLine = lIn.readLine();
-        while (lLine != null) {
-            // skip empty lines
-            if (!lLine.trim().equals("")) {
-                //				System.err.println("Test: " + lLine );
-                // Find fingerprint in this line
-                ArrayList lSplit = RandallUtil.split(lLine, " ", false);
-                for (int i = 0; i < lSplit.size(); i++) {
-                    if ((String) lSplit.get(i) != null) {
-                        String lSplitted = ((String) lSplit.get(i)).trim();
-                        if (lSplitted.startsWith("0x")) {
-                            iDupeList.put(lSplitted, lLine.trim());
-                        }
-                    }
-                }
-            }
-            lLine = lIn.readLine();
+    public FlavieDupeFilter(String dupeName, Reader dupeFile) throws Exception {
+        try (BufferedReader in = new BufferedReader(dupeFile)) {
+            in.lines()
+              .map(Strings::nullToEmpty)
+              .map(String::trim)
+              // skip empty lines
+              .filter(line -> !Strings.isNullOrEmpty(line))
+              .forEach(line -> {
+                  // Find fingerprint in this line
+                  RandallUtil.split(line, " ", false)
+                             .stream()
+                             .filter(s -> s.startsWith("0x"))
+                             .forEach(s -> dupeList.put(s, line));
+              });
         }
-        lIn.close();
-        System.err.println("Dupelist " + pDupeName + " contains " + iDupeList.size() + " items.");
+        log.debug("Dupelist {} contains {} items.", dupeName, dupeList.size());
     }
     
-    public HashMap getDupeList() {
-        return iDupeList;
+    @SneakyThrows
+    @Override
+    public void initialize() {
+        Preconditions.checkState(dupeOut == null, "Dupe file already initialised!");
+        dupeOut = new PrintStream(new FileOutputStream(Flavie.MATCHED_DIR + "matched.dupe.txt"));
+        dupeCount = 0;
     }
     
-    public void initialize() throws Exception {
-        if (iDupeOut != null) {
-            throw new Exception("Dupe file allready initialised");
-        }
-        iDupeOut = new PrintStream(new FileOutputStream(Flavie.sMatchedDir + "matched.dupe.txt"));
-        iDupeCounter = 0;
-        //		iDupeOut.println("Start dupe detection");
+    @Override
+    public void finish() {
+        Preconditions.checkState(dupeOut != null, "Dupe file not initialised!");
+        dupeOut.close();
+        dupeCount = -1;
     }
     
-    public void finish() throws Exception {
-        if (iDupeOut == null) {
-            throw new Exception("Dupe file not initialised");
-        }
-        //		iDupeOut.println("Dupe detection is finished");
-        iDupeOut.close();
-        iDupeOut = null;
-    }
-    
-    public boolean check(D2ItemInterface pItemFound) {
-        if (iDupeList.containsKey(pItemFound.getFingerprint())) {
-            iDupeOut.println("Item " + pItemFound.getFingerprint() + "/" + pItemFound.getName() + " from file " + pItemFound.getFileName() + " is listed as a dupe");
-            iDupeCounter++;
+    @Override
+    public boolean check(D2ItemInterface itemFound) {
+        if (dupeList.containsKey(itemFound.getFingerprint())) {
+            dupeOut.println("Item " + itemFound.getFingerprint() + "/" + itemFound.getItemName() + " from file " + itemFound.getFileName() + " is listed as a dupe");
+            dupeCount++;
             return false;
         }
         return true;
-    }
-    
-    public boolean check(String pFingerprint, String pItemname) {
-        if (iDupeList.containsKey(pFingerprint)) {
-            iDupeOut.println("Item " + pFingerprint + "/" + pItemname + " is listed as a dupe");
-            iDupeCounter++;
-            return false;
-        }
-        return true;
-    }
-    
-    public int getDupeCount() {
-        return iDupeCounter;
     }
 }

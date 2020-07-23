@@ -22,19 +22,16 @@ package randall.flavie;
 
 /**
  * @author Marco
- * <p>
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public interface D2ItemInterface {
     
-    public boolean isCharacter();
+    boolean isCharacter();
     
-    public boolean isEthereal();
+    boolean isEthereal();
     
-    public String getFingerprint();
+    String getFingerprint();
     
-    public String getName();
+    String getItemName();
     
-    public String getFileName();
+    String getFileName();
 }

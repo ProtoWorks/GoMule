@@ -14,5 +14,5 @@ package gomule.gui;
  */
 public interface D2ItemListListener {
     
-    public void itemListChanged();
+    void itemListChanged();
 }

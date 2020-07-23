@@ -24,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import randall.util.RandallUtil;
 
@@ -47,12 +48,12 @@ public class DataFileBuilder {
         return "Unknown";
     }
     
-    public ArrayList readDataFileObjects(String pFileName, ArrayList pDatFile) throws Exception {
+    public List<Object> readDataFileObjects(String pFileName, List<Object> pDatFile) throws Exception {
         if (pFileName == null || "".equals(pFileName.trim())) {
             throw new Exception("No data file set, please set the data file in the Flavie tab");
         }
         
-        ArrayList lList = new ArrayList();
+        List<Object> lList = new ArrayList<>();
         
         File lData = new File(pFileName);
         
@@ -69,7 +70,7 @@ public class DataFileBuilder {
         CatObject lCat = null;
         SubCatObject lSubCat = null;
         
-        ArrayList lTotalObjectList = new ArrayList();
+        List<Object> lTotalObjectList = new ArrayList<>();
         
         String lLine = lIn.readLine();
         while (lLine != null) {
@@ -78,16 +79,16 @@ public class DataFileBuilder {
                 String lWork = RandallUtil.merge(RandallUtil.split(lLine, "]", true), "");
                 lWork = lWork.substring(3);
                 
-                ArrayList lItem = RandallUtil.split(lWork, "[", false);
+                List<String> lItem = RandallUtil.split(lWork, "[", false);
                 
                 if (lItem.size() != 3 && lItem.size() != 4) {
                     throw new Exception("Incorrect line format " + lLine);
                 }
-                TotalObject lTotal = new TotalObject((String) lItem.get(0), (String) lItem.get(1), (String) lItem.get(2));
+                TotalObject lTotal = new TotalObject(lItem.get(0), lItem.get(1), lItem.get(2));
                 if (lItem.size() == 4) {
                     for (int i = 0; i < lTotalObjectList.size(); i++) {
                         TotalObject lParent = (TotalObject) lTotalObjectList.get(i);
-                        if (((String) lItem.get(3)).equals(lParent.getShort())) {
+                        if (lItem.get(3).equals(lParent.getShortString())) {
                             lParent.addChild(lTotal);
                         }
                     }
@@ -99,19 +100,20 @@ public class DataFileBuilder {
                 String lWork = RandallUtil.merge(RandallUtil.split(lLine, "]", true), "");
                 
                 lWork = lWork.substring(2);
-                ArrayList lItem = RandallUtil.split(lWork, "[", false);
+                List<String> lItem = RandallUtil.split(lWork, "[", false);
                 
                 if (lItem.size() != 3 && lItem.size() != 4) {
                     throw new Exception("Incorrect line format " + lLine);
                 }
-                lCat = new CatObject((String) lItem.get(0));
-                lCat.setStyle((String) lItem.get(1));
-                lCat.setNewRow(lItem.get(2).equals("newrow"));
+                lCat = CatObject.builder().cat(lItem.get(0))
+                                .style(lItem.get(1))
+                                .newRow(lItem.get(2).equals("newrow"))
+                                .group(lItem.size() == 4 ? lItem.get(3) : null)
+                                .build();
                 if (lItem.size() == 4) {
-                    lCat.setGroup((String) lItem.get(3));
                     for (int i = 0; i < lTotalObjectList.size(); i++) {
                         TotalObject lParent = (TotalObject) lTotalObjectList.get(i);
-                        if (((String) lItem.get(3)).equals(lParent.getShort())) {
+                        if (lItem.get(3).equals(lParent.getShortString())) {
                             lParent.addChild(lCat);
                         }
                     }
@@ -125,10 +127,10 @@ public class DataFileBuilder {
                 pDatFile.add(lSubCat);
             } else {
                 // TODO: Start item
-                ArrayList lItem = RandallUtil.split(lLine, ",", false);
+                List<String> lItem = RandallUtil.split(lLine, ",", false);
                 if (lItem.size() == 1) {
                     // Ok, found a item definition
-                    ItemObject lItemObject = new ItemObject((String) lItem.get(0), "", lSubCat);
+                    ItemObject lItemObject = new ItemObject(lItem.get(0), "", lSubCat);
                     lList.add(lItemObject);
                     lSubCat.addItemObject(lItemObject);
                     pDatFile.add(lItemObject);
@@ -137,17 +139,17 @@ public class DataFileBuilder {
                         System.err.println("Test");
                     }
                     // Ok, found a item definition
-                    ItemObject lItemObject = new ItemObject((String) lItem.get(0), (String) lItem.get(1), lSubCat);
-                    if (iFlavie.checkForRuneWord((String) lItem.get(0), (String) lItem.get(1))) {
+                    ItemObject lItemObject = new ItemObject(lItem.get(0), lItem.get(1), lSubCat);
+                    if (iFlavie.checkForRuneWord(lItem.get(1))) {
                         lItemObject.setRuneWord(true);
                     } else {
-                        checkForTC(lItemObject, (String) lItem.get(1));
+                        checkForTC(lItemObject, lItem.get(1));
                     }
                     if (lItem.size() == 3) {
                         // xTODO: complete
                         //					    System.err.println("Read jewelry");
                         
-                        String lExtra = (String) lItem.get(2);
+                        String lExtra = lItem.get(2);
                         int lDisplayStart = lExtra.indexOf("(");
                         int lDisplayEnd = lExtra.indexOf(")");
                         int lDetectStart = lExtra.indexOf("[");
@@ -159,7 +161,7 @@ public class DataFileBuilder {
                                 lDetectStart < lDetectEnd
                         ) {
                             String lDisplay = lExtra.substring(lDisplayStart + 1, lDisplayEnd);
-                            ArrayList lDetect = RandallUtil.split(lExtra.substring(lDetectStart + 1, lDetectEnd), "/", true);
+                            List<String> lDetect = RandallUtil.split(lExtra.substring(lDetectStart + 1, lDetectEnd), "/", true);
                             
                             lItemObject.setExtraDisplay(lDisplay);
                             lItemObject.setExtraDetect(lDetect);
@@ -182,9 +184,9 @@ public class DataFileBuilder {
     }
     
     public void checkForTC(ItemObject pItemObject, String lLine) {
-        ArrayList lList = RandallUtil.split(lLine, "(", false);
-        if (lList.size() == 2 && ((String) lList.get(1)).toUpperCase().startsWith("TC")) {
-            pItemObject.setItemType(((String) lList.get(0)).trim());
+        List<String> lList = RandallUtil.split(lLine, "(", false);
+        if (lList.size() == 2 && lList.get(1).toUpperCase().startsWith("TC")) {
+            pItemObject.setItemType(lList.get(0).trim());
         } else {
             pItemObject.setItemType(lLine);
         }
