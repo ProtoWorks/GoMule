@@ -64,7 +64,7 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
     
     private static D2ViewClipboard iMouseItem;
     
-    private List<Object> iItems;
+    private List<D2Item> iItems;
     
     private String iFileName;
     private D2Stash iStash;
@@ -123,11 +123,12 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
             
             iTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
                 
+                @Override
                 public void valueChanged(ListSelectionEvent arg0) {
                     
                     if (!arg0.getValueIsAdjusting()) {
                         if (iTable.getSelectedRow() > -1) {
-                            D2Item iItem = (D2Item) iItems.get(iTable.getSelectedRow());
+                            D2Item iItem = iItems.get(iTable.getSelectedRow());
                             iIcon.setImage(D2ImageCache.getDC6Image(iItem));
                             if (iIconLabel.getIcon() == null) {
                                 iIconLabel.setIcon(iIcon);
@@ -165,31 +166,35 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
         setVisible(true);
     }
     
+    @Override
     public void itemListChanged() {
         fireTableChanged();
     }
     
     class D2ItemModel implements TableModel {
         
-        private List<Object> iTableModelListeners = new ArrayList<>();
-        private List<Object> iItems;
+        private List<TableModelListener> iTableModelListeners = new ArrayList<>();
+        private List<D2Item> iItems;
         
-        public D2ItemModel(List<Object> pItems) {
+        public D2ItemModel(List<D2Item> pItems) {
             setItems(pItems);
         }
         
-        public void setItems(List<Object> pItems) {
+        public void setItems(List<D2Item> pItems) {
             iItems = pItems;
         }
         
+        @Override
         public int getRowCount() {
             return iItems.size();
         }
         
+        @Override
         public int getColumnCount() {
             return 2;
         }
         
+        @Override
         public String getColumnName(int pCol) {
             switch (pCol) {
                 case 0:
@@ -201,16 +206,19 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
             }
         }
         
+        @Override
         public Class getColumnClass(int pCol) {
             return String.class;
         }
         
+        @Override
         public boolean isCellEditable(int pRow, int pCol) {
             return false;
         }
         
+        @Override
         public Object getValueAt(int pRow, int pCol) {
-            D2Item lItem = (D2Item) iItems.get(pRow);
+            D2Item lItem = iItems.get(pRow);
             switch (pCol) {
                 case 0:
                     return new D2CellValue(lItem.getItemName(), lItem, iFileManager.getProject());
@@ -221,14 +229,17 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
             }
         }
         
+        @Override
         public void setValueAt(Object pValue, int pRow, int pCol) {
             // Do nothing
         }
         
+        @Override
         public void addTableModelListener(TableModelListener pListener) {
             iTableModelListeners.add(pListener);
         }
         
+        @Override
         public void removeTableModelListener(TableModelListener pListener) {
             iTableModelListeners.remove(pListener);
         }
@@ -239,7 +250,7 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
         
         public void fireTableChanged(TableModelEvent pEvent) {
             for (int i = 0; i < iTableModelListeners.size(); i++) {
-                ((TableModelListener) iTableModelListeners.get(i)).tableChanged(pEvent);
+                iTableModelListeners.get(i).tableChanged(pEvent);
             }
             int lRowCount = iTable.getRowCount();
             if (iTable.getSelectedRow() == -1 && iTable.getRowCount() > 0) {
@@ -249,6 +260,7 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
         }
     }
     
+    @Override
     public String getFileName() {
         return iFileName;
     }
@@ -282,22 +294,27 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
         iMouseItem.iBank.setText(Integer.toString(pProject.getBankValue()));
     }
     
+    @Override
     public boolean isModified() {
         return iStash.isModified();
     }
     
+    @Override
     public D2ItemList getItemLists() {
         return iStash;
     }
     
+    @Override
     public void closeView() {
         iStash.removeD2ItemListListener(this);
     }
     
+    @Override
     public boolean isSC() {
         return true;
     }
     
+    @Override
     public boolean isHC() {
         return true;
     }
@@ -308,13 +325,12 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
         }
     }
     
-    public static List<Object> getItemList() {
+    public static List<D2Item> getItemList() {
         return iMouseItem.iItems;
     }
     
-    public static List<Object> removeAllItems() {
+    public static List<D2Item> removeAllItems() {
         return iMouseItem.iStash.removeAllItems();
-        
     }
     
     public static void removeItem(D2Item dropItem) {
@@ -329,7 +345,7 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
         if (!iItems.isEmpty()) {
             int lRow = iTable.getSelectedRow();
             if (lRow >= 0 && lRow < iItems.size()) {
-                return (D2Item) iItems.get(lRow);
+                return iItems.get(lRow);
             }
         }
         return null;
@@ -343,7 +359,7 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
         if (!iItems.isEmpty()) {
             int lRow = iTable.getSelectedRow();
             if (lRow >= 0 && lRow < iItems.size()) {
-                D2Item lItem = (D2Item) iItems.get(lRow);
+                D2Item lItem = iItems.get(lRow);
                 iStash.removeItem(lItem);
                 if (!iItems.isEmpty() && iTable.getSelectedRow() == -1) {
                     iTable.clearSelection();
@@ -394,10 +410,12 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
         iItemModel.fireTableChanged();
     }
     
+    @Override
     public void connect() {
         throw new RuntimeException("Internal error: wrong calling");
     }
     
+    @Override
     public void disconnect(Exception pEx) {
         throw new RuntimeException("Internal error: wrong calling");
     }

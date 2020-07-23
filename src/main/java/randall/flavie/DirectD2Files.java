@@ -92,7 +92,7 @@ public class DirectD2Files {
                 //					throw new Exception("File " + lD2FileName + " can not be read");
                 //				}
                 
-                List<Object> lItems = null;
+                List<D2Item> lItems = null;
                 
                 if (lD2FileName.endsWith(".d2s")) {
                     try {
@@ -112,7 +112,7 @@ public class DirectD2Files {
                 
                 if (lItems != null) {
                     for (int lItemNr = 0; lItemNr < lItems.size(); lItemNr++) {
-                        D2Item lItem = (D2Item) lItems.get(lItemNr);
+                        D2Item lItem = lItems.get(lItemNr);
                         matchItem(pDataObjects, lItem, lOutDualFP);
                     }
                 }

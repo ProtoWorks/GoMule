@@ -105,7 +105,7 @@ public class D2PropCollection extends ArrayList {
         for (int x = 0; x < size(); x++) {
             
             for (int y = 0; y < size(); y++) {
-    
+                
                 if (get(x) == get(y)) { continue; }
                 
                 if ((((D2Prop) get(x)).getPNum() == ((D2Prop) get(y)).getPNum()) && (((D2Prop) get(x)).getQFlag() == ((D2Prop) get(y)).getQFlag()) && (((D2Prop) get(x)).getQFlag() == 0)) {
@@ -164,7 +164,7 @@ public class D2PropCollection extends ArrayList {
         List<Object> statMap = new ArrayList<>();
         
         for (int x = 0; x < size(); x++) {
-    
+            
             if (D2TxtFile.ITEM_STAT_COST.searchColumns("ID", Integer.toString(((D2Prop) get(x)).getPNum())).get("dgrp").equals("") || ((D2Prop) get(x)).getQFlag() != 0) { continue; }
             if (((D2Prop) get(x)).getPNum() == 0 || ((D2Prop) get(x)).getPNum() == 1 || ((D2Prop) get(x)).getPNum() == 2 || ((D2Prop) get(x)).getPNum() == 3) { statMap.add(get(x)); }
             if (((D2Prop) get(x)).getPNum() == 39 || ((D2Prop) get(x)).getPNum() == 41 || ((D2Prop) get(x)).getPNum() == 43 || ((D2Prop) get(x)).getPNum() == 45) { resMap.add(get(x)); }
@@ -381,7 +381,7 @@ public class D2PropCollection extends ArrayList {
         
     }
     
-    public void calcStats(int[] outStats, List<Object> plSkill, int cLvl, int op, int qFlagM) {
+    public void calcStats(int[] outStats, List<D2Prop> plSkill, int cLvl, int op, int qFlagM) {
         
         for (int x = 0; x < size(); x++) {
             
@@ -392,6 +392,7 @@ public class D2PropCollection extends ArrayList {
     public void sort() {
         
         Collections.sort(this, new Comparator() {
+            @Override
             public int compare(Object pObj1, Object pObj2) {
                 D2Prop p1 = (D2Prop) pObj1;
                 D2Prop p2 = (D2Prop) pObj2;

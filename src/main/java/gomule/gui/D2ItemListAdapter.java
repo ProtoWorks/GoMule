@@ -24,7 +24,7 @@ public abstract class D2ItemListAdapter implements D2ItemList {
     
     private long iTimestamp;
     
-    private List<Object> iListeners = new ArrayList<>();
+    private List<D2ItemListListener> iListeners = new ArrayList<>();
     private boolean iModified;
     
     private boolean iIgnoreItemListEvents = false;
@@ -34,6 +34,7 @@ public abstract class D2ItemListAdapter implements D2ItemList {
         initTimestamp();
     }
     
+    @Override
     public final void save(D2Project pProject) {
         saveInternal(pProject);
         initTimestamp();
@@ -41,10 +42,12 @@ public abstract class D2ItemListAdapter implements D2ItemList {
     
     protected abstract void saveInternal(D2Project pProject);
     
+    @Override
     public void initTimestamp() {
         iTimestamp = (new File(iFileName)).lastModified();
     }
     
+    @Override
     public boolean checkTimestamp() {
         long lTimestamp = (new File(iFileName)).lastModified();
         return iTimestamp == lTimestamp;
@@ -54,8 +57,8 @@ public abstract class D2ItemListAdapter implements D2ItemList {
         return iListeners;
     }
     
-    public void putItemListInfo(Object pItemListInfo) {
-        iListeners = (ArrayList) pItemListInfo;
+    public void putItemListInfo(List<D2ItemListListener> pItemListInfo) {
+        iListeners = pItemListInfo;
     }
     
     protected void setModified(boolean pModified) {
@@ -63,35 +66,42 @@ public abstract class D2ItemListAdapter implements D2ItemList {
         fireD2ItemListEvent();
     }
     
+    @Override
     public boolean isModified() {
         return iModified;
     }
     
+    @Override
     public void addD2ItemListListener(D2ItemListListener pListener) {
         iListeners.add(pListener);
     }
     
+    @Override
     public void removeD2ItemListListener(D2ItemListListener pListener) {
         iListeners.remove(pListener);
     }
     
+    @Override
     public boolean hasD2ItemListListener() {
         return !iListeners.isEmpty();
     }
     
+    @Override
     public void fireD2ItemListEvent() {
         if (iIgnoreItemListEvents) {
             return;
         }
         for (int i = 0; i < iListeners.size(); i++) {
-            ((D2ItemListListener) iListeners.get(i)).itemListChanged();
+            iListeners.get(i).itemListChanged();
         }
     }
     
+    @Override
     public void ignoreItemListEvents() {
         iIgnoreItemListEvents = true;
     }
     
+    @Override
     public void listenItemListEvents() {
         iIgnoreItemListEvents = false;
     }

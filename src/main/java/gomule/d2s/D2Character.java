@@ -78,11 +78,11 @@ public class D2Character extends D2ItemListAdapter {
     public static final int CUBESIZEY = 4;
     
     private D2BitReader iReader;
-    private List<Object> iCharItems;
+    private List<D2Item> iCharItems;
     private D2Item iCharCursorItem;
     private D2Item golemItem;
-    private List<Object> iMercItems;
-    private List<Object> iCorpseItems = new ArrayList<>();
+    private List<D2Item> iMercItems;
+    private List<D2Item> iCorpseItems = new ArrayList<>();
     
     private String iCharName;
     private String iTitleString;
@@ -112,17 +112,12 @@ public class D2Character extends D2ItemListAdapter {
     
     private int[][] setTracker = new int[33][2];
     
-    //	private int testCounter = 0;
-    //	private boolean fullChanged = false;
-    //	private List<Object> partialSetProps = new ArrayList<>();
-    //	private List<Object> fullSetProps = new ArrayList<>();
-    
-    private List<Object> plSkill;
+    private List<D2Prop> plSkill;
     private long[] iReadStats = new long[16];
     private int[] cStats = new int[31];
     
     D2TxtFileItemProperties mercHireCol;
-    private Map<Object, Object> cMercInfo;
+    private Map<String, Object> cMercInfo;
     private int[] mStats = new int[31];
     
     private int lWoo;
@@ -132,10 +127,10 @@ public class D2Character extends D2ItemListAdapter {
     private int iKF;
     private int iJF;
     private int iItemEnd;
-    private byte iBeforeStats[];
-    private byte iBeforeItems[];
-    private byte iBetweenItems[];
-    private byte iAfterItems[];
+    private byte[] iBeforeStats;
+    private byte[] iBeforeItems;
+    private byte[] iBetweenItems;
+    private byte[] iAfterItems;
     
     public D2Character(String pFileName) throws Exception {
         super(pFileName);
@@ -285,7 +280,7 @@ public class D2Character extends D2ItemListAdapter {
         // now copy the block into the Flavie bitreader
         // (it can read integers unaligned to bytes which is needed here)
         iReader.set_byte_pos(iGF);
-        byte lInitialBytes[] = iReader.get_bytes(iIF - iGF);
+        byte[] lInitialBytes = iReader.get_bytes(iIF - iGF);
         
         D2FileReader lReader = new D2FileReader(lInitialBytes);
         if (lReader.getCounterInt(8) != 103) { throw new Exception("Stats Section not found"); }
@@ -305,7 +300,7 @@ public class D2Character extends D2ItemListAdapter {
         }
         
         // check writer (just to be sure)
-        byte lWritenBytes[] = getCurrentStats();
+        byte[] lWritenBytes = getCurrentStats();
         if (lInitialBytes.length != lWritenBytes.length) { throw new Exception("Stats writer check at reading: incorrect length"); }
         for (int i = 0; i < lInitialBytes.length; i++) {
             if (lInitialBytes[i] != lWritenBytes[i]) { throw new Exception("Stats writer check at reading: incorrect byte at nr: " + i); }
@@ -361,7 +356,7 @@ public class D2Character extends D2ItemListAdapter {
         }
     }
     
-    private void generateItemStats(D2Item cItem, int[] cStats, List<Object> plSkill, int op, int qFlagM) {
+    private void generateItemStats(D2Item cItem, int[] cStats, List<D2Prop> plSkill, int op, int qFlagM) {
         
         cItem.getPropCollection().calcStats(cStats, plSkill, (int) iCharLevel, op, qFlagM);
     }
@@ -506,7 +501,7 @@ public class D2Character extends D2ItemListAdapter {
         cSkills = new int[3][10];
         D2TxtFileItemProperties initRow = D2TxtFile.SKILLS.searchColumns("charclass", cClass);
         iReader.set_byte_pos(iIF);
-        byte skillInitialBytes[] = iReader.get_bytes(32);
+        byte[] skillInitialBytes = iReader.get_bytes(32);
         D2FileReader skillReader = new D2FileReader(skillInitialBytes);
         skillReader.getCounterInt(8);
         skillReader.getCounterInt(8);
@@ -806,8 +801,8 @@ public class D2Character extends D2ItemListAdapter {
     }
     
     @Override
-    public List<Object> getItemList() {
-        List<Object> lList = new ArrayList<>();
+    public List<D2Item> getItemList() {
+        List<D2Item> lList = new ArrayList<>();
         if (iCharItems != null) { lList.addAll(iCharItems); }
         if (iMercItems != null) { lList.addAll(iMercItems); }
         return lList;
@@ -1362,7 +1357,7 @@ public class D2Character extends D2ItemListAdapter {
                 lMercSize += ((D2Item) iMercItems.get(i)).getBytes().length;
             }
         }
-        byte lWritenBytes[] = getCurrentStats();
+        byte[] lWritenBytes = getCurrentStats();
         byte[] lNewbytes = new byte[iBeforeStats.length + lWritenBytes.length + iBeforeItems.length + lCharSize + iBetweenItems.length + lMercSize + iAfterItems.length];
         int lPos = 0;
         System.arraycopy(iBeforeStats, 0, lNewbytes, lPos, iBeforeStats.length);
@@ -1584,7 +1579,7 @@ public class D2Character extends D2ItemListAdapter {
     }
     
     private void remSetItem(D2Item item) {
-    
+        
         int setNo = D2TxtFile.FULLSET.searchColumns("index", D2TxtFile.SETITEMS.getRow(item.getSetId()).get("set")).getRowNum();
         //Since the item we have just removed is no longer equipped (so not in icharitems) we need
         //to remove it first.
@@ -1670,143 +1665,275 @@ public class D2Character extends D2ItemListAdapter {
     }
     
     @Override
-    public void addItem(D2Item item) {equipItem(item);}
+    public void addItem(D2Item item) {
+        equipItem(item);
+    }
     
     ;
     
-    public D2Item getCursorItem() {return iCharCursorItem;}
+    public D2Item getCursorItem() {
+        return iCharCursorItem;
+    }
     
-    public D2Item getCharItem(int i) {return (D2Item) iCharItems.get(i);}
+    public D2Item getCharItem(int i) {
+        return (D2Item) iCharItems.get(i);
+    }
     
-    public D2Item getMercItem(int i) {return (D2Item) iMercItems.get(i);}
+    public D2Item getMercItem(int i) {
+        return (D2Item) iMercItems.get(i);
+    }
     
-    public D2Item getCorpseItem(int i) {return (D2Item) iCorpseItems.get(i);}
+    public D2Item getCorpseItem(int i) {
+        return (D2Item) iCorpseItems.get(i);
+    }
     
-    public D2Item getGolemItem() {return golemItem;}
+    public D2Item getGolemItem() {
+        return golemItem;
+    }
     
-    public void equipMercItem(D2Item item) {generateItemStats(item, mStats, null, 1, 0);}
+    public void equipMercItem(D2Item item) {
+        generateItemStats(item, mStats, null, 1, 0);
+    }
     
-    public void unequipMercItem(D2Item item) {generateItemStats(item, mStats, null, -1, 0);}
-    
-    @Override
-    public int getNrItems() {return iCharItems.size() + iMercItems.size();}
-    
-    public int getCharItemNr() {return iCharItems.size();}
-    
-    public int getMercItemNr() {return iMercItems.size();}
-    
-    public int getCorpseItemNr() {return iCorpseItems.size();}
-    
-    public Point[] getSkillLocs() {return iSkillLocs;}
-    
-    public int[] getSkillListA() {return cSkills[0];}
-    
-    public int[] getSkillListB() {return cSkills[1];}
-    
-    public int[] getSkillListC() {return cSkills[2];}
-    
-    public int[] getInitSkillListA() {return initSkills[0];}
-    
-    public int[] getInitSkillListB() {return initSkills[1];}
-    
-    public int[] getInitSkillListC() {return initSkills[2];}
-    
-    public boolean[][][] getQuests() {return iQuests;}
-    
-    public boolean getCowKingDead(int difficulty) {return cowKingDead[difficulty];}
-    
-    public boolean[][][] getWaypoints() {return iWaypoints;}
-    
-    public int getGold() {return (int) iReadStats[14];}
-    
-    public int getGoldMax() {return 10000 * ((int) iCharLevel);}
-    
-    public int getGoldBank() {return (int) iReadStats[15];}
+    public void unequipMercItem(D2Item item) {
+        generateItemStats(item, mStats, null, -1, 0);
+    }
     
     @Override
-    public boolean isSC() {return !iHC;}
+    public int getNrItems() {
+        return iCharItems.size() + iMercItems.size();
+    }
+    
+    public int getCharItemNr() {
+        return iCharItems.size();
+    }
+    
+    public int getMercItemNr() {
+        return iMercItems.size();
+    }
+    
+    public int getCorpseItemNr() {
+        return iCorpseItems.size();
+    }
+    
+    public Point[] getSkillLocs() {
+        return iSkillLocs;
+    }
+    
+    public int[] getSkillListA() {
+        return cSkills[0];
+    }
+    
+    public int[] getSkillListB() {
+        return cSkills[1];
+    }
+    
+    public int[] getSkillListC() {
+        return cSkills[2];
+    }
+    
+    public int[] getInitSkillListA() {
+        return initSkills[0];
+    }
+    
+    public int[] getInitSkillListB() {
+        return initSkills[1];
+    }
+    
+    public int[] getInitSkillListC() {
+        return initSkills[2];
+    }
+    
+    public boolean[][][] getQuests() {
+        return iQuests;
+    }
+    
+    public boolean getCowKingDead(int difficulty) {
+        return cowKingDead[difficulty];
+    }
+    
+    public boolean[][][] getWaypoints() {
+        return iWaypoints;
+    }
+    
+    public int getGold() {
+        return (int) iReadStats[14];
+    }
+    
+    public int getGoldMax() {
+        return 10000 * ((int) iCharLevel);
+    }
+    
+    public int getGoldBank() {
+        return (int) iReadStats[15];
+    }
     
     @Override
-    public boolean isHC() {return iHC;}
-    
-    public boolean hasMerc() {return cMercInfo != null;}
-    
-    public int getCharCode() {return (int) lCharCode;}
-    
-    public String getCharClass() {return iCharClass;}
-    
-    public String getTitleString() {return iTitleString;}
+    public boolean isSC() {
+        return !iHC;
+    }
     
     @Override
-    public String getFilename() {return iFileName;}
+    public boolean isHC() {
+        return iHC;
+    }
     
-    public String getCharName() {return iCharName;}
+    public boolean hasMerc() {
+        return cMercInfo != null;
+    }
     
-    public long getCharExp() {return iReadStats[13];}
+    public int getCharCode() {
+        return (int) lCharCode;
+    }
     
-    public int getCharStr() {return cStats[0] + cStats[1];}
+    public String getCharClass() {
+        return iCharClass;
+    }
     
-    public int getCharDex() {return cStats[4] + cStats[5];}
+    public String getTitleString() {
+        return iTitleString;
+    }
     
-    public int getCharNrg() {return cStats[2] + cStats[3];}
+    @Override
+    public String getFilename() {
+        return iFileName;
+    }
     
-    public int getCharVit() {return cStats[6] + cStats[7];}
+    public String getCharName() {
+        return iCharName;
+    }
     
-    public int getCharRemStat() {return (int) iReadStats[4];}
+    public long getCharExp() {
+        return iReadStats[13];
+    }
     
-    public int getCharRemSkill() {return (int) iReadStats[5];}
+    public int getCharStr() {
+        return cStats[0] + cStats[1];
+    }
     
-    public int getCharMana() {return cStats[10] + cStats[11];}
+    public int getCharDex() {
+        return cStats[4] + cStats[5];
+    }
     
-    public int getCharStam() {return cStats[12] + cStats[13];}
+    public int getCharNrg() {
+        return cStats[2] + cStats[3];
+    }
     
-    public int getCharHP() {return cStats[8] + cStats[9];}
+    public int getCharVit() {
+        return cStats[6] + cStats[7];
+    }
     
-    public int getCharFireRes() {return cStats[18];}
+    public int getCharRemStat() {
+        return (int) iReadStats[4];
+    }
     
-    public int getCharColdRes() {return cStats[20];}
+    public int getCharRemSkill() {
+        return (int) iReadStats[5];
+    }
     
-    public int getCharLightRes() {return cStats[19];}
+    public int getCharMana() {
+        return cStats[10] + cStats[11];
+    }
     
-    public int getCharPoisRes() {return cStats[21];}
+    public int getCharStam() {
+        return cStats[12] + cStats[13];
+    }
     
-    public int getCharInitStr() {return (int) iReadStats[0];}
+    public int getCharHP() {
+        return cStats[8] + cStats[9];
+    }
     
-    public int getCharInitDex() {return (int) iReadStats[2];}
+    public int getCharFireRes() {
+        return cStats[18];
+    }
     
-    public int getCharInitNrg() {return (int) iReadStats[1];}
+    public int getCharColdRes() {
+        return cStats[20];
+    }
     
-    public int getCharInitVit() {return (int) iReadStats[3];}
+    public int getCharLightRes() {
+        return cStats[19];
+    }
     
-    public int getCharInitMana() {return (int) iReadStats[9] / 256;}
+    public int getCharPoisRes() {
+        return cStats[21];
+    }
     
-    public int getCharInitStam() {return (int) iReadStats[11] / 256;}
+    public int getCharInitStr() {
+        return (int) iReadStats[0];
+    }
     
-    public int getCharInitHP() {return (int) iReadStats[7] / 256;}
+    public int getCharInitDex() {
+        return (int) iReadStats[2];
+    }
     
-    public int getCharInitDef() {return (int) (Math.floor((double) getCharInitDex() / (double) 4));}
+    public int getCharInitNrg() {
+        return (int) iReadStats[1];
+    }
     
-    public int getCharInitAR() {return ((getCharInitDex() * 5) - 35) + getARClassBonus();}
+    public int getCharInitVit() {
+        return (int) iReadStats[3];
+    }
     
-    public int getCharLevel() {return (int) iCharLevel;}
+    public int getCharInitMana() {
+        return (int) iReadStats[9] / 256;
+    }
     
-    public int getCharAR() {return (((getCharDex() * 5) - 35) + getARClassBonus() + cStats[14] + cStats[16]) * (1 + cStats[15] + cStats[17]);}
+    public int getCharInitStam() {
+        return (int) iReadStats[11] / 256;
+    }
     
-    public int getCharMF() {return cStats[22] + cStats[23];}
+    public int getCharInitHP() {
+        return (int) iReadStats[7] / 256;
+    }
     
-    public int getCharGF() {return cStats[28] + cStats[29];}
+    public int getCharInitDef() {
+        return (int) (Math.floor((double) getCharInitDex() / (double) 4));
+    }
     
-    public int getCharFHR() {return cStats[27];}
+    public int getCharInitAR() {
+        return ((getCharInitDex() * 5) - 35) + getARClassBonus();
+    }
     
-    public int getCharIAS() {return cStats[26];}
+    public int getCharLevel() {
+        return (int) iCharLevel;
+    }
     
-    public int getCharFRW() {return cStats[24];}
+    public int getCharAR() {
+        return (((getCharDex() * 5) - 35) + getARClassBonus() + cStats[14] + cStats[16]) * (1 + cStats[15] + cStats[17]);
+    }
     
-    public int getCharFCR() {return cStats[25];}
+    public int getCharMF() {
+        return cStats[22] + cStats[23];
+    }
     
-    public int getCharSkillRem() {return (int) iReadStats[5];}
+    public int getCharGF() {
+        return cStats[28] + cStats[29];
+    }
     
-    public List<Object> getPlusSkills() {return plSkill;}
+    public int getCharFHR() {
+        return cStats[27];
+    }
+    
+    public int getCharIAS() {
+        return cStats[26];
+    }
+    
+    public int getCharFRW() {
+        return cStats[24];
+    }
+    
+    public int getCharFCR() {
+        return cStats[25];
+    }
+    
+    public int getCharSkillRem() {
+        return (int) iReadStats[5];
+    }
+    
+    public List<D2Prop> getPlusSkills() {
+        return plSkill;
+    }
     
     public int getMercInitStr() {
         return (int) Math.floor((Integer.parseInt(mercHireCol.get("Str")) + ((Double.parseDouble(mercHireCol.get("Str/Lvl")) / (double) 8) * (getMercLevel() - Integer.parseInt(mercHireCol.get("Level"))))));
@@ -1830,24 +1957,38 @@ public class D2Character extends D2ItemListAdapter {
                 mercHireCol.get("Level"))))));
     }
     
-    public int getMercStr() {return mStats[0] + mStats[1];}
+    public int getMercStr() {
+        return mStats[0] + mStats[1];
+    }
     
-    public int getMercDex() {return mStats[4] + mStats[5];}
+    public int getMercDex() {
+        return mStats[4] + mStats[5];
+    }
     
-    public int getMercHP() {return mStats[8] + mStats[9];}
+    public int getMercHP() {
+        return mStats[8] + mStats[9];
+    }
     
     public int getMercAR() {
         return (((getMercInitDex() * 5) - 35) + (int) Math.floor((Integer.parseInt(mercHireCol.get("AR")) + ((Double.parseDouble(mercHireCol.get("AR/Lvl")) / (double) 8) * (getMercLevel() - Integer.parseInt(
                 mercHireCol.get("Level")))))) + mStats[14] + mStats[16]) * (1 + mStats[15] + mStats[17]);
     }
     
-    public int getMercFireRes() {return mStats[18];}
+    public int getMercFireRes() {
+        return mStats[18];
+    }
     
-    public int getMercColdRes() {return mStats[20];}
+    public int getMercColdRes() {
+        return mStats[20];
+    }
     
-    public int getMercLightRes() {return mStats[19];}
+    public int getMercLightRes() {
+        return mStats[19];
+    }
     
-    public int getMercPoisRes() {return mStats[21];}
+    public int getMercPoisRes() {
+        return mStats[21];
+    }
     
     public String getStatString() {
         return

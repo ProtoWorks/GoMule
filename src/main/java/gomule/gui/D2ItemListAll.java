@@ -26,8 +26,8 @@ public class D2ItemListAll implements D2ItemList {
     private D2FileManager iFileManager;
     private D2Project iProject;
     
-    private List<Object> iList = new ArrayList<>();
-    private List<Object> iD2ItemListListenerList = new ArrayList<>();
+    private List<D2ItemList> iList = new ArrayList<>();
+    private List<D2ItemListListener> iD2ItemListListenerList = new ArrayList<>();
     private boolean iIgnoreItemListEvents = false;
     
     public D2ItemListAll(D2FileManager pFileManager, D2Project pProject) {
@@ -56,7 +56,7 @@ public class D2ItemListAll implements D2ItemList {
             D2ItemList lList = iFileManager.addItemList(pFileName, null);
             // set listeners
             for (int i = 0; i < iD2ItemListListenerList.size(); i++) {
-                D2ItemListListener lListener = (D2ItemListListener) iD2ItemListListenerList.get(i);
+                D2ItemListListener lListener = iD2ItemListListenerList.get(i);
                 lList.addD2ItemListListener(lListener);
             }
             iList.add(lList);
@@ -73,7 +73,7 @@ public class D2ItemListAll implements D2ItemList {
             if (lList != null) {
                 // remove listeners
                 for (int i = 0; i < iD2ItemListListenerList.size(); i++) {
-                    D2ItemListListener lListener = (D2ItemListListener) iD2ItemListListenerList.get(i);
+                    D2ItemListListener lListener = iD2ItemListListenerList.get(i);
                     lList.removeD2ItemListListener(lListener);
                 }
                 
@@ -87,7 +87,7 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
     
-    public List<Object> getAllContainers() {
+    public List<D2ItemList> getAllContainers() {
         return iList;
     }
     
@@ -99,7 +99,7 @@ public class D2ItemListAll implements D2ItemList {
     public String getFilename(D2Item pItem) {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
-            lItemList = (D2ItemList) iList.get(i);
+            lItemList = iList.get(i);
             if (lItemList.containsItem(pItem)) {
                 if (lItemList.getFilename().toLowerCase().endsWith(".d2s")) {
                     return ((D2Character) lItemList).getCharName() + ".d2s";
@@ -116,7 +116,7 @@ public class D2ItemListAll implements D2ItemList {
     public boolean containsItem(D2Item pItem) {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
-            lItemList = (D2ItemList) iList.get(i);
+            lItemList = iList.get(i);
             if (lItemList.containsItem(pItem)) {
                 return true;
             }
@@ -128,7 +128,7 @@ public class D2ItemListAll implements D2ItemList {
     public void removeItem(D2Item pItem) {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
-            lItemList = (D2ItemList) iList.get(i);
+            lItemList = iList.get(i);
             if (lItemList.containsItem(pItem)) {
                 lItemList.removeItem(pItem);
                 return;
@@ -137,12 +137,12 @@ public class D2ItemListAll implements D2ItemList {
     }
     
     @Override
-    public List<Object> getItemList() {
-        List<Object> lList = new ArrayList<>();
+    public List<D2Item> getItemList() {
+        List<D2Item> lList = new ArrayList<>();
         
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
-            lItemList = (D2ItemList) iList.get(i);
+            lItemList = iList.get(i);
             lList.addAll(lItemList.getItemList());
         }
         
@@ -155,7 +155,7 @@ public class D2ItemListAll implements D2ItemList {
         
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
-            lItemList = (D2ItemList) iList.get(i);
+            lItemList = iList.get(i);
             lNrItems += lItemList.getNrItems();
         }
         
@@ -166,7 +166,7 @@ public class D2ItemListAll implements D2ItemList {
     public boolean isModified() {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
-            lItemList = (D2ItemList) iList.get(i);
+            lItemList = iList.get(i);
             if (lItemList.isModified()) {
                 return true;
             }
@@ -180,7 +180,7 @@ public class D2ItemListAll implements D2ItemList {
         iD2ItemListListenerList.add(pListener);
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
-            lItemList = (D2ItemList) iList.get(i);
+            lItemList = iList.get(i);
             lItemList.addD2ItemListListener(pListener);
         }
     }
@@ -190,7 +190,7 @@ public class D2ItemListAll implements D2ItemList {
         iD2ItemListListenerList.remove(pListener);
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
-            lItemList = (D2ItemList) iList.get(i);
+            lItemList = iList.get(i);
             lItemList.removeD2ItemListListener(pListener);
         }
     }
@@ -201,7 +201,7 @@ public class D2ItemListAll implements D2ItemList {
             return;
         }
         for (int i = 0; i < iD2ItemListListenerList.size(); i++) {
-            D2ItemListListener lListener = (D2ItemListListener) iD2ItemListListenerList.get(i);
+            D2ItemListListener lListener = iD2ItemListListenerList.get(i);
             lListener.itemListChanged();
         }
     }
@@ -210,7 +210,7 @@ public class D2ItemListAll implements D2ItemList {
     public boolean hasD2ItemListListener() {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
-            lItemList = (D2ItemList) iList.get(i);
+            lItemList = iList.get(i);
             if (lItemList.hasD2ItemListListener()) {
                 return true;
             }
@@ -223,7 +223,7 @@ public class D2ItemListAll implements D2ItemList {
     public void save(D2Project pProject) {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
-            lItemList = (D2ItemList) iList.get(i);
+            lItemList = iList.get(i);
             if (lItemList.isModified()) {
                 lItemList.save(pProject);
             }
@@ -234,7 +234,7 @@ public class D2ItemListAll implements D2ItemList {
     public boolean isSC() {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
-            lItemList = (D2ItemList) iList.get(i);
+            lItemList = iList.get(i);
             if (lItemList.isSC()) {
                 return true;
             }
@@ -247,7 +247,7 @@ public class D2ItemListAll implements D2ItemList {
     public boolean isHC() {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
-            lItemList = (D2ItemList) iList.get(i);
+            lItemList = iList.get(i);
             if (lItemList.isHC()) {
                 return true;
             }
@@ -260,7 +260,7 @@ public class D2ItemListAll implements D2ItemList {
     public void fullDump(PrintWriter pWriter) {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
-            lItemList = (D2ItemList) iList.get(i);
+            lItemList = iList.get(i);
             lItemList.fullDump(pWriter);
         }
     }

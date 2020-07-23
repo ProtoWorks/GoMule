@@ -600,7 +600,7 @@ public class D2Prop {
         }
     }
     
-    public void addCharMods(int[] outStats, List<Object> plSkill, int cLvl, int op, int qFlagMarker) {
+    public void addCharMods(int[] outStats, List<D2Prop> plSkill, int cLvl, int op, int qFlagMarker) {
         
         //If it's 0 we only want standard properties (non set)
         if (qFlagMarker == 0) {

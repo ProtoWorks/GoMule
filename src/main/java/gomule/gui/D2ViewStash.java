@@ -328,16 +328,20 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                 }
                 
                 @Override
-                public void mouseEntered(MouseEvent arg0) {}
+                public void mouseEntered(MouseEvent arg0) {
+                }
                 
                 @Override
-                public void mouseExited(MouseEvent arg0) {}
+                public void mouseExited(MouseEvent arg0) {
+                }
                 
                 @Override
-                public void mousePressed(MouseEvent arg0) {}
+                public void mousePressed(MouseEvent arg0) {
+                }
                 
                 @Override
-                public void mouseReleased(MouseEvent arg0) {}
+                public void mouseReleased(MouseEvent arg0) {
+                }
             });
             
             iTable.getSelectionModel().addListSelectionListener(
@@ -412,9 +416,9 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
             if (isStash()) {
                 iFileManager.removeItemList(iFileName, this);
             } else {
-                List<Object> lList = ((D2ItemListAll) iStash).getAllContainers();
+                List<D2ItemList> lList = ((D2ItemListAll) iStash).getAllContainers();
                 for (int i = 0; i < lList.size(); i++) {
-                    D2ItemList lItemList = (D2ItemList) lList.get(i);
+                    D2ItemList lItemList = lList.get(i);
                     iFileManager.removeItemList(lItemList.getFilename(), this);
                 }
             }
@@ -466,9 +470,9 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
             public void actionPerformed(ActionEvent pEvent) {
                 try {
                     iStash.ignoreItemListEvents();
-                    List<Object> lItemList = D2ViewClipboard.removeAllItems();
+                    List<D2Item> lItemList = D2ViewClipboard.removeAllItems();
                     while (lItemList.size() > 0) {
-                        iStash.addItem((D2Item) lItemList.remove(0));
+                        iStash.addItem(lItemList.remove(0));
                     }
                 } finally {
                     iStash.listenItemListEvents();
@@ -993,9 +997,9 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
             
             iItems = new ArrayList<>();
             if (iStash != null) {
-                List<Object> lList = iStash.getItemList();
+                List<D2Item> lList = iStash.getItemList();
                 for (int i = 0; i < lList.size(); i++) {
-                    D2Item lItem = (D2Item) lList.get(i);
+                    D2Item lItem = lList.get(i);
                     
                     boolean lAdd1 = false;
                     boolean lAdd2 = false;

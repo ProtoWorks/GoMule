@@ -30,7 +30,7 @@ public interface D2ItemList {
     
     void addItem(D2Item pItem);
     
-    List<Object> getItemList();
+    List<D2Item> getItemList();
     
     int getNrItems();
     

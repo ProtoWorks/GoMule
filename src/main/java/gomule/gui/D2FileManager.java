@@ -493,8 +493,8 @@ public class D2FileManager extends JFrame {
                             
                             for (int x = 0; x < iList.getNrItems(); x++) {
                                 
-                                if (((D2Item) iList.getItemList().get(x)).isMoveable()) {
-                                    moveToClipboard(((D2Item) iList.getItemList().get(x)), iList);
+                                if (iList.getItemList().get(x).isMoveable()) {
+                                    moveToClipboard(iList.getItemList().get(x), iList);
                                     x--;
                                 }
                             }
@@ -502,7 +502,7 @@ public class D2FileManager extends JFrame {
                         } else {
                             
                             for (int x = 0; x < iList.getNrItems(); x++) {
-                                moveToClipboard(((D2Item) iList.getItemList().get(x)), iList);
+                                moveToClipboard(iList.getItemList().get(x), iList);
                                 x--;
                             }
                             
@@ -530,9 +530,9 @@ public class D2FileManager extends JFrame {
                                 iCharacter.putOnCharacter(x, D2ViewClipboard.getItemList());
                             }
                         } else {
-                            List<Object> lItemList = D2ViewClipboard.removeAllItems();
+                            List<D2Item> lItemList = D2ViewClipboard.removeAllItems();
                             while (lItemList.size() > 0) {
-                                iList.addItem((D2Item) lItemList.remove(0));
+                                iList.addItem(lItemList.remove(0));
                             }
                         }
                     } finally {
@@ -554,13 +554,13 @@ public class D2FileManager extends JFrame {
                     iList.ignoreItemListEvents();
                     try {
                         for (int x = 0; x < iList.getNrItems(); x++) {
-                            D2Item remItem = ((D2Item) iList.getItemList().get(x));
+                            D2Item remItem = iList.getItemList().get(x);
                             if (!remItem.isMoveable() && pickChooser.getSelectedIndex() != 3 && getProject().getIgnoreItems()) {
                                 continue;
                             }
                             switch (pickChooser.getSelectedIndex()) {
                                 case 0:
-    
+                                    
                                     if (remItem.getLocation() == 0 && remItem.getPanel() == 5) {
                                         moveToClipboard(remItem, iList);
                                         x--;
@@ -1255,22 +1255,28 @@ public class D2FileManager extends JFrame {
             }
             
             @Override
-            public void internalFrameClosed(InternalFrameEvent arg0) {}
+            public void internalFrameClosed(InternalFrameEvent arg0) {
+            }
             
             @Override
-            public void internalFrameClosing(InternalFrameEvent arg0) {}
+            public void internalFrameClosing(InternalFrameEvent arg0) {
+            }
             
             @Override
-            public void internalFrameDeactivated(InternalFrameEvent arg0) {}
+            public void internalFrameDeactivated(InternalFrameEvent arg0) {
+            }
             
             @Override
-            public void internalFrameDeiconified(InternalFrameEvent arg0) {}
+            public void internalFrameDeiconified(InternalFrameEvent arg0) {
+            }
             
             @Override
-            public void internalFrameIconified(InternalFrameEvent arg0) {}
+            public void internalFrameIconified(InternalFrameEvent arg0) {
+            }
             
             @Override
-            public void internalFrameOpened(InternalFrameEvent arg0) {}
+            public void internalFrameOpened(InternalFrameEvent arg0) {
+            }
         });
         iViewProject.notifyFileOpened(pContainer.getFileName());
         

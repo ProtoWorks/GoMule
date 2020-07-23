@@ -2918,7 +2918,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         return iCharacter;
     }
     
-    public void putOnCharacter(int areaCode, List<Object> dropList) {
+    public void putOnCharacter(int areaCode, List<D2Item> dropList) {
         
         iCharacter.ignoreItemListEvents();
         int dPanel = 0;
@@ -2946,7 +2946,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         }
         try {
             for (int z = dropList.size() - 1; z > -1; z--) {
-                D2Item lDropItem = (D2Item) dropList.get(z);
+                D2Item lDropItem = dropList.get(z);
                 for (int x = 0; x < rMax; x++) {
                     for (int y = 0; y < cMax; y++) {
                         if (iCharacter.checkCharGrid(dPanel, y, x, lDropItem)) {
